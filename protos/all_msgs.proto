@@ -1,0 +1,7 @@
+import "google/protobuf/any.proto";
+
+message hytech_msg {
+    required google.protobuf.Any message_pack = 1;
+    required string msg_id = 2;
+}
+

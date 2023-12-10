@@ -9,14 +9,15 @@ import ht_data_pb2
 from base64 import standard_b64encode
 import socket
 import time
+
 with open(
     os.path.join(os.path.dirname(ht_data_pb2.__file__), "ht_data.bin"), "rb"
 ) as schema_bin:
     schema_base64 = standard_b64encode(schema_bin.read()).decode("ascii")
+
 # Define the IP and port to listen on
 UDP_IP = "127.0.0.1"
 UDP_PORT = 12345
-
 
 async def listen_for_messages():
     # Create a UDP socket
@@ -34,7 +35,7 @@ async def listen_for_messages():
         try:
             while True:
                 data, addr = await asyncio.to_thread(sock.recvfrom, 1024)
-                # print(f"Received a message from {addr}")
+
                 await fs.send_message(
                     chan_id,
                     time.time_ns(),
