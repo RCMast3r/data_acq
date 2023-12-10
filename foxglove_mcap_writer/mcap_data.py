@@ -2,7 +2,7 @@ import sys
 from mcap_protobuf.writer import Writer
 import ht_data_pb2
 import all_msgs_pb2
-
+import google.protobuf.message_factory
 def main():
     with open(sys.argv[1], "wb") as f, Writer(f) as mcap_writer:
         # for i in range(1, 11):
@@ -30,6 +30,10 @@ def main():
             des_msg.ParseFromString(enc_msg)
             
             # go from decoded generic message into specific message based on the id
+            
+            # create a message class from the name of the message
+            asdf = google.protobuf.message_factory.GetMessageClass(ht_data_pb2.DESCRIPTOR.message_types_by_name.get('ht_data'))
+            
             if(des_msg.msg_id == ht_data_pb2.ht_data.DESCRIPTOR.name):
                 msg = ht_data_pb2.ht_data()
                 # the value in the message_pack is the binary encoded data which we can use for the foxglove webserver socket api

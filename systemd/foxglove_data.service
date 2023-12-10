@@ -1,0 +1,12 @@
+[Unit]
+Description=Foxglove webserver and mcap writer service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/ben/hytech/data_acq/foxglove_mcap_writer/data_writer_service.py
+ExecStop=/bin/kill -SIGINT $MAINPID
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
