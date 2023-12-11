@@ -12,7 +12,7 @@ def main():
             my_message.shock_fr = 12.23
             my_message.shock_fl = 12.23
             my_message.shock_br = 12.23
-            my_message.shock_bl = 12.23
+            my_message.shock_bl = 12.2
 
             # creation of the any message envelope that will hold each one of the packed messages
             an_any = all_msgs_pb2.hytech_msg()
