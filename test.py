@@ -22,7 +22,6 @@ import asyncudp
 async def continuous_udp_receiver(queue, q2):
     sock = await asyncudp.create_socket(local_addr=('127.0.0.1', 12345))
     while True:
-        print("asdf")
 
         data, addr = await sock.recvfrom()
         await queue.put(data)
@@ -34,20 +33,20 @@ async def consume_data(queue, foxglove_server):
             await fz.send_msgs_from_queue(queue)
 
 async def main():
-
-    # this queue could at some point be receiving from multiple inputs.
+    
     # for example, we will have CAN as our only input as of right now but we may need to add in 
     # a sensor that inputs over UART or ethernet
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
-    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", "/home/neb/data_acq/py_data_acq/foxglove_live/ht_data.bin")
+    fx_s = HTProtobufFoxgloveServer("172.20.16.1", 8765, "asdf", "/home/neb/data_acq/py_data_acq/foxglove_live/ht_data.bin")
     receiver_task = asyncio.create_task(continuous_udp_receiver(queue, queue2))
-    fx_task = asyncio.create_task(consume_data(queue, fx_s))
-    await asyncio.gather(receiver_task, fx_task)
-
-    # TODO the deserialization task 
     
-    # TODO the MCAP file task
+    # TODO the deserialization task for unpacking received data. 
+    fx_task = asyncio.create_task(consume_data(queue, fx_s))
+    
+    # TODO the data consuming MCAP file task for writing MCAP files to specific directory
+    
+    await asyncio.gather(receiver_task, fx_task)
 
 if __name__ == "__main__":
     asyncio.run(main())

@@ -21,6 +21,8 @@ class HTProtobufFoxgloveServer(FoxgloveServer):
 
     # this is run when we use this in a with statement for context management
     async def __aenter__(self): 
+        print("yoyoyoyoyoyoyoyoyoyoyyoo")
+        await super().__aenter__()
         self.chan_id = await super().add_channel(
             {
                 "topic": "car data",
@@ -29,7 +31,7 @@ class HTProtobufFoxgloveServer(FoxgloveServer):
                 "schema": self.schema,
             }
         )
-        await super().__aenter__()
+        
         return self
 
     async def __aexit__(self, exc_type: Any, exc_val: Any, traceback: Any):
