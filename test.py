@@ -38,7 +38,8 @@ async def main():
     # a sensor that inputs over UART or ethernet
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
-    fx_s = HTProtobufFoxgloveServer("172.20.16.1", 8765, "asdf", "/home/neb/data_acq/py_data_acq/foxglove_live/ht_data.bin")
+    
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", "/home/ben/hytech/data_acq/py_data_acq/foxglove_live/ht_data.bin")
     receiver_task = asyncio.create_task(continuous_udp_receiver(queue, queue2))
     
     # TODO the deserialization task for unpacking received data. 

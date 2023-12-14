@@ -17,11 +17,10 @@ class HTProtobufFoxgloveServer(FoxgloveServer):
         super().__init__(host, port, name)
         self.path = pb_bin_file_path
         
-        self.schema = open(pb_bin_file_path, "rb")
-
+        self.schema = standard_b64encode(open(pb_bin_file_path, "rb").read()).decode("ascii")
+        
     # this is run when we use this in a with statement for context management
     async def __aenter__(self): 
-        print("yoyoyoyoyoyoyoyoyoyoyyoo")
         await super().__aenter__()
         self.chan_id = await super().add_channel(
             {
@@ -39,7 +38,6 @@ class HTProtobufFoxgloveServer(FoxgloveServer):
 
     async def send_msgs_from_queue(self, queue):
         try:
-            print("running fs")
             data = await queue.get()
             if data is not None:
                 await super().send_message(self.chan_id, time.time_ns(), data)
