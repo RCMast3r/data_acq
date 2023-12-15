@@ -28,10 +28,11 @@ def list_of_message_names():
 class HTPBMcapWriter(Writer):
     def __init__(self, mcap_base_path):
         self.base_path = mcap_base_path
-        names = list_of_message_names()
-        self.message_classes = []
-        for name in names: 
-            self.message_classes.append({name, google.protobuf.message_factory.GetMessageClass(ht_data_pb2.DESCRIPTOR.message_types_by_name.get(name))})
+        messages = list_of_message_names()
+        message_classes = {}
+        for name in messages: 
+            self.message_classes[name] = google.protobuf.message_factory.GetMessageClass(ht_data_pb2.DESCRIPTOR.message_types_by_name.get(name))
+
     def __enter__(self):
         return self
     def __exit__(self, exc_, exc_type_, tb_):
@@ -45,9 +46,15 @@ class HTPBMcapWriter(Writer):
     # gets the list of names via type inflection
 
     async def write_data(self, queue):
-        try:
-            data = await queue.get()
-            if data is not None:
-                des_msg = all_msgs_pb2.hytech_msg()
-                des_msg.ParseFromString(data)
+    
+        data = await queue.get()
+        if data is not None:
+            des_msg = all_msgs_pb2.hytech_msg()
+            des_msg.ParseFromString(data)
+            if des_msg.msg_id in self.message_classes:
+                msg = message_classes[des_msg.msg_id]()
+                msg.ParseFromString(des_msg.message_pack.value)
+                # TODO make this awaitable
+                await super().write_message(topic="/"+des_msg.msg_id, message=msg, log_time=time.time(), publish_time=time.time())
+    
                 
