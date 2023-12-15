@@ -1,5 +1,5 @@
 import asyncio
-from py_data_acq.io_handler.udp_handle import UDP_Handle
+
 from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 import logging 
@@ -30,7 +30,7 @@ async def continuous_udp_receiver(queue, q2):
 async def write_data_to_mcap(queue, mcap_writer):
     async with mcap_writer as mcw:
         while True:
-            await mcap_writer.write_data(queue)
+            await mcw.write_data(queue)
 
 async def consume_data(queue, foxglove_server):
     async with foxglove_server as fz:
@@ -44,7 +44,7 @@ async def main():
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
     
-    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", "/home/ben/hytech/data_acq/py_data_acq/foxglove_live/ht_data.bin")
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", "/home/neb/data_acq/py_data_acq/foxglove_live/ht_data.bin")
 
     mcap_writer = HTPBMcapWriter(".")
     
@@ -59,7 +59,8 @@ async def main():
     
     # TODO the data consuming MCAP file task for writing MCAP files to specific directory
     
-    await asyncio.gather(receiver_task, fx_task)
+    await asyncio.gather(receiver_task, fx_task, mcap_task)
+    # await asyncio.gather(receiver_task, mcap_task)
 
 if __name__ == "__main__":
     asyncio.run(main())
