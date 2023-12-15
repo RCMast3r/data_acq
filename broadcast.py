@@ -1,6 +1,6 @@
 import socket
 import time
-import py_data_acq.foxglove_live.ht_data_pb2 as ht_data_pb2 # Import the generated Python code from your .proto file
+import py_data_acq.test.ht_data_pb2 as ht_data_pb2 # Import the generated Python code from your .proto file
 
 
 # Define the IP and port for the UDP socket
