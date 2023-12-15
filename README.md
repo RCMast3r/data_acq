@@ -10,6 +10,16 @@ TODO:
 
 - [ ] write the data storage script for saving the received CAN messages locally in the mcap 
     - [ ]  make service script that creates an instance of the mcap writer and the foxglove websocket
+
+
+- [ ] the deserialization task for unpacking received data.
+
+- [ ] come up with a good way of associating the dbc file with the protobuf file
+
+    - I want each CAN ID to have its own protobuf message. perhaps in the protobuf message I will also include the CAN ID as a fixed part of the protobuf message in the creation of the proto file.
+       
+    - I know that I will be using cantools to create the DBC file so I might as well extend that creation script to create the proto at the same time. Additionally, I know that I will be using tim's auto-magic nix-proto for creation of the python auto-gen code.
+
 input: 
 - protobuf stream (will be from CAN, this prototype will be from a port)
 
@@ -21,27 +31,23 @@ output:
     - on hardware receive in the data_handler script data gets pushed into a container triggers both the webserver and the data writer to use that data
     - once both the data writer and the foxglove websocket have finished processing the data delete the data from the container
 
-- I cant just used a single protobuf message that describes all of the data over CAN, I need to be able to differentiate between the different messages that come over the wire. 
-
-- the thing needs to be able to differentiate between the different encoded message types and decode them accordingly.
 - a desired workflow is that it all we need to do to add a new input that we will be seeing over the wire is to add a .proto to a specific folder. No code changes should be required.
-- i know that an any protobuf data type can kinda handle these types of requirements
-
 
 notes:
 - filter journalctl based on service: `journalctl -u nginx.service`
+- why was I looking at using an Any protobuf msg? i think this was an over-complication
 
 ```mermaid
 flowchart TD
     CAN[RPI CAN] --> py_async_q[encoded CAN data]
     py_async_q --> des[DBC based CAN parser] 
     des --> pb_pack[protobuf packet creation]
+    
     pb_pack --> data_q1[webserver protobuf packet queue]
     pb_pack --> data_q2[MCAP file writer protobuf packet queue]
     subgraph websocket thread
-        direction TB
-
-        data_q1 --> py_foxglove[foxglove server websocket]
+        data_q1 --> enc[serialize into protobuf packet]
+        enc --> py_foxglove[foxglove server websocket]
     end
     subgraph file writer thread
         data_q2 --> py_mcap[MCAP file writer]

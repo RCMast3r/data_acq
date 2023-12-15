@@ -14,6 +14,8 @@ from typing import (
 # TODO make these an environmental thing for nix
 import all_msgs_pb2
 import ht_data_pb2
+
+# TODO move this into a schema / descriptor associator util module or class
 def list_of_message_names():
     message_names = []
     # Iterate through all attributes in the generated module
