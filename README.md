@@ -30,3 +30,20 @@ output:
 
 notes:
 - filter journalctl based on service: `journalctl -u nginx.service`
+
+```mermaid
+flowchart TD
+    CAN[RPI CAN] --> py_async_q[encoded CAN data]
+    py_async_q --> des[DBC based CAN parser] 
+    des --> pb_pack[protobuf packet creation]
+    pb_pack --> data_q1[webserver protobuf packet queue]
+    pb_pack --> data_q2[MCAP file writer protobuf packet queue]
+    subgraph websocket thread
+        direction TB
+
+        data_q1 --> py_foxglove[foxglove server websocket]
+    end
+    subgraph file writer thread
+        data_q2 --> py_mcap[MCAP file writer]
+    end
+```

@@ -44,7 +44,7 @@ async def main():
     
     # TODO the deserialization task for unpacking received data. 
     fx_task = asyncio.create_task(consume_data(queue, fx_s))
-    
+     
     # TODO the data consuming MCAP file task for writing MCAP files to specific directory
     
     await asyncio.gather(receiver_task, fx_task)
