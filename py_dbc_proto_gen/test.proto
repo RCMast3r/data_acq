@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+message id_bms_coulomb_counts {
+    float total_charge = 1;
+    float total_discharge = 2;
+}
+
