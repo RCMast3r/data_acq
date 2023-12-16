@@ -1,7 +1,6 @@
 usage: 
-1. broadcast dummy data
-TODO:
 
+TODO:
 - [ ] actually get current data from car into protobuf encoded CAN messages and send them from current TCU / SAB
 
 - [ ] get the raspberry pi listening to CAN messages

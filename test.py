@@ -44,7 +44,7 @@ async def main():
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
     
-    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", "/home/neb/data_acq/py_data_acq/foxglove_live/ht_data.bin")
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", "./py_data_acq/foxglove_live/ht_data.bin")
 
     mcap_writer = HTPBMcapWriter(".")
     
@@ -58,9 +58,7 @@ async def main():
     mcap_task = asyncio.create_task(write_data_to_mcap(queue, mcap_writer)) 
     
     # TODO the data consuming MCAP file task for writing MCAP files to specific directory
-    
     await asyncio.gather(receiver_task, fx_task, mcap_task)
     # await asyncio.gather(receiver_task, mcap_task)
-
 if __name__ == "__main__":
     asyncio.run(main())
