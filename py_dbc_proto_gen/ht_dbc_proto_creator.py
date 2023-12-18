@@ -2,7 +2,7 @@ from cantools.database import *
 import requests
 import re
 from ht_can_msg_signals import *
-
+import math
 
 class HyTechCANmsg:
     def __init__(self):
@@ -10,10 +10,14 @@ class HyTechCANmsg:
         self.can_id_hex = 0x0
         self.sender_name = ""
         self.packing_type = ""
-        self.signals = [can.signal]
+        self.signals = [can.signal.Signal]
 
-    def create_msg() -> can.message:
-        msg = can.message()
+    def create_msg(self, bytes_length) -> can.message.Message:
+        print(self.can_id_name)
+        is_ext = False
+        if(int(self.can_id_hex, base=16).bit_length() >11):
+            is_ext = True
+        msg = can.message.Message(frame_id=int(self.can_id_hex, base=16), name=self.can_id_name, signals=self.signals, length=bytes_length, is_extended_frame=is_ext)
         return msg
 
 
@@ -24,7 +28,8 @@ def extract_defines(header_file_content):
     for line in header_file_content:
         # Check if the line starts with '#define'
         if line.startswith("#define"):
-            line_without_comment = re.sub(r"//.*$", "", line)
+            line_without_comment = re.sub(r"//.*$", 
+            "", line)
             if line_without_comment.startswith("#define"):
                 parts = line_without_comment.strip().split()
                 if len(parts) >= 3:
@@ -131,13 +136,6 @@ for msg in listofmsgs:
 
 # time for some semi-jank
 
-
-# TODO energy meter
-# TODO motor controller
-# TODO MCU
-# TODO SAB
-
-
 def create_field_name(name: str) -> str:
     replaced_text = name.replace(" ", "_")
     replaced_text = replaced_text.replace("(", "")
@@ -145,18 +143,17 @@ def create_field_name(name: str) -> str:
     return replaced_text
 
 
-def generate_proto_message_from_CAN_message(can_msg: HyTechCANmsg):
+def append_proto_message_from_CAN_message(file, can_msg: HyTechCANmsg):
     # if the msg has a conversion, we know that the value with be a float
     file_lines = []
     msgname = can_msg.can_id_name
     # type and then name
-    file_lines.append("message "+msgname.lower() + " {")
+    file.write("message "+msgname.lower() + " {\n")
     line_index = 0
     for sig in can_msg.signals:
         line_index += 1
-        if sig.is_float or sig.conversion is not None:
+        if sig.is_float or (type(sig.conversion) is not type(conversion.IdentityConversion(is_float=False)) and not type(conversion.NamedSignalConversion(choices={},scale=0, offset=0,is_float=False))):
             line = "    float " + create_field_name(sig.name) + " = " + str(line_index) + ";"
-            file_lines.append(line)
         elif sig.choices is not None:
             line = "    string " + create_field_name(sig.name) + " = " + str(line_index) +";"
         elif sig.length == 1:
@@ -165,18 +162,101 @@ def generate_proto_message_from_CAN_message(can_msg: HyTechCANmsg):
             line = "    int " + create_field_name(sig.name) +   " = " + str(line_index) +";"
         else:
             print("ERROR")
-    file_lines.append("}")
-    return file_lines
+        file.write(line+"\n")
+    file.write("}\n\n")
+    return file
 
 
-couloum_count_sigs = get_bms_coulomb_count_signals()
 
+# associating the signals set with each one of the different CAN ids 
+list_of_cantools_msgs=[]
 with open('test.proto', 'a') as proto_file:
     proto_file.write("syntax = \"proto3\";\n\n")
     for msg in listofmsgs:
-        if msg.can_id_name == "ID_BMS_COULOMB_COUNTS":
-            msg.signals = couloum_count_sigs
-            lines = generate_proto_message_from_CAN_message(msg)
-            for line in lines:
-                proto_file.write(line+"\n")
-            proto_file.write("\n")
+        real_name = re.sub(r"\d+", "", msg.can_id_name)
+        if real_name == "ID_BMS_COULOMB_COUNTS":
+            msg.signals, len = get_bms_coulomb_count_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_ONBOARD_TEMPERATURES":
+            msg.signals, len = get_bms_onboard_temperatures_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_ONBOARD_DETAILED_TEMPERATURES":
+            msg.signals, len = get_bms_onboard_detailed_temperatures_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_VOLTAGES":
+            msg.signals, len = get_bms_voltage_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_DETAILED_VOLTAGES":
+            msg.signals, len = get_bms_detailed_voltages_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_TEMPERATURES":
+            msg.signals, len = get_bms_onboard_temperatures_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_DETAILED_TEMPERATURES":
+            msg.signals, len = get_bms_detailed_temp_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_STATUS":
+            msg.signals, len = get_bms_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_BALANCING_STATUS":
+            print("TODO")
+            # msg.signals, len = get_bms_balancing_status_signals()
+            # list_of_cantools_msgs.append(msg.create_msg(len))
+            # proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_BMS_READ_WRITE_PARAMETER_COMMAND":
+            print("bruh")
+        elif real_name == "ID_BMS_PARAMETER_RESPONSE":
+            print("bruh")
+        elif real_name == "ID_MC_STATUS":
+            print("TODO")
+        elif real_name == "ID_MC_TEMPS":
+            print("TODO")
+        elif real_name == "ID_MC_ENERGY":
+            print("TODO")
+        elif real_name == "ID_MC_SETPOINTS_COMMAND":
+            print("TODO")
+        elif real_name == "ID_MC_TORQUE_COMMAND":
+            print("TODO")
+        elif real_name == "ID_MCU_STATUS":
+            print("TODO")
+        elif real_name == "ID_MCU_PEDAL_READINGS":
+            print("TODO")
+        elif real_name == "ID_MCU_LOAD_CELLS":
+            print("TODO")
+        elif real_name == "ID_MCU_FRONT_POTS":
+            print("TODO")
+        elif real_name == "ID_MCU_REAR_POTS":
+            print("TODO")
+        elif real_name == "ID_MCU_ANALOG_READINGS":
+            print("TODO")
+        elif real_name== "ID_CCU_STATUS":
+            msg.signals, len = get_ccu_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name== "ID_CHARGER_CONTROL":
+            msg.signals, len = get_charger_configure_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name== "ID_CHARGER_DATA":
+            msg.signals, len = get_charger_data_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name== "ID_DASHBOARD_STATUS":
+            msg.signals, len = get_dashboard_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name == "ID_TEMP_LF" or real_name == "ID_TEMP_LR" or real_name == "ID_TEMP_RR" or real_name == "ID_TEMP_RF":
+            print("bruh")
+nodes = [can.Node('hytech')]
+buses = [can.Bus('ht08', None, 500000)]
+db = can.Database(list_of_cantools_msgs, nodes, buses)
+
+dump_file(db, "hytech.dbc")
