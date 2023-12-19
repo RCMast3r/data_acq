@@ -151,7 +151,7 @@ def append_proto_message_from_CAN_message(file, can_msg: HyTechCANmsg):
         elif sig.length == 1:
             line = "    bool " + create_field_name(sig.name) +  " = " + str(line_index) +";"
         elif sig.length >1:
-            line = "    int " + create_field_name(sig.name) +   " = " + str(line_index) +";"
+            line = "    int32 " + create_field_name(sig.name) +   " = " + str(line_index) +";"
         else:
             print("ERROR")
         file.write(line+"\n")
