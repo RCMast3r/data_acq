@@ -18,23 +18,20 @@ TODO:
     - I want each CAN ID to have its own protobuf message. perhaps in the protobuf message I will also include the CAN ID as a fixed part of the protobuf message in the creation of the proto file.
        
     - I know that I will be using cantools to create the DBC file so I might as well extend that creation script to create the proto at the same time. Additionally, I know that I will be using tim's auto-magic nix-proto for creation of the python auto-gen code.
-
+## high level overview
 input: 
 - protobuf stream (will be from CAN, this prototype will be from a port)
 
 output: 
 - saved files at time steps
 - encoded websocket stream of data
-
 - desired behavior for the data flow:
     - on hardware receive in the data_handler script data gets pushed into a container triggers both the webserver and the data writer to use that data
     - once both the data writer and the foxglove websocket have finished processing the data delete the data from the container
-
 - a desired workflow is that it all we need to do to add a new input that we will be seeing over the wire is to add a .proto to a specific folder. No code changes should be required.
 
-notes:
+### notes:
 - filter journalctl based on service: `journalctl -u nginx.service`
-- why was I looking at using an Any protobuf msg? i think this was an over-complication
 
 ```mermaid
 flowchart TD

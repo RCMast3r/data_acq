@@ -13,13 +13,11 @@ class HyTechCANmsg:
         self.signals = [can.signal.Signal]
 
     def create_msg(self, bytes_length) -> can.message.Message:
-        print(self.can_id_name)
         is_ext = False
         if(int(self.can_id_hex, base=16).bit_length() >11):
             is_ext = True
         msg = can.message.Message(frame_id=int(self.can_id_hex, base=16), name=self.can_id_name, signals=self.signals, length=bytes_length, is_extended_frame=is_ext)
         return msg
-
 
 # GitHub API URL to fetch the file content
 # extract CAN ids from hytech CAN's definition:
@@ -44,7 +42,6 @@ def extract_defines(header_file_content):
 
     return defines
 
-
 def get_header_files_in_folder(owner, repo, folder_path):
     files = []
 
@@ -67,7 +64,6 @@ def get_header_files_in_folder(owner, repo, folder_path):
     else:
         print(f"Failed to fetch folder contents. Status code: {response.status_code}")
     return files
-
 
 CAN_defines_url = f"https://raw.githubusercontent.com/hytech-racing/code-2024/main/Libraries/HyTech_CAN/CAN_ID.h"
 
@@ -104,14 +100,12 @@ files_in_folder = get_header_files_in_folder(
 files_in_folder.remove("CAN_ID.h")
 files_in_folder.remove("HyTech_CAN.h")
 
-print(files_in_folder)
 # generate list of senders of CAN messages via the string before the first underscore
 list_of_senders = []
 for file_name in files_in_folder:
     sender_name = file_name.split("_", 1)
     if sender_name[0] not in list_of_senders:
         list_of_senders.append(sender_name[0])
-
 
 # associate CAN ids with their senders while creating a CAN message:
 def extract_between_underscores(input_string):
@@ -135,13 +129,11 @@ for msg in listofmsgs:
             msg.sender_name = sender
 
 # time for some semi-jank
-
 def create_field_name(name: str) -> str:
     replaced_text = name.replace(" ", "_")
     replaced_text = replaced_text.replace("(", "")
     replaced_text = replaced_text.replace(")", "")
     return replaced_text
-
 
 def append_proto_message_from_CAN_message(file, can_msg: HyTechCANmsg):
     # if the msg has a conversion, we know that the value with be a float
@@ -166,9 +158,8 @@ def append_proto_message_from_CAN_message(file, can_msg: HyTechCANmsg):
     file.write("}\n\n")
     return file
 
+# associating the signals set with each one of the different CAN ids and creating proto message entries for them
 
-
-# associating the signals set with each one of the different CAN ids 
 list_of_cantools_msgs=[]
 with open('test.proto', 'a') as proto_file:
     proto_file.write("syntax = \"proto3\";\n\n")
@@ -207,36 +198,58 @@ with open('test.proto', 'a') as proto_file:
             list_of_cantools_msgs.append(msg.create_msg(len))
             proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_BMS_BALANCING_STATUS":
-            print("TODO")
-            # msg.signals, len = get_bms_balancing_status_signals()
-            # list_of_cantools_msgs.append(msg.create_msg(len))
-            # proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+            # print("TODO")
+            msg.signals, len = get_bms_balancing_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_BMS_READ_WRITE_PARAMETER_COMMAND":
             print("bruh")
         elif real_name == "ID_BMS_PARAMETER_RESPONSE":
             print("bruh")
         elif real_name == "ID_MC_STATUS":
-            print("TODO")
+            msg.signals, len = get_mc_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MC_TEMPS":
-            print("TODO")
+            msg.signals, len = get_mc_temp_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MC_ENERGY":
-            print("TODO")
+            msg.signals, len = get_mc_energy_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MC_SETPOINTS_COMMAND":
-            print("TODO")
+            msg.signals, len = get_mc_setpoints_commands_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MC_TORQUE_COMMAND":
-            print("TODO")
+            msg.signals, len = get_mc_torque_command_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MCU_STATUS":
-            print("TODO")
+            msg.signals, len = get_mcu_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MCU_PEDAL_READINGS":
-            print("TODO")
+            msg.signals, len = get_mcu_pedals_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MCU_LOAD_CELLS":
-            print("TODO")
+            msg.signals, len = get_bms_balancing_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MCU_FRONT_POTS":
-            print("TODO")
+            msg.signals, len = get_mcu_front_potentiometer_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MCU_REAR_POTS":
-            print("TODO")
+            msg.signals, len = get_mcu_rear_potentiometer_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_MCU_ANALOG_READINGS":
-            print("TODO")
+            msg.signals, len = get_mcu_analog_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name== "ID_CCU_STATUS":
             msg.signals, len = get_ccu_status_signals()
             list_of_cantools_msgs.append(msg.create_msg(len))
