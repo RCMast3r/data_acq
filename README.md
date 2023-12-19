@@ -26,7 +26,7 @@ TODO:
 ## automation requirements:
 - [ ] nix flake packaging of all non existing packages
 - [ ] nixification of data_acq
-    - [ ] 
+    - [ ] package foxglove mcap support / other foxglove python stuff for nix
 
 - [ ] nixification of the dbc and proto file generator module
     - im thinking that the dbc file gets stored in the repo for this as well (?)
