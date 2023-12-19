@@ -129,12 +129,13 @@ for msg in listofmsgs:
             msg.sender_name = sender
 
 # time for some semi-jank
+# replaces the spaces in the name with underscores and removes parentheses
 def create_field_name(name: str) -> str:
     replaced_text = name.replace(" ", "_")
     replaced_text = replaced_text.replace("(", "")
     replaced_text = replaced_text.replace(")", "")
     return replaced_text
-
+# 
 def append_proto_message_from_CAN_message(file, can_msg: HyTechCANmsg):
     # if the msg has a conversion, we know that the value with be a float
     file_lines = []
@@ -159,12 +160,17 @@ def append_proto_message_from_CAN_message(file, can_msg: HyTechCANmsg):
     return file
 
 # associating the signals set with each one of the different CAN ids and creating proto message entries for them
-
+# TODO unfuck this massive unholy mess
 list_of_cantools_msgs=[]
 with open('test.proto', 'a') as proto_file:
+    
     proto_file.write("syntax = \"proto3\";\n\n")
+    
     for msg in listofmsgs:
+
+        # removes numbers from repeated CAN messages so that we can assign multiple messages with the same signals
         real_name = re.sub(r"\d+", "", msg.can_id_name)
+        
         if real_name == "ID_BMS_COULOMB_COUNTS":
             msg.signals, len = get_bms_coulomb_count_signals()
             list_of_cantools_msgs.append(msg.create_msg(len))

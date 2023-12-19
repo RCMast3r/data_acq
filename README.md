@@ -1,23 +1,21 @@
 usage: 
 
 TODO:
-- [ ] actually get current data from car into protobuf encoded CAN messages and send them from current TCU / SAB
-
-- [ ] get the raspberry pi listening to CAN messages
-
-- [ ] adjust the foxglove server code host script to make it listen to CAN messages and switch between topics that it is sending based on the CAN IDs
 
 - [ ] write the data storage script for saving the received CAN messages locally in the mcap 
-    - [ ]  make service script that creates an instance of the mcap writer and the foxglove websocket
-
-
+- [x] make service script that creates an instance of the mcap writer and the foxglove websocket
 - [ ] the deserialization task for unpacking received data.
+- [x] come up with a good way of associating the dbc file with the protobuf file
 
-- [ ] come up with a good way of associating the dbc file with the protobuf file
-
-    - I want each CAN ID to have its own protobuf message. perhaps in the protobuf message I will also include the CAN ID as a fixed part of the protobuf message in the creation of the proto file.
+    - I will simply match the CAN frame id name to the message name, and match each signal name (spaces into underscores) to the field name in the proto. The protobuf message will be packed with the parsed and converted data from cantools.
+    
+    - notes:
+        - I want each CAN ID to have its own protobuf message. perhaps in the protobuf message I will also include the CAN ID as a fixed part of the protobuf message in the creation of the proto file.
        
-    - I know that I will be using cantools to create the DBC file so I might as well extend that creation script to create the proto at the same time. Additionally, I know that I will be using tim's auto-magic nix-proto for creation of the python auto-gen code.
+        - I know that I will be using cantools to create the DBC file so I might as well extend that creation script to create the proto at the same time. Additionally, I know that I will be using tim's auto-magic nix-proto for creation of the python auto-gen code.
+
+- [ ] actually get current data from car into protobuf encoded CAN messages and send them from current TCU / SAB
+- [ ] get the raspberry pi listening to CAN messages
 
 ## automation goals
 - [ ] dbc and proto file generation using CI
@@ -26,7 +24,12 @@ TODO:
 - [ ] CI generated platformio c/c++ library from DBC
 
 ## automation requirements:
-- [ ] nix flake packaging of all non existing packaged 
+- [ ] nix flake packaging of all non existing packages
+- [ ] nixification of data_acq
+    - [ ] 
+
+- [ ] nixification of the dbc and proto file generator module
+    - im thinking that the dbc file gets stored in the repo for this as well (?)
 - [ ] creation of at least 3 CI jobs
 
 ## high level overview

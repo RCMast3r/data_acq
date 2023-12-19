@@ -1,8 +1,10 @@
 from cantools.database import *
 
-# multiple different CAN msgs can have the same array of signals, these functions create the individual arrays of signals
+# multiple different CAN msgs can have the same array of signals, these functions create the individual arrays of signals.
 # TODO put in units
 # TODO verify
+# TODO make this more automated and maybe define the signals using a file format
+# TODO make this more automated by associating each ID with sets of signals in the file format
 
 # TODO fix this? may wanna re-work this CAN message to make it more easily into a msg
 def get_bms_balancing_status_signals():

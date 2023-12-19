@@ -9,10 +9,6 @@ import threading
 
 import asyncudp
 
-# log = logging.getLogger('data_writer_service')
-# log.addHandler(JournalHandler())
-# log.setLevel(logging.INFO)
-
 # TODO we may want to have a config file handling to set params such as:
 #      - file save interval for MCAP file
 #      - foxglove server port
