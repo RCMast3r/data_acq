@@ -29,5 +29,5 @@ jobs:
         - name: upload DBC file artifact
           uses: actions/upload-artifact@v2
             with:
-            name: dbc-artifact
-            path: hytech.dbc
+              name: dbc-artifact
+              path: hytech.dbc
