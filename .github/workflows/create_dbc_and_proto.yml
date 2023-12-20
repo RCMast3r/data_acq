@@ -24,4 +24,4 @@ jobs:
             repository: RCMast3r/data_acq
             ref: refs/heads/master
         - run: nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}}
-        - run: ht_dbc_proto_creator
+        - run: ht_dbc_proto_creator.py
