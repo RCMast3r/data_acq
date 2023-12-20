@@ -4,13 +4,14 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     utils.url = "github:numtide/flake-utils";
+    mcap-protobuf.url = "github:RCMast3r/mcap-protobuf-support-flake";
   };
-  outputs = { self, nixpkgs, utils}:
+  outputs = { self, nixpkgs, utils, mcap-protobuf}:
     let
       py_data_acq_overlay = final: prev: {
         py_data_acq_pkg = final.callPackage ./default.nix { };
       };
-      my_overlays = [ py_data_acq_overlay ];
+      my_overlays = [ py_data_acq_overlay mcap-protobuf.overlays.default ];
       pkgs = import nixpkgs {
         system = "x86_64-linux";
         overlays = [ self.overlays.default ];

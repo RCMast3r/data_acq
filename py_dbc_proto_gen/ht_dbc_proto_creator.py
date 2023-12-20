@@ -272,6 +272,14 @@ with open('test.proto', 'a') as proto_file:
             msg.signals, len = get_dashboard_status_signals()
             list_of_cantools_msgs.append(msg.create_msg(len))
             proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name== "ID_EM_MEASUREMENT":
+            msg.signals, len = get_energy_meter_measurement_signals()()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
+        elif real_name== "ID_EM_STATUS":
+            msg.signals, len =  get_energy_meter_status_signals()
+            list_of_cantools_msgs.append(msg.create_msg(len))
+            proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name == "ID_TEMP_LF" or real_name == "ID_TEMP_LR" or real_name == "ID_TEMP_RR" or real_name == "ID_TEMP_RF":
             print("bruh")
 nodes = [can.Node('hytech')]
