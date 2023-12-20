@@ -5,7 +5,6 @@ from foxglove_websocket import run_cancellable
 
 from foxglove_websocket.server import FoxgloveServer
 
-
 from base64 import standard_b64encode
 import time
 

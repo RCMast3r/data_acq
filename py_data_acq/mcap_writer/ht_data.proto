@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-message ht_data {
-    string status = 1;
-    float shock_fr = 2;
-    float shock_fl = 3;
-    float shock_br = 4;
-    float shock_bl = 5;
-}

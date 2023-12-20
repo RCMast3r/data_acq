@@ -24,9 +24,10 @@ TODO:
 - [ ] CI generated platformio c/c++ library from DBC
 
 ## automation requirements:
-- [ ] nix flake packaging of all non existing packages
+- [x] nix flake packaging of all non existing packages
 - [ ] nixification of data_acq
-    - [ ] package foxglove mcap support / other foxglove python stuff for nix
+    - [x] package foxglove mcap support / other foxglove python stuff for nix
+    - [ ] creation of executable for setup.py so that it is something that can be run in the flake
 
 - [ ] nixification of the dbc and proto file generator module
     - im thinking that the dbc file gets stored in the repo for this as well (?)
@@ -60,7 +61,6 @@ flowchart TD
         data_q2 --> py_mcap[MCAP file writer]
     end
 ```
-
 
 ### notes:
 - filter journalctl based on service: `journalctl -u nginx.service`
