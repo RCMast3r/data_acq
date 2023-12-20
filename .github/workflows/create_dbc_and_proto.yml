@@ -23,7 +23,7 @@ jobs:
           with:
             repository: RCMast3r/data_acq
             ref: refs/heads/master
-        - run: nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} && ht_dbc_proto_creator.py
+        - run: nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command ht_dbc_proto_creator.py
         
         - name: upload DBC file artifact
           uses: actions/upload-artifact@v2
