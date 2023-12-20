@@ -1,0 +1,30 @@
+name: nix-proto-gen
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build-packages:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [23.11]
+        architecture: [x86_64-linux]
+        package: [tester]
+        language: [py]
+    steps:
+        - uses: cachix/install-nix-action@v23
+        - name: Get branch names
+          id: branch-name
+          uses: tj-actions/branch-names@v7
+        - uses: actions/checkout@v4
+          with:
+            repository: RCMast3r/data_acq
+            ref: refs/heads/master
+        - run: nix develop .#packages.${{matrix.architecture}}.ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}}
+        - run: ht_dbc_proto_creator
