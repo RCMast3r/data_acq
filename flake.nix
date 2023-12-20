@@ -25,7 +25,6 @@
     in
     {
       overlays.default = nixpkgs.lib.composeManyExtensions my_overlays;
-
       packages.x86_64-linux =
         rec {
           py_data_acq_pkg = pkgs.py_data_acq_pkg;
@@ -38,11 +37,9 @@
           name = "nix-devshell";
           packages = with pkgs; [
             # Development Tools
-            # gcc-arm-embedded
             py_dbc_proto_gen_pkg
             cmake
           ];
-
           # Setting up the environment variables you need during
           # development.
           shellHook =
