@@ -1,7 +1,9 @@
+#!/usr/bin/env python
+
 from cantools.database import *
 import requests
 import re
-from ht_can_msg_signals import *
+from ht_can_msg_signals.ht_can_msg_signals import *
 import math
 
 class HyTechCANmsg:
@@ -170,7 +172,7 @@ with open('test.proto', 'a') as proto_file:
 
         # removes numbers from repeated CAN messages so that we can assign multiple messages with the same signals
         real_name = re.sub(r"\d+", "", msg.can_id_name)
-        
+        print(real_name)
         if real_name == "ID_BMS_COULOMB_COUNTS":
             msg.signals, len = get_bms_coulomb_count_signals()
             list_of_cantools_msgs.append(msg.create_msg(len))
@@ -273,7 +275,7 @@ with open('test.proto', 'a') as proto_file:
             list_of_cantools_msgs.append(msg.create_msg(len))
             proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name== "ID_EM_MEASUREMENT":
-            msg.signals, len = get_energy_meter_measurement_signals()()
+            msg.signals, len = get_energy_meter_measurement_signals()
             list_of_cantools_msgs.append(msg.create_msg(len))
             proto_file = append_proto_message_from_CAN_message(proto_file, msg)
         elif real_name== "ID_EM_STATUS":

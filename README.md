@@ -25,12 +25,14 @@ TODO:
 
 ## automation requirements:
 - [x] nix flake packaging of all non existing packages
-- [ ] nixification of data_acq
+- [x] nixification of data_acq
     - [x] package foxglove mcap support / other foxglove python stuff for nix
-    - [ ] creation of executable for setup.py so that it is something that can be run in the flake
-
+    - [x] creation of executable for setup.py so that it is something that can be run in the flake
 - [ ] nixification of the dbc and proto file generator module
+    - [ ] creation of CI job that runs the dbc and proto generation script and stores the proto file and the dbc file in an artifact repo
+    
     - im thinking that the dbc file gets stored in the repo for this as well (?)
+        - nop, needs to be in an action artifact storage
 - [ ] creation of at least 3 CI jobs
 
 ## high level overview

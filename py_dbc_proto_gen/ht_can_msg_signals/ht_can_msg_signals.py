@@ -430,16 +430,16 @@ def get_mc_temp_signals():
     )
     
     return signals, length
-
+# TODO make this big endian, the cantools lib seems to be not handling big endian packets correctly
 def get_energy_meter_measurement_signals():
     signals = []
     conv = conversion.LinearConversion(scale=(1 / 65536), offset=0, is_float=False)
     length = 8
     signals.append(
-        can.signal.Signal(name="voltage", start=0, length=32, byte_order="big_endian", conversion=conv)
+        can.signal.Signal(name="voltage", start=0, length=32, conversion=conv)
     )
     signals.append(
-        can.signal.Signal(name="current", start=32, length=32, byte_order="big_endian", conversion=conv)
+        can.signal.Signal(name="current", start=32, length=32, conversion=conv)
     )
     
     return signals, length
@@ -456,13 +456,13 @@ def get_energy_meter_status_signals():
         can.signal.Signal(name="current gain", start=4, length=4)
     )
     signals.append(
-        can.signal.Signal(name="overvoltage error", start=5, length=1)
+        can.signal.Signal(name="overvoltage error", start=8, length=1)
     )
     signals.append(
-        can.signal.Signal(name="overpower error", start=6, length=1)
+        can.signal.Signal(name="overpower error", start=9, length=1)
     )
     signals.append(
-        can.signal.Signal(name="logging", start=7, length=1)
+        can.signal.Signal(name="logging", start=10, length=1)
     )
     return signals, length
 

@@ -14,7 +14,10 @@
       py_data_acq_overlay = final: prev: {
         py_data_acq_pkg = final.callPackage ./default.nix { };
       };
-      my_overlays = [ py_data_acq_overlay mcap-protobuf.overlays.default mcap.overlays.default asyncudp.overlays.default foxglove-websocket.overlays.default ];
+      py_dbc_proto_gen_overlay = final: prev: {
+        py_dbc_proto_gen_pkg = final.callPackage ./dbc_proto_gen.nix { };
+      };
+      my_overlays = [ py_dbc_proto_gen_overlay py_data_acq_overlay mcap-protobuf.overlays.default mcap.overlays.default asyncudp.overlays.default foxglove-websocket.overlays.default ];
       pkgs = import nixpkgs {
         system = "x86_64-linux";
         overlays = [ self.overlays.default ];
@@ -26,6 +29,7 @@
       packages.x86_64-linux =
         rec {
           py_data_acq_pkg = pkgs.py_data_acq_pkg;
+          py_dbc_proto_gen_pkg = pkgs.py_dbc_proto_gen_pkg;
           default = py_data_acq_pkg;
         };
       devShells.x86_64-linux.default =
@@ -35,6 +39,7 @@
           packages = with pkgs; [
             # Development Tools
             # gcc-arm-embedded
+            py_dbc_proto_gen_pkg
             cmake
           ];
 
