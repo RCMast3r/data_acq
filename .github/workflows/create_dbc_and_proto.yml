@@ -30,7 +30,7 @@ jobs:
         run: |
           tag="v$(date +'%Y%m%d%H%M%S')"  # Unique tag name for the release
           response=$(curl -X POST \
-                       -H "Authorization: token $GITHUB_TOKEN" \
+                       -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
                        -H "Accept: application/vnd.github.v3+json" \
                        https://api.github.com/repos/RCMast3r/hytech_dbc_proto/releases \
                        -d "{\"tag_name\":\"$tag\",\"name\":\"Release $tag\"}")
@@ -41,13 +41,13 @@ jobs:
         - name: Upload files
           run: |
             curl -X POST \
-                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
                 -H "Content-Type: application/octet-stream" \
                 --data-binary @hytech.dbc \
                 "$UPLOAD_URL?name=hytech.dbc"
 
             curl -X POST \
-                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
                 -H "Content-Type: application/octet-stream" \
                 --data-binary @hytech.proto \
                 "$UPLOAD_URL?name=hytech.proto"
