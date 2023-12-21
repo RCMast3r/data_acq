@@ -18,22 +18,33 @@ TODO:
 - [ ] get the raspberry pi listening to CAN messages
 
 ## automation goals
-- [ ] dbc and proto file generation using CI
-- [ ] proto python lib using CI and the proto file that was generated from CI (using tim's nix flake)
-- [ ] binary proto schema generation from the generated proto file using an addition to tim's nix flake
-- [ ] CI generated platformio c/c++ library from DBC
+- [x] dbc and proto file generation using CI
+- [ ] binary schema generation from proto file in CI
+    - I am thinking for this we can just use protoc in a dev shell similar to how I did the proto and dbc creation with the script
+- [ ] platformio c/c++ library from DBC by making a platformio script (python / platformio)
+
+```mermaid
+flowchart TD
+
+CI[remote CI generation and release of dbc / proto] --> pio[TODO local built platformio util CAN lib]
+CI --> np[local built nix proto gen lib]
+CI --> bin[TODO remote schema binary generation using ci devshell]
+bin --> fg[foxglove webserver service]
+np --> mc[mcap writer / CAN msg to protobuf service]
+CI --> cantools[cantools dbc load]
+
+```
 
 ## automation requirements:
 - [x] nix flake packaging of all non existing packages
 - [x] nixification of data_acq
     - [x] package foxglove mcap support / other foxglove python stuff for nix
     - [x] creation of executable for setup.py so that it is something that can be run in the flake
-- [ ] nixification of the dbc and proto file generator module
-    - [ ] creation of CI job that runs the dbc and proto generation script and stores the proto file and the dbc file in an artifact repo
-    
+- [x] nixification of the dbc and proto file generator module
+    - [x] creation of CI job that runs the dbc and proto generation script and uploads the file to the release
     - im thinking that the dbc file gets stored in the repo for this as well (?)
         - nop, needs to be in an action artifact storage
-- [ ] creation of at least 3 CI jobs
+            - actually the dbc, proto and schema binary will be in the release
 
 ## high level overview
 input: 

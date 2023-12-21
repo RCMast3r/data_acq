@@ -1,7 +1,6 @@
 import sys
 from mcap_protobuf.writer import Writer
 # import ht_data_pb2
-# import all_msgs_pb2
 import google.protobuf.message_factory
 
 def list_of_message_names():
