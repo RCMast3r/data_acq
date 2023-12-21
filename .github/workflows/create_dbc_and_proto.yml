@@ -30,11 +30,14 @@ jobs:
 
         - name: release
           uses: actions/create-release@v1
-          
           id: create_release
           with:
             draft: false
             prerelease: false
+            body: |
+              Changes in this Release
+              - First Change
+              - Second Change
             release_name: yo
             tag_name: ${{ steps.date.outputs.date }}
             owner: RCMast3r
