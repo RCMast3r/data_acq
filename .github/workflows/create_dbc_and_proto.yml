@@ -23,17 +23,21 @@ jobs:
           with:
             repository: RCMast3r/data_acq
             ref: refs/heads/master
+        
+        - name: Get current date and time
+          id: date
+          run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%S')"
 
         - name: release
           uses: actions/create-release@v1
-          repo: hytech_dbc_proto
+          
           id: create_release
           with:
             draft: false
             prerelease: false
-            release_name: ${{ steps.version.outputs.version }}
-            tag_name: ${{ github.ref }}
-            body_path: CHANGELOG.md
+            release_name: ${{ steps.date.outputs.date }}
+            tag_name: ${{ steps.date.outputs.date }}
+            repo: hytech_dbc_proto
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
