@@ -28,24 +28,11 @@ jobs:
         - name: Get current date and time
           id: date
           run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H_%M_%S')"
-
-        # - name: release
-        #   uses: actions/create-release@v1
-        #   id: create_release
-        #   with:
-        #     draft: false
-        #     prerelease: false
-        #     body: |
-        #       - dbc and proto release
-        #     release_name: yo
-        #     tag_name: ${{ steps.date.outputs.date }}
-        #     owner: RCMast3r
-        #     # repo: hytech_dbc_proto
-        #   env:
-        #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            
+    
         - name: Release
           uses: softprops/action-gh-release@v1
           with:
             tag_name: ${{ steps.date.outputs.date }} 
-            files: hytech.dbc
+            files: | 
+              hytech.dbc
+              hytech.proto
