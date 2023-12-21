@@ -23,19 +23,19 @@ jobs:
           with:
             repository: RCMast3r/data_acq
             ref: refs/heads/master
-        - run: nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command ht_dbc_proto_creator.py
-        
-        - name: Create Release
-          id: create_release
-          run: |
-            tag="v$(date +'%Y%m%d%H%M%S')"  # Unique tag name for the release
-            response=$(curl -X POST \
-                        -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-                        -H "Accept: application/vnd.github.v3+json" \
-                        https://api.github.com/repos/RCMast3r/hytech_dbc_proto/releases \
-                        -d "{\"tag_name\":\"$tag\",\"name\":\"Release $tag\"}")
-            upload_url=$(echo "$response" | jq -r '.upload_url' | sed -e 's/{?name,label}//')
-            echo "::set-output name=upload_url::$upload_url"
+
+          - name: release
+            uses: actions/create-release@v1
+            repo: hytech_dbc_proto
+            id: create_release
+            with:
+              draft: false
+              prerelease: false
+              release_name: ${{ steps.version.outputs.version }}
+              tag_name: ${{ github.ref }}
+              body_path: CHANGELOG.md
+            env:
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         - name: Upload dbc_file.dbc
           run: |
