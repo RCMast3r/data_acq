@@ -43,7 +43,7 @@ jobs:
             owner: RCMast3r
             repo: hytech_dbc_proto
           env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
         - name: Upload dbc_file.dbc
           run: |
