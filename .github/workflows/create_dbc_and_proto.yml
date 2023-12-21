@@ -37,7 +37,7 @@ jobs:
             upload_url=$(echo "$response" | jq -r '.upload_url' | sed -e 's/{?name,label}//')
             echo "::set-output name=upload_url::$upload_url"
 
-        - name: Upload files
+        - name: Upload dbc_file.dbc
           run: |
             curl -X POST \
                 -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
@@ -45,8 +45,11 @@ jobs:
                 --data-binary @hytech.dbc \
                 "$UPLOAD_URL?name=hytech.dbc"
 
+        # Step to upload hytech.proto
+        - name: Upload hytech.proto
+          run: |
             curl -X POST \
-                -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
+                -H "Authorization: token $GITHUB_TOKEN" \
                 -H "Content-Type: application/octet-stream" \
                 --data-binary @hytech.proto \
-                "$UPLOAD_URL?name=hytech.proto"
+                "$UPLOAD_URL?name=hytech.proto" 
