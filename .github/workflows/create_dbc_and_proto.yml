@@ -28,36 +28,25 @@ jobs:
           id: date
           run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H_%M_%S')"
 
-        - name: release
-          uses: actions/create-release@v1
-          id: create_release
+        # - name: release
+        #   uses: actions/create-release@v1
+        #   id: create_release
+        #   with:
+        #     draft: false
+        #     prerelease: false
+        #     body: |
+        #       - dbc and proto release
+        #     release_name: yo
+        #     tag_name: ${{ steps.date.outputs.date }}
+        #     owner: RCMast3r
+        #     # repo: hytech_dbc_proto
+        #   env:
+        #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            
+        - name: Release
+          uses: softprops/action-gh-release@v1
           with:
-            draft: false
-            prerelease: false
-            body: |
-              Changes in this Release
-              - First Change
-              - Second Change
-            release_name: yo
-            tag_name: ${{ steps.date.outputs.date }}
-            owner: RCMast3r
-            # repo: hytech_dbc_proto
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        - name: Upload dbc_file.dbc
-          run: |
-            curl -X POST \
-                -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
-                -H "Content-Type: application/octet-stream" \
-                --data-binary hytech.dbc \
-                "$UPLOAD_URL?name=hytech.dbc"
-
-        # Step to upload hytech.proto
-        - name: Upload hytech.proto
-          run: |
-            curl -X POST \
-                -H "Authorization: token $GITHUB_TOKEN" \
-                -H "Content-Type: application/octet-stream" \
-                --data-binary @hytech.proto \
-                "$UPLOAD_URL?name=hytech.proto" 
+            tag_name: ${{ steps.date.outputs.date }} 
+            files: |
+              hytech.dbc
+              hytech.proto
