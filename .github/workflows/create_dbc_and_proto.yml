@@ -35,8 +35,9 @@ jobs:
           with:
             draft: false
             prerelease: false
-            release_name: ${{ steps.date.outputs.date }}
+            release_name: yo
             tag_name: ${{ steps.date.outputs.date }}
+            owner: RCMast3r
             repo: hytech_dbc_proto
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
