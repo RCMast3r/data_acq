@@ -165,9 +165,8 @@ def append_proto_message_from_CAN_message(file, can_msg: HyTechCANmsg):
 # associating the signals set with each one of the different CAN ids and creating proto message entries for them
 # TODO unfuck this massive unholy mess
 list_of_cantools_msgs=[]
-if os.path.exists("demofile.txt"):
-  os.remove("demofile.txt")
-with open('protos/hytech.proto', 'w+') as proto_file:
+
+with open('hytech.proto', 'w+') as proto_file:
     
     proto_file.write("syntax = \"proto3\";\n\n")
     
@@ -291,4 +290,4 @@ nodes = [can.Node('hytech')]
 buses = [can.Bus('ht08', None, 500000)]
 db = can.Database(list_of_cantools_msgs, nodes, buses)
 
-dump_file(db, "dbcs/hytech.dbc")
+dump_file(db, "hytech.dbc")

@@ -25,18 +25,29 @@ jobs:
             ref: refs/heads/master
         - run: nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command ht_dbc_proto_creator.py
         
-        - name: upload DBC file artifact for use in another job
-          uses: actions/upload-artifact@v2
-          with:
-            name: dbc-artifact
-            path: dbcs/hytech.dbc
-        
-        - name: Commit DBC file to repo
-          run: |
-            git config --global user.email "actions@github.com"
-            git config --global user.name "GitHub Actions"
-            
-            git add dbcs/hytech.dbc
-            git add protos/hytech.proto
-            git commit -m "Add generated DBC and proto files"
-            git push
+        - name: Create Release
+        id: create_release
+        run: |
+          tag="v$(date +'%Y%m%d%H%M%S')"  # Unique tag name for the release
+          response=$(curl -X POST \
+                       -H "Authorization: token $GITHUB_TOKEN" \
+                       -H "Accept: application/vnd.github.v3+json" \
+                       https://api.github.com/repos/RCMast3r/hytech_dbc_proto/releases \
+                       -d "{\"tag_name\":\"$tag\",\"name\":\"Release $tag\"}")
+          upload_url=$(echo "$response" | jq -r '.upload_url' | sed -e 's/{?name,label}//')
+          echo "::set-output name=upload_url::$upload_url"
+
+      # Step to upload hytech.dbc and hytech.proto
+      - name: Upload files
+        run: |
+          curl -X POST \
+               -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Content-Type: application/octet-stream" \
+               --data-binary @hytech.dbc \
+               "$UPLOAD_URL?name=hytech.dbc"
+
+          curl -X POST \
+               -H "Authorization: token $GITHUB_TOKEN" \
+               -H "Content-Type: application/octet-stream" \
+               --data-binary @hytech.proto \
+               "$UPLOAD_URL?name=hytech.proto"
