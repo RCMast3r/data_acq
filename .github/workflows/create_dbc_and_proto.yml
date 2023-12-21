@@ -38,16 +38,16 @@ jobs:
           echo "::set-output name=upload_url::$upload_url"
 
       # Step to upload hytech.dbc and hytech.proto
-      - name: Upload files
-        run: |
-          curl -X POST \
-               -H "Authorization: token $GITHUB_TOKEN" \
-               -H "Content-Type: application/octet-stream" \
-               --data-binary @hytech.dbc \
-               "$UPLOAD_URL?name=hytech.dbc"
+        - name: Upload files
+          run: |
+            curl -X POST \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary @hytech.dbc \
+                "$UPLOAD_URL?name=hytech.dbc"
 
-          curl -X POST \
-               -H "Authorization: token $GITHUB_TOKEN" \
-               -H "Content-Type: application/octet-stream" \
-               --data-binary @hytech.proto \
-               "$UPLOAD_URL?name=hytech.proto"
+            curl -X POST \
+                -H "Authorization: token $GITHUB_TOKEN" \
+                -H "Content-Type: application/octet-stream" \
+                --data-binary @hytech.proto \
+                "$UPLOAD_URL?name=hytech.proto"
