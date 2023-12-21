@@ -42,7 +42,7 @@ jobs:
             curl -X POST \
                 -H "Authorization: token ${{ secrets.GH_TOKEN }}" \
                 -H "Content-Type: application/octet-stream" \
-                --data-binary @hytech.dbc \
+                --data-binary hytech.dbc \
                 "$UPLOAD_URL?name=hytech.dbc"
 
         # Step to upload hytech.proto
