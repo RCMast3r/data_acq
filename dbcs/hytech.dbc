@@ -1,0 +1,492 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: hytech
+
+
+BO_ 160 ID_MC1_STATUS: 8 Vector__XXX
+ SG_ magnetizing current : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ torque current : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ derating on : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter on : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit inverter on : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc on : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit dc on : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ warning : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ error : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ system ready : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 161 ID_MC2_STATUS: 8 Vector__XXX
+ SG_ magnetizing current : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ torque current : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ derating on : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter on : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit inverter on : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc on : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit dc on : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ warning : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ error : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ system ready : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 162 ID_MC3_STATUS: 8 Vector__XXX
+ SG_ magnetizing current : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ torque current : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ derating on : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter on : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit inverter on : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc on : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit dc on : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ warning : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ error : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ system ready : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 163 ID_MC4_STATUS: 8 Vector__XXX
+ SG_ magnetizing current : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ torque current : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ derating on : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter on : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit inverter on : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc on : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ quit dc on : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ warning : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ error : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ system ready : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 164 ID_MC1_TEMPS: 8 Vector__XXX
+ SG_ igbt temp : 48|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ diagnostic number : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter temp : 16|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ motor temp : 0|16@1- (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 165 ID_MC2_TEMPS: 8 Vector__XXX
+ SG_ igbt temp : 48|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ diagnostic number : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter temp : 16|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ motor temp : 0|16@1- (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 166 ID_MC3_TEMPS: 8 Vector__XXX
+ SG_ igbt temp : 48|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ diagnostic number : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter temp : 16|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ motor temp : 0|16@1- (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 167 ID_MC4_TEMPS: 8 Vector__XXX
+ SG_ igbt temp : 48|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ diagnostic number : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter temp : 16|16@1- (0.1,0) [0|0] "" Vector__XXX
+ SG_ motor temp : 0|16@1- (0.1,0) [0|0] "" Vector__XXX
+
+BO_ 168 ID_MC1_ENERGY: 8 Vector__XXX
+ SG_ feedback torque : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ motor power : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc bus voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 169 ID_MC2_ENERGY: 8 Vector__XXX
+ SG_ feedback torque : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ motor power : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc bus voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 170 ID_MC3_ENERGY: 8 Vector__XXX
+ SG_ feedback torque : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ motor power : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc bus voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 171 ID_MC4_ENERGY: 8 Vector__XXX
+ SG_ feedback torque : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ motor power : 16|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dc bus voltage : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 176 ID_MC1_SETPOINTS_COMMAND: 8 Vector__XXX
+ SG_ negative torque limit : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ positive torque limit : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed setpoint rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ remove error : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ driver enable : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hv enable : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter enable : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 177 ID_MC2_SETPOINTS_COMMAND: 8 Vector__XXX
+ SG_ negative torque limit : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ positive torque limit : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed setpoint rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ remove error : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ driver enable : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hv enable : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter enable : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 178 ID_MC3_SETPOINTS_COMMAND: 8 Vector__XXX
+ SG_ negative torque limit : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ positive torque limit : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed setpoint rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ remove error : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ driver enable : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hv enable : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter enable : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 179 ID_MC4_SETPOINTS_COMMAND: 8 Vector__XXX
+ SG_ negative torque limit : 48|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ positive torque limit : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ speed setpoint rpm : 16|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ remove error : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ driver enable : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hv enable : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter enable : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 180 ID_MC1_TORQUE_COMMAND: 2 Vector__XXX
+ SG_ torque command : 0|16@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 181 ID_MC2_TORQUE_COMMAND: 2 Vector__XXX
+ SG_ torque command : 0|16@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 182 ID_MC3_TORQUE_COMMAND: 2 Vector__XXX
+ SG_ torque command : 0|16@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 183 ID_MC4_TORQUE_COMMAND: 2 Vector__XXX
+ SG_ torque command : 0|16@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 195 ID_MCU_STATUS: 8 Vector__XXX
+ SG_ distance traveled m : 48|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ torque mode : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max torque : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ pack charge critical : 24|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ launch control active : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ software ok : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ activate buzzer : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ energy meter present : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inverter error : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ecu state : 16|3@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no accel or brake implausability : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bspd brake high : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bspd current high : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ brake pedal active : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no brake implausability : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ no accel implausability : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mechanical brake active : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shutdown e above threshold : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shoftware ok high : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shutdown d above threshold : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bspd ok high : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shutdown c above threshold : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bms ok high : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shutdown b above threshold : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ imd ok high : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 196 ID_MCU_PEDAL_READINGS: 8 Vector__XXX
+ SG_ brake pedal 2 : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ brake pedal 1 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ accel pedal 2 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ accel pedal 1 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 197 ID_MCU_LOAD_CELLS: 8 Vector__XXX
+ SG_ cell_60_balancing_status : 63|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_59_balancing_status : 62|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_58_balancing_status : 61|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_57_balancing_status : 60|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_56_balancing_status : 59|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_55_balancing_status : 58|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_54_balancing_status : 57|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_53_balancing_status : 56|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_52_balancing_status : 55|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_51_balancing_status : 54|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_50_balancing_status : 53|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_49_balancing_status : 52|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_48_balancing_status : 51|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_47_balancing_status : 50|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_46_balancing_status : 49|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_45_balancing_status : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_44_balancing_status : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_43_balancing_status : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_42_balancing_status : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_41_balancing_status : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_40_balancing_status : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_39_balancing_status : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_38_balancing_status : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_37_balancing_status : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_36_balancing_status : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_35_balancing_status : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_34_balancing_status : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_33_balancing_status : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_32_balancing_status : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_31_balancing_status : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_30_balancing_status : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_29_balancing_status : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_28_balancing_status : 31|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_27_balancing_status : 30|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_26_balancing_status : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_25_balancing_status : 28|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_24_balancing_status : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_23_balancing_status : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_22_balancing_status : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_21_balancing_status : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_20_balancing_status : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_19_balancing_status : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_18_balancing_status : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_17_balancing_status : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_16_balancing_status : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_15_balancing_status : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_14_balancing_status : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_13_balancing_status : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_12_balancing_status : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_11_balancing_status : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_10_balancing_status : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_9_balancing_status : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_8_balancing_status : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_7_balancing_status : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_6_balancing_status : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_5_balancing_status : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_4_balancing_status : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_3_balancing_status : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_2_balancing_status : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_1_balancing_status : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ group_id : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 198 ID_MCU_FRONT_POTS: 6 Vector__XXX
+ SG_ pot_3 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ pot_2 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ pot_1 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 199 ID_MCU_REAR_POTS: 6 Vector__XXX
+ SG_ pot_6 : 32|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ pot_5 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ pot_4 : 0|16@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 204 ID_MCU_ANALOG_READINGS: 8 Vector__XXX
+ SG_ glv battery voltage : 48|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ hall effect current : 32|16@1- (1,0) [0|0] "" Vector__XXX
+ SG_ steering_2 : 16|16@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ steering_1 : 0|16@1- (1,0) [0|0] "" Vector__XXX
+
+BO_ 213 ID_BMS_ONBOARD_TEMPERATURES: 6 Vector__XXX
+ SG_ high temp : 32|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ low temp : 16|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ average temp : 0|16@1- (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 214 ID_BMS_ONBOARD_DETAILED_TEMPERAT: 5 Vector__XXX
+ SG_ temp 1 : 24|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ temp 0 : 8|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ ic id : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 215 ID_BMS_VOLTAGES: 8 Vector__XXX
+ SG_ total voltage : 48|16@1+ (0.01,0) [0|0] "" Vector__XXX
+ SG_ high voltage : 32|16@1+ (0.0001,0) [0|0] "" Vector__XXX
+ SG_ low voltage : 16|16@1+ (0.0001,0) [0|0] "" Vector__XXX
+ SG_ average voltage : 0|16@1+ (0.0001,0) [0|0] "" Vector__XXX
+
+BO_ 216 ID_BMS_DETAILED_VOLTAGES: 7 Vector__XXX
+ SG_ voltage 2 : 40|16@1+ (0.0001,0) [0|0] "" Vector__XXX
+ SG_ voltage 1 : 24|16@1+ (0.0001,0) [0|0] "" Vector__XXX
+ SG_ voltage 0 : 8|16@1+ (0.0001,0) [0|0] "" Vector__XXX
+ SG_ ic id : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ group id : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 217 ID_BMS_TEMPERATURES: 6 Vector__XXX
+ SG_ high temp : 32|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ low temp : 16|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ average temp : 0|16@1- (0.01,0) [0|0] "" Vector__XXX
+
+BO_ 218 ID_BMS_DETAILED_TEMPERATURES: 7 Vector__XXX
+ SG_ thermistor id 2 : 40|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ thermistor id 1 : 24|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ thermistor id 0 : 8|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ group id : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ic id : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 219 ID_BMS_STATUS: 6 Vector__XXX
+ SG_ shutdown h above threshold error : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shutdown g above threshold error : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ current : 24|16@1- (0.01,0) [0|0] "" Vector__XXX
+ SG_ overtemp error : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ undertemp error : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge overtemp error : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharge overtemp error : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ charge overcurrent error : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ discharge overcurrent error : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ total voltage high error : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ undervoltage error : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ overvoltage error : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ state : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 221 ID_CCU_STATUS: 1 Vector__XXX
+ SG_ charger enabled : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 222 ID_BMS_BALANCING_STATUS: 8 Vector__XXX
+ SG_ cell_60_balancing_status : 63|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_59_balancing_status : 62|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_58_balancing_status : 61|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_57_balancing_status : 60|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_56_balancing_status : 59|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_55_balancing_status : 58|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_54_balancing_status : 57|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_53_balancing_status : 56|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_52_balancing_status : 55|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_51_balancing_status : 54|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_50_balancing_status : 53|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_49_balancing_status : 52|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_48_balancing_status : 51|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_47_balancing_status : 50|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_46_balancing_status : 49|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_45_balancing_status : 48|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_44_balancing_status : 47|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_43_balancing_status : 46|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_42_balancing_status : 45|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_41_balancing_status : 44|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_40_balancing_status : 43|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_39_balancing_status : 42|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_38_balancing_status : 41|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_37_balancing_status : 40|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_36_balancing_status : 39|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_35_balancing_status : 38|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_34_balancing_status : 37|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_33_balancing_status : 36|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_32_balancing_status : 35|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_31_balancing_status : 34|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_30_balancing_status : 33|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_29_balancing_status : 32|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_28_balancing_status : 31|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_27_balancing_status : 30|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_26_balancing_status : 29|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_25_balancing_status : 28|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_24_balancing_status : 27|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_23_balancing_status : 26|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_22_balancing_status : 25|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_21_balancing_status : 24|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_20_balancing_status : 23|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_19_balancing_status : 22|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_18_balancing_status : 21|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_17_balancing_status : 20|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_16_balancing_status : 19|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_15_balancing_status : 18|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_14_balancing_status : 17|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_13_balancing_status : 16|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_12_balancing_status : 15|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_11_balancing_status : 14|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_10_balancing_status : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_9_balancing_status : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_8_balancing_status : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_7_balancing_status : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_6_balancing_status : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_5_balancing_status : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_4_balancing_status : 7|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_3_balancing_status : 6|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_2_balancing_status : 5|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cell_1_balancing_status : 4|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ group_id : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 226 ID_BMS_COULOMB_COUNTS: 8 Vector__XXX
+ SG_ total discharge : 32|32@1+ (0.0001,0) [0|0] "Coulombs" Vector__XXX
+ SG_ total charge : 0|32@1+ (0.0001,0) [0|0] "" Vector__XXX
+
+BO_ 235 ID_DASHBOARD_STATUS: 7 Vector__XXX
+ SG_ launch control led : 48|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ glv led : 46|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ crit charge led : 44|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ cockpit brb led : 42|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ bots led : 40|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ gen purp led : 38|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mechanical brake led : 36|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ inertia status led : 34|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ start status led : 32|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor controller error led : 30|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mode led : 28|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ imd led : 26|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ams led : 24|2@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ dial state : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ led dimmer button : 13|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ torque mode button : 12|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ launch ctrl button  : 11|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ motor controller cycle button : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mode button : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ mark button : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ shutdown h above threshold : 3|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ ssok above threshold : 2|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ buzzer active : 1|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ start button : 0|1@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2550588916 ID_CHARGER_CONTROL: 5 Vector__XXX
+ SG_ control : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max charging current low : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max charging current high : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max charging voltage low : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ max charging voltage high : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 2566869221 ID_CHARGER_DATA: 7 Vector__XXX
+ SG_ input ac voltage low : 48|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ input ac voltage high : 40|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ flags : 32|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ output current low : 24|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ output current high : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ output dc voltage low : 8|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ output dc voltage high : 0|8@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 256 ID_EM_STATUS: 8 Vector__XXX
+ SG_ logging : 10|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ overpower error : 9|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ overvoltage error : 8|1@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ current gain : 4|4@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ voltage gain : 0|4@1+ (1,0) [0|0] "" Vector__XXX
+
+BO_ 1024 ID_EM_MEASUREMENT: 8 Vector__XXX
+ SG_ current : 32|32@1+ (1.52587890625e-05,0) [0|0] "" Vector__XXX
+ SG_ voltage : 0|32@1+ (1.52587890625e-05,0) [0|0] "" Vector__XXX
+
+
+
+
+
+BA_DEF_ BO_  "SystemMessageLongSymbol" STRING ;
+BA_DEF_DEF_  "SystemMessageLongSymbol" "";
+BA_ "SystemMessageLongSymbol" BO_ 214 "ID_BMS_ONBOARD_DETAILED_TEMPERATURES";
+VAL_ 195 ecu state 0 "STARTUP" 1 "TRACTIVE_SYSTEM_NOT_ACTIVE" 2 "TRACTIVE_SYSTEM_ACTIVE" 3 "ENABLING_INVERTER" 4 "WAITING_READY_TO_DRIVE_SOUND" 5 "READY_TO_DRIVE" ;
+VAL_ 235 launch control led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 glv led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 crit charge led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 cockpit brb led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 bots led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 gen purp led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 mechanical brake led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 inertia status led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 start status led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 motor controller error led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 mode led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 imd led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 ams led 0 "OFF" 1 "ON" 2 "YELLOW" 3 "RED" ;
+VAL_ 235 dial state 0 "MODE_ONE" 1 "MODE_TWO" 2 "ACCELERATION_LAUNCH_CONTROL" 3 "SKIDPAD" 4 "AUTOCROSS" 5 "ENDURANCE" ;
+
+
+

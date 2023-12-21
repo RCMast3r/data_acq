@@ -1,0 +1,472 @@
+syntax = "proto3";
+
+message id_mc1_status {
+    bool system_ready = 1;
+    bool error = 2;
+    bool warning = 3;
+    bool quit_dc_on = 4;
+    bool dc_on = 5;
+    bool quit_inverter_on = 6;
+    bool inverter_on = 7;
+    bool derating_on = 8;
+    int32 speed_rpm = 9;
+    int32 torque_current = 10;
+    int32 magnetizing_current = 11;
+}
+
+message id_mc2_status {
+    bool system_ready = 1;
+    bool error = 2;
+    bool warning = 3;
+    bool quit_dc_on = 4;
+    bool dc_on = 5;
+    bool quit_inverter_on = 6;
+    bool inverter_on = 7;
+    bool derating_on = 8;
+    int32 speed_rpm = 9;
+    int32 torque_current = 10;
+    int32 magnetizing_current = 11;
+}
+
+message id_mc3_status {
+    bool system_ready = 1;
+    bool error = 2;
+    bool warning = 3;
+    bool quit_dc_on = 4;
+    bool dc_on = 5;
+    bool quit_inverter_on = 6;
+    bool inverter_on = 7;
+    bool derating_on = 8;
+    int32 speed_rpm = 9;
+    int32 torque_current = 10;
+    int32 magnetizing_current = 11;
+}
+
+message id_mc4_status {
+    bool system_ready = 1;
+    bool error = 2;
+    bool warning = 3;
+    bool quit_dc_on = 4;
+    bool dc_on = 5;
+    bool quit_inverter_on = 6;
+    bool inverter_on = 7;
+    bool derating_on = 8;
+    int32 speed_rpm = 9;
+    int32 torque_current = 10;
+    int32 magnetizing_current = 11;
+}
+
+message id_mc1_temps {
+    int32 motor_temp = 1;
+    int32 inverter_temp = 2;
+    int32 diagnostic_number = 3;
+    int32 igbt_temp = 4;
+}
+
+message id_mc2_temps {
+    int32 motor_temp = 1;
+    int32 inverter_temp = 2;
+    int32 diagnostic_number = 3;
+    int32 igbt_temp = 4;
+}
+
+message id_mc3_temps {
+    int32 motor_temp = 1;
+    int32 inverter_temp = 2;
+    int32 diagnostic_number = 3;
+    int32 igbt_temp = 4;
+}
+
+message id_mc4_temps {
+    int32 motor_temp = 1;
+    int32 inverter_temp = 2;
+    int32 diagnostic_number = 3;
+    int32 igbt_temp = 4;
+}
+
+message id_mc1_energy {
+    int32 dc_bus_voltage = 1;
+    int32 motor_power = 2;
+    int32 feedback_torque = 3;
+}
+
+message id_mc2_energy {
+    int32 dc_bus_voltage = 1;
+    int32 motor_power = 2;
+    int32 feedback_torque = 3;
+}
+
+message id_mc3_energy {
+    int32 dc_bus_voltage = 1;
+    int32 motor_power = 2;
+    int32 feedback_torque = 3;
+}
+
+message id_mc4_energy {
+    int32 dc_bus_voltage = 1;
+    int32 motor_power = 2;
+    int32 feedback_torque = 3;
+}
+
+message id_mc1_setpoints_command {
+    bool inverter_enable = 1;
+    bool hv_enable = 2;
+    bool driver_enable = 3;
+    bool remove_error = 4;
+    int32 speed_setpoint_rpm = 5;
+    int32 positive_torque_limit = 6;
+    int32 negative_torque_limit = 7;
+}
+
+message id_mc2_setpoints_command {
+    bool inverter_enable = 1;
+    bool hv_enable = 2;
+    bool driver_enable = 3;
+    bool remove_error = 4;
+    int32 speed_setpoint_rpm = 5;
+    int32 positive_torque_limit = 6;
+    int32 negative_torque_limit = 7;
+}
+
+message id_mc3_setpoints_command {
+    bool inverter_enable = 1;
+    bool hv_enable = 2;
+    bool driver_enable = 3;
+    bool remove_error = 4;
+    int32 speed_setpoint_rpm = 5;
+    int32 positive_torque_limit = 6;
+    int32 negative_torque_limit = 7;
+}
+
+message id_mc4_setpoints_command {
+    bool inverter_enable = 1;
+    bool hv_enable = 2;
+    bool driver_enable = 3;
+    bool remove_error = 4;
+    int32 speed_setpoint_rpm = 5;
+    int32 positive_torque_limit = 6;
+    int32 negative_torque_limit = 7;
+}
+
+message id_mc1_torque_command {
+    int32 torque_command = 1;
+}
+
+message id_mc2_torque_command {
+    int32 torque_command = 1;
+}
+
+message id_mc3_torque_command {
+    int32 torque_command = 1;
+}
+
+message id_mc4_torque_command {
+    int32 torque_command = 1;
+}
+
+message id_mcu_status {
+    bool imd_ok_high = 1;
+    bool shutdown_b_above_threshold = 2;
+    bool bms_ok_high = 3;
+    bool shutdown_c_above_threshold = 4;
+    bool bspd_ok_high = 5;
+    bool shutdown_d_above_threshold = 6;
+    bool shoftware_ok_high = 7;
+    bool shutdown_e_above_threshold = 8;
+    bool mechanical_brake_active = 9;
+    bool no_accel_implausability = 10;
+    bool no_brake_implausability = 11;
+    bool brake_pedal_active = 12;
+    bool bspd_current_high = 13;
+    bool bspd_brake_high = 14;
+    bool no_accel_or_brake_implausability = 15;
+    string ecu_state = 16;
+    bool inverter_error = 17;
+    bool energy_meter_present = 18;
+    bool activate_buzzer = 19;
+    bool software_ok = 20;
+    bool launch_control_active = 21;
+    int32 pack_charge_critical = 22;
+    int32 max_torque = 23;
+    int32 torque_mode = 24;
+    int32 distance_traveled_m = 25;
+}
+
+message id_mcu_pedal_readings {
+    int32 accel_pedal_1 = 1;
+    int32 accel_pedal_2 = 2;
+    int32 brake_pedal_1 = 3;
+    int32 brake_pedal_2 = 4;
+}
+
+message id_mcu_load_cells {
+    int32 group_id = 1;
+    bool cell_1_balancing_status = 2;
+    bool cell_2_balancing_status = 3;
+    bool cell_3_balancing_status = 4;
+    bool cell_4_balancing_status = 5;
+    bool cell_5_balancing_status = 6;
+    bool cell_6_balancing_status = 7;
+    bool cell_7_balancing_status = 8;
+    bool cell_8_balancing_status = 9;
+    bool cell_9_balancing_status = 10;
+    bool cell_10_balancing_status = 11;
+    bool cell_11_balancing_status = 12;
+    bool cell_12_balancing_status = 13;
+    bool cell_13_balancing_status = 14;
+    bool cell_14_balancing_status = 15;
+    bool cell_15_balancing_status = 16;
+    bool cell_16_balancing_status = 17;
+    bool cell_17_balancing_status = 18;
+    bool cell_18_balancing_status = 19;
+    bool cell_19_balancing_status = 20;
+    bool cell_20_balancing_status = 21;
+    bool cell_21_balancing_status = 22;
+    bool cell_22_balancing_status = 23;
+    bool cell_23_balancing_status = 24;
+    bool cell_24_balancing_status = 25;
+    bool cell_25_balancing_status = 26;
+    bool cell_26_balancing_status = 27;
+    bool cell_27_balancing_status = 28;
+    bool cell_28_balancing_status = 29;
+    bool cell_29_balancing_status = 30;
+    bool cell_30_balancing_status = 31;
+    bool cell_31_balancing_status = 32;
+    bool cell_32_balancing_status = 33;
+    bool cell_33_balancing_status = 34;
+    bool cell_34_balancing_status = 35;
+    bool cell_35_balancing_status = 36;
+    bool cell_36_balancing_status = 37;
+    bool cell_37_balancing_status = 38;
+    bool cell_38_balancing_status = 39;
+    bool cell_39_balancing_status = 40;
+    bool cell_40_balancing_status = 41;
+    bool cell_41_balancing_status = 42;
+    bool cell_42_balancing_status = 43;
+    bool cell_43_balancing_status = 44;
+    bool cell_44_balancing_status = 45;
+    bool cell_45_balancing_status = 46;
+    bool cell_46_balancing_status = 47;
+    bool cell_47_balancing_status = 48;
+    bool cell_48_balancing_status = 49;
+    bool cell_49_balancing_status = 50;
+    bool cell_50_balancing_status = 51;
+    bool cell_51_balancing_status = 52;
+    bool cell_52_balancing_status = 53;
+    bool cell_53_balancing_status = 54;
+    bool cell_54_balancing_status = 55;
+    bool cell_55_balancing_status = 56;
+    bool cell_56_balancing_status = 57;
+    bool cell_57_balancing_status = 58;
+    bool cell_58_balancing_status = 59;
+    bool cell_59_balancing_status = 60;
+    bool cell_60_balancing_status = 61;
+}
+
+message id_mcu_front_pots {
+    int32 pot_1 = 1;
+    int32 pot_2 = 2;
+    int32 pot_3 = 3;
+}
+
+message id_mcu_rear_pots {
+    int32 pot_4 = 1;
+    int32 pot_5 = 2;
+    int32 pot_6 = 3;
+}
+
+message id_mcu_analog_readings {
+    int32 steering_1 = 1;
+    int32 steering_2 = 2;
+    int32 hall_effect_current = 3;
+    int32 glv_battery_voltage = 4;
+}
+
+message id_bms_onboard_temperatures {
+    int32 average_temp = 1;
+    int32 low_temp = 2;
+    int32 high_temp = 3;
+}
+
+message id_bms_onboard_detailed_temperatures {
+    int32 ic_id = 1;
+    int32 temp_0 = 2;
+    int32 temp_1 = 3;
+}
+
+message id_bms_voltages {
+    int32 average_voltage = 1;
+    int32 low_voltage = 2;
+    int32 high_voltage = 3;
+    int32 total_voltage = 4;
+}
+
+message id_bms_detailed_voltages {
+    int32 ic_id = 1;
+    int32 group_id = 2;
+    int32 voltage_0 = 3;
+    int32 voltage_1 = 4;
+    int32 voltage_2 = 5;
+}
+
+message id_bms_temperatures {
+    int32 average_temp = 1;
+    int32 low_temp = 2;
+    int32 high_temp = 3;
+}
+
+message id_bms_detailed_temperatures {
+    int32 ic_id = 1;
+    int32 group_id = 2;
+    int32 thermistor_id_0 = 3;
+    int32 thermistor_id_1 = 4;
+    int32 thermistor_id_2 = 5;
+}
+
+message id_bms_status {
+    int32 state = 1;
+    bool overvoltage_error = 2;
+    bool undervoltage_error = 3;
+    bool total_voltage_high_error = 4;
+    bool discharge_overcurrent_error = 5;
+    bool charge_overcurrent_error = 6;
+    bool discharge_overtemp_error = 7;
+    bool charge_overtemp_error = 8;
+    bool undertemp_error = 9;
+    bool overtemp_error = 10;
+    int32 current = 11;
+    bool shutdown_g_above_threshold_error = 12;
+    bool shutdown_h_above_threshold_error = 13;
+}
+
+message id_ccu_status {
+    bool charger_enabled = 1;
+}
+
+message id_bms_balancing_status {
+    int32 group_id = 1;
+    bool cell_1_balancing_status = 2;
+    bool cell_2_balancing_status = 3;
+    bool cell_3_balancing_status = 4;
+    bool cell_4_balancing_status = 5;
+    bool cell_5_balancing_status = 6;
+    bool cell_6_balancing_status = 7;
+    bool cell_7_balancing_status = 8;
+    bool cell_8_balancing_status = 9;
+    bool cell_9_balancing_status = 10;
+    bool cell_10_balancing_status = 11;
+    bool cell_11_balancing_status = 12;
+    bool cell_12_balancing_status = 13;
+    bool cell_13_balancing_status = 14;
+    bool cell_14_balancing_status = 15;
+    bool cell_15_balancing_status = 16;
+    bool cell_16_balancing_status = 17;
+    bool cell_17_balancing_status = 18;
+    bool cell_18_balancing_status = 19;
+    bool cell_19_balancing_status = 20;
+    bool cell_20_balancing_status = 21;
+    bool cell_21_balancing_status = 22;
+    bool cell_22_balancing_status = 23;
+    bool cell_23_balancing_status = 24;
+    bool cell_24_balancing_status = 25;
+    bool cell_25_balancing_status = 26;
+    bool cell_26_balancing_status = 27;
+    bool cell_27_balancing_status = 28;
+    bool cell_28_balancing_status = 29;
+    bool cell_29_balancing_status = 30;
+    bool cell_30_balancing_status = 31;
+    bool cell_31_balancing_status = 32;
+    bool cell_32_balancing_status = 33;
+    bool cell_33_balancing_status = 34;
+    bool cell_34_balancing_status = 35;
+    bool cell_35_balancing_status = 36;
+    bool cell_36_balancing_status = 37;
+    bool cell_37_balancing_status = 38;
+    bool cell_38_balancing_status = 39;
+    bool cell_39_balancing_status = 40;
+    bool cell_40_balancing_status = 41;
+    bool cell_41_balancing_status = 42;
+    bool cell_42_balancing_status = 43;
+    bool cell_43_balancing_status = 44;
+    bool cell_44_balancing_status = 45;
+    bool cell_45_balancing_status = 46;
+    bool cell_46_balancing_status = 47;
+    bool cell_47_balancing_status = 48;
+    bool cell_48_balancing_status = 49;
+    bool cell_49_balancing_status = 50;
+    bool cell_50_balancing_status = 51;
+    bool cell_51_balancing_status = 52;
+    bool cell_52_balancing_status = 53;
+    bool cell_53_balancing_status = 54;
+    bool cell_54_balancing_status = 55;
+    bool cell_55_balancing_status = 56;
+    bool cell_56_balancing_status = 57;
+    bool cell_57_balancing_status = 58;
+    bool cell_58_balancing_status = 59;
+    bool cell_59_balancing_status = 60;
+    bool cell_60_balancing_status = 61;
+}
+
+message id_bms_coulomb_counts {
+    int32 total_charge = 1;
+    int32 total_discharge = 2;
+}
+
+message id_dashboard_status {
+    bool start_button = 1;
+    bool buzzer_active = 2;
+    bool ssok_above_threshold = 3;
+    bool shutdown_h_above_threshold = 4;
+    bool mark_button = 5;
+    bool mode_button = 6;
+    bool motor_controller_cycle_button = 7;
+    bool launch_ctrl_button_ = 8;
+    bool torque_mode_button = 9;
+    bool led_dimmer_button = 10;
+    string dial_state = 11;
+    string ams_led = 12;
+    string imd_led = 13;
+    string mode_led = 14;
+    string motor_controller_error_led = 15;
+    string start_status_led = 16;
+    string inertia_status_led = 17;
+    string mechanical_brake_led = 18;
+    string gen_purp_led = 19;
+    string bots_led = 20;
+    string cockpit_brb_led = 21;
+    string crit_charge_led = 22;
+    string glv_led = 23;
+    string launch_control_led = 24;
+}
+
+message id_charger_control {
+    int32 max_charging_voltage_high = 1;
+    int32 max_charging_voltage_low = 2;
+    int32 max_charging_current_high = 3;
+    int32 max_charging_current_low = 4;
+    int32 control = 5;
+}
+
+message id_charger_data {
+    int32 output_dc_voltage_high = 1;
+    int32 output_dc_voltage_low = 2;
+    int32 output_current_high = 3;
+    int32 output_current_low = 4;
+    int32 flags = 5;
+    int32 input_ac_voltage_high = 6;
+    int32 input_ac_voltage_low = 7;
+}
+
+message id_em_status {
+    int32 voltage_gain = 1;
+    int32 current_gain = 2;
+    bool overvoltage_error = 3;
+    bool overpower_error = 4;
+    bool logging = 5;
+}
+
+message id_em_measurement {
+    int32 voltage = 1;
+    int32 current = 2;
+}
+

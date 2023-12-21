@@ -25,8 +25,18 @@ jobs:
             ref: refs/heads/master
         - run: nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command ht_dbc_proto_creator.py
         
-        - name: upload DBC file artifact
+        - name: upload DBC file artifact for use in another job
           uses: actions/upload-artifact@v2
           with:
             name: dbc-artifact
-            path: hytech.dbc
+            path: dbcs/hytech.dbc
+        
+        - name: Commit DBC file to repo
+          run: |
+            git config --global user.email "actions@github.com"
+            git config --global user.name "GitHub Actions"
+            
+            git add dbcs/hytech.dbc
+            git add protos/hytech.proto
+            git commit -m "Add generated DBC and proto files"
+            git push
