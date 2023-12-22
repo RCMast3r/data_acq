@@ -152,10 +152,10 @@ def get_bms_status_signals():
         )
     )
     signals.append(
-        can.signal.Signal(name="shutdown g_above_threshold_error", start=40, length=1)
+        can.signal.Signal(name="shutdown_g_above_threshold_error", start=40, length=1)
     )
     signals.append(
-        can.signal.Signal(name="shutdown h_above_threshold_error", start=41, length=1)
+        can.signal.Signal(name="shutdown_h_above_threshold_error", start=41, length=1)
     )
     return signals, length
 
