@@ -517,16 +517,16 @@ def get_mcu_load_cell_signals():
     signals = []
     length = 8
     signals.append(
-        can.signal.Signal(name="front left_load_cell_lbs", start=0, length=16)
+        can.signal.Signal(name="front_left_load_cell_lbs", start=0, length=16)
     )
     signals.append(
-        can.signal.Signal(name="front right_load_cell_lbs", start=16, length=16)
+        can.signal.Signal(name="front_right_load_cell_lbs", start=16, length=16)
     )
     signals.append(
-        can.signal.Signal(name="rear left_load_cell_lbs", start=32, length=16)
+        can.signal.Signal(name="rear_left_load_cell_lbs", start=32, length=16)
     )
     signals.append(
-        can.signal.Signal(name="rear right_load_cell_lbs", start=48, length=16)
+        can.signal.Signal(name="rear_right_load_cell_lbs", start=48, length=16)
     )
     return signals, length
 
@@ -652,10 +652,10 @@ def get_sab_front_readings_signals():
     length = 4
     conv_1000 = conversion.LinearConversion(scale=(1 / 1000), offset=0, is_float=False)
     signals.append(
-        can.signal.Signal(name="front left_linear_suspension_mm", start=0, length=16, conversion=conv_1000)
+        can.signal.Signal(name="front_left_linear_suspension_mm", start=0, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="front right_linear_suspension_mm", start=16, length=16, conversion=conv_1000)
+        can.signal.Signal(name="front_right_linear_suspension_mm", start=16, length=16, conversion=conv_1000)
     )
     
     return signals, length
@@ -665,7 +665,7 @@ def get_sab_rear_readings_signals():
     length = 8
     conv_1000 = conversion.LinearConversion(scale=(1 / 1000), offset=0, is_float=False)
     signals.append(
-        can.signal.Signal(name="cooling loop_fluid_temp_C", start=0, length=16, conversion=conv_1000)
+        can.signal.Signal(name="cooling_loop_fluid_temp_C", start=0, length=16, conversion=conv_1000)
     )
     signals.append(
         can.signal.Signal(name="ambient_air_tem", start=16, length=16, conversion=conv_1000)
@@ -674,9 +674,9 @@ def get_sab_rear_readings_signals():
         can.signal.Signal(name="ambient_air_tem", start=32, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="back left_linear_suspension_mm", start=48, length=16, conversion=conv_1000)
+        can.signal.Signal(name="back_left_linear_suspension_mm", start=48, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="back right_linear_suspension_mm", start=64, length=16, conversion=conv_1000)
+        can.signal.Signal(name="back_right_linear_suspension_mm", start=64, length=16, conversion=conv_1000)
     )
     return signals, length
