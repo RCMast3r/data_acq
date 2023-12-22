@@ -76,7 +76,7 @@ def get_bms_detailed_temp_signals():
     while id < 3:
         signals.append(
             can.signal.Signal(
-                name="thermistor id_" + str(id),
+                name="thermistor_id_" + str(id),
                 start=8 + (16 * id),
                 length=16,
                 conversion=temp_scale_conv,
@@ -131,18 +131,18 @@ def get_bms_status_signals():
     signals.append(can.signal.Signal(name="overvoltage_error", start=8, length=1))
     signals.append(can.signal.Signal(name="undervoltage_error", start=9, length=1))
     signals.append(
-        can.signal.Signal(name="total voltage high_error", start=10, length=1)
+        can.signal.Signal(name="total voltage_high_error", start=10, length=1)
     )
     signals.append(
-        can.signal.Signal(name="discharge overcurrent_error", start=11, length=1)
+        can.signal.Signal(name="discharge_overcurrent_error", start=11, length=1)
     )
     signals.append(
-        can.signal.Signal(name="charge overcurrent_error", start=12, length=1)
+        can.signal.Signal(name="charge_overcurrent_error", start=12, length=1)
     )
     signals.append(
-        can.signal.Signal(name="discharge overtemp_error", start=13, length=1)
+        can.signal.Signal(name="discharge_overtemp_error", start=13, length=1)
     )
-    signals.append(can.signal.Signal(name="charge overtemp_error", start=14, length=1))
+    signals.append(can.signal.Signal(name="charge_overtemp_error", start=14, length=1))
     signals.append(can.signal.Signal(name="undertemp_error", start=15, length=1))
     signals.append(can.signal.Signal(name="overtemp_error", start=16, length=1))
     conv = conversion.LinearConversion(scale=(1 / 100), offset=0, is_float=False)
@@ -152,10 +152,10 @@ def get_bms_status_signals():
         )
     )
     signals.append(
-        can.signal.Signal(name="shutdown g above threshold_error", start=40, length=1)
+        can.signal.Signal(name="shutdown g above_threshold_error", start=40, length=1)
     )
     signals.append(
-        can.signal.Signal(name="shutdown h above threshold_error", start=41, length=1)
+        can.signal.Signal(name="shutdown h above_threshold_error", start=41, length=1)
     )
     return signals, length
 
@@ -191,16 +191,16 @@ def get_charger_configure_signals():
     signals = []
     length = 5
     signals.append(
-        can.signal.Signal(name="max charging voltage_high", start=0, length=8)
+        can.signal.Signal(name="max charging_voltage_high", start=0, length=8)
     )
     signals.append(
-        can.signal.Signal(name="max charging voltage_low", start=8, length=8)
+        can.signal.Signal(name="max charging_voltage_low", start=8, length=8)
     )
     signals.append(
-        can.signal.Signal(name="max charging current_high", start=16, length=8)
+        can.signal.Signal(name="max charging_current_high", start=16, length=8)
     )
     signals.append(
-        can.signal.Signal(name="max charging current_low", start=24, length=8)
+        can.signal.Signal(name="max charging_current_low", start=24, length=8)
     )
     signals.append(can.signal.Signal(name="control", start=32, length=8))
     return signals, length
@@ -208,13 +208,13 @@ def get_charger_configure_signals():
 def get_charger_data_signals():
     signals = []
     length = 7
-    signals.append(can.signal.Signal(name="output dc voltage_high", start=0, length=8))
-    signals.append(can.signal.Signal(name="output dc voltage_low", start=8, length=8))
-    signals.append(can.signal.Signal(name="output current_high", start=16, length=8))
-    signals.append(can.signal.Signal(name="output current_low", start=24, length=8))
+    signals.append(can.signal.Signal(name="output dc_voltage_high", start=0, length=8))
+    signals.append(can.signal.Signal(name="output dc_voltage_low", start=8, length=8))
+    signals.append(can.signal.Signal(name="output_current_high", start=16, length=8))
+    signals.append(can.signal.Signal(name="output_current_low", start=24, length=8))
     signals.append(can.signal.Signal(name="flags", start=32, length=8))
-    signals.append(can.signal.Signal(name="input ac voltage_high", start=40, length=8))
-    signals.append(can.signal.Signal(name="input ac voltage_low", start=48, length=8))
+    signals.append(can.signal.Signal(name="input ac_voltage_high", start=40, length=8))
+    signals.append(can.signal.Signal(name="input ac_voltage_low", start=48, length=8))
     return signals, length
 
 def get_dashboard_status_signals():
@@ -222,20 +222,20 @@ def get_dashboard_status_signals():
     length = 7
     signals.append(can.signal.Signal(name="start_button", start=0, length=1))
     signals.append(can.signal.Signal(name="buzzer_active", start=1, length=1))
-    signals.append(can.signal.Signal(name="ssok above_threshold", start=2, length=1))
+    signals.append(can.signal.Signal(name="ssok_above_threshold", start=2, length=1))
     # why is this a dash signal?
     signals.append(
-        can.signal.Signal(name="shutdown h above_threshold", start=3, length=1)
+        can.signal.Signal(name="shutdown h_above_threshold", start=3, length=1)
     )
 
     signals.append(can.signal.Signal(name="mark_button", start=8, length=1))
     signals.append(can.signal.Signal(name="mode_button", start=9, length=1))
     signals.append(
-        can.signal.Signal(name="motor controller cycle_button", start=10, length=1)
+        can.signal.Signal(name="motor controller_cycle_button", start=10, length=1)
     )
-    signals.append(can.signal.Signal(name="launch ctrl button_", start=11, length=1))
-    signals.append(can.signal.Signal(name="torque mode_button", start=12, length=1))
-    signals.append(can.signal.Signal(name="led dimmer_button", start=13, length=1))
+    signals.append(can.signal.Signal(name="launch ctrl_button_", start=11, length=1))
+    signals.append(can.signal.Signal(name="torque_mode_button", start=12, length=1))
+    signals.append(can.signal.Signal(name="led_dimmer_button", start=13, length=1))
 
     choice_conv = conversion.NamedSignalConversion(
         scale=1,
@@ -276,7 +276,7 @@ def get_dashboard_status_signals():
     )
     signals.append(
         can.signal.Signal(
-            name="motor controller error_led",
+            name="motor controller_error_led",
             start=30,
             length=2,
             conversion=led_choices,
@@ -284,22 +284,22 @@ def get_dashboard_status_signals():
     )
     signals.append(
         can.signal.Signal(
-            name="start status_led", start=32, length=2, conversion=led_choices
+            name="start_status_led", start=32, length=2, conversion=led_choices
         )
     )
     signals.append(
         can.signal.Signal(
-            name="inertia status_led", start=34, length=2, conversion=led_choices
+            name="inertia_status_led", start=34, length=2, conversion=led_choices
         )
     )
     signals.append(
         can.signal.Signal(
-            name="mechanical brake_led", start=36, length=2, conversion=led_choices
+            name="mechanical_brake_led", start=36, length=2, conversion=led_choices
         )
     )
     signals.append(
         can.signal.Signal(
-            name="gen purp_led", start=38, length=2, conversion=led_choices
+            name="gen_purp_led", start=38, length=2, conversion=led_choices
         )
     )
     signals.append(
@@ -307,12 +307,12 @@ def get_dashboard_status_signals():
     )
     signals.append(
         can.signal.Signal(
-            name="cockpit brb_led", start=42, length=2, conversion=led_choices
+            name="cockpit_brb_led", start=42, length=2, conversion=led_choices
         )
     )
     signals.append(
         can.signal.Signal(
-            name="crit charge_led", start=44, length=2, conversion=led_choices
+            name="crit_charge_led", start=44, length=2, conversion=led_choices
         )
     )
     signals.append(
@@ -320,7 +320,7 @@ def get_dashboard_status_signals():
     )
     signals.append(
         can.signal.Signal(
-            name="launch control_led", start=48, length=2, conversion=led_choices
+            name="launch_control_led", start=48, length=2, conversion=led_choices
         )
     )
     return signals, length
@@ -329,7 +329,7 @@ def get_mc_energy_signals():
     signals = []
     length = 8
     signals.append(
-        can.signal.Signal(name="dc bus_voltage", start=0, length=16)
+        can.signal.Signal(name="dc_bus_voltage", start=0, length=16)
     )
     signals.append(
         can.signal.Signal(name="motor_power", start=16, length=32)
@@ -356,13 +356,13 @@ def get_mc_setpoints_commands_signals():
         can.signal.Signal(name="remove_error", start=11, length=1)
     )
     signals.append(
-        can.signal.Signal(name="speed setpoint_rpm", start=16, length=16, is_signed=True)
+        can.signal.Signal(name="speed_setpoint_rpm", start=16, length=16, is_signed=True)
     )
     signals.append(
-        can.signal.Signal(name="positive torque_limit", start=32, length=16, is_signed=True)
+        can.signal.Signal(name="positive_torque_limit", start=32, length=16, is_signed=True)
     )
     signals.append(
-        can.signal.Signal(name="negative torque_limit", start=48, length=16, is_signed=True)
+        can.signal.Signal(name="negative_torque_limit", start=48, length=16, is_signed=True)
     )
     return signals, length
 
@@ -387,13 +387,13 @@ def get_mc_status_signals():
         can.signal.Signal(name="warning", start=10, length=1)
     )
     signals.append(
-        can.signal.Signal(name="quit dc_on", start=11, length=1)
+        can.signal.Signal(name="quit_dc_on", start=11, length=1)
     )
     signals.append(
         can.signal.Signal(name="dc_on", start=12, length=1)
     )
     signals.append(
-        can.signal.Signal(name="quit inverter_on", start=13, length=1)
+        can.signal.Signal(name="quit_inverter_on", start=13, length=1)
     )
     signals.append(
         can.signal.Signal(name="inverter_on", start=14, length=1)
@@ -477,10 +477,10 @@ def get_mcu_analog_signals():
         can.signal.Signal(name="steering_2", start=16, length=16)
     )
     signals.append(
-        can.signal.Signal(name="hall effect_current", start=32, length=16, is_signed=True)
+        can.signal.Signal(name="hall_effect_current", start=32, length=16, is_signed=True)
     )
     signals.append(
-        can.signal.Signal(name="glv battery_voltage", start=48, length=16)
+        can.signal.Signal(name="glv_battery_voltage", start=48, length=16)
     )
     return signals, length
 
@@ -517,16 +517,16 @@ def get_mcu_load_cell_signals():
     signals = []
     length = 8
     signals.append(
-        can.signal.Signal(name="front left load cell_lbs", start=0, length=16)
+        can.signal.Signal(name="front left load_cell_lbs", start=0, length=16)
     )
     signals.append(
-        can.signal.Signal(name="front right load cell_lbs", start=16, length=16)
+        can.signal.Signal(name="front right load_cell_lbs", start=16, length=16)
     )
     signals.append(
-        can.signal.Signal(name="rear left load cell_lbs", start=32, length=16)
+        can.signal.Signal(name="rear left load_cell_lbs", start=32, length=16)
     )
     signals.append(
-        can.signal.Signal(name="rear right load cell_lbs", start=48, length=16)
+        can.signal.Signal(name="rear right load_cell_lbs", start=48, length=16)
     )
     return signals, length
 
@@ -534,16 +534,16 @@ def get_mcu_pedals_signals():
     signals = []
     length = 8
     signals.append(
-        can.signal.Signal(name="accel pedal_1", start=0, length=16)
+        can.signal.Signal(name="accel_pedal_1", start=0, length=16)
     )
     signals.append(
-        can.signal.Signal(name="accel pedal_2", start=16, length=16)
+        can.signal.Signal(name="accel_pedal_2", start=16, length=16)
     )
     signals.append(
-        can.signal.Signal(name="brake pedal_1", start=32, length=16)
+        can.signal.Signal(name="brake_pedal_1", start=32, length=16)
     )
     signals.append(
-        can.signal.Signal(name="brake pedal_2", start=48, length=16)
+        can.signal.Signal(name="brake_pedal_2", start=48, length=16)
     )
     return signals, length
 
@@ -565,51 +565,51 @@ def get_mcu_status_signals():
     )
     
     signals.append(
-        can.signal.Signal(name="imd ok_high", start=0, length=1)
+        can.signal.Signal(name="imd_ok_high", start=0, length=1)
     )
     signals.append(
-        can.signal.Signal(name="shutdown b above_threshold", start=1, length=1)
+        can.signal.Signal(name="shutdown b_above_threshold", start=1, length=1)
     )
     signals.append(
-        can.signal.Signal(name="bms ok_high", start=2, length=1)
+        can.signal.Signal(name="bms_ok_high", start=2, length=1)
     )
     signals.append(
-        can.signal.Signal(name="shutdown c above_threshold", start=3, length=1)
+        can.signal.Signal(name="shutdown c_above_threshold", start=3, length=1)
     )
     signals.append(
-        can.signal.Signal(name="bspd ok_high", start=4, length=1)
+        can.signal.Signal(name="bspd_ok_high", start=4, length=1)
     )
     signals.append(
-        can.signal.Signal(name="shutdown d above_threshold", start=5, length=1)
+        can.signal.Signal(name="shutdown d_above_threshold", start=5, length=1)
     )
     signals.append(
-        can.signal.Signal(name="shoftware ok_high", start=6, length=1)
+        can.signal.Signal(name="shoftware_ok_high", start=6, length=1)
     )
     signals.append(
-        can.signal.Signal(name="shutdown e above_threshold", start=7, length=1)
+        can.signal.Signal(name="shutdown e_above_threshold", start=7, length=1)
     )
     
 
     signals.append(
-        can.signal.Signal(name="mechanical brake_active", start=8, length=1)
+        can.signal.Signal(name="mechanical_brake_active", start=8, length=1)
     )
     signals.append(
-        can.signal.Signal(name="no accel_implausability", start=9, length=1)
+        can.signal.Signal(name="no_accel_implausability", start=9, length=1)
     )
     signals.append(
-        can.signal.Signal(name="no brake_implausability", start=10, length=1)
+        can.signal.Signal(name="no_brake_implausability", start=10, length=1)
     )
     signals.append(
-        can.signal.Signal(name="brake pedal_active", start=11, length=1)
+        can.signal.Signal(name="brake_pedal_active", start=11, length=1)
     )
     signals.append(
-        can.signal.Signal(name="bspd current_high", start=12, length=1)
+        can.signal.Signal(name="bspd_current_high", start=12, length=1)
     )
     signals.append(
-        can.signal.Signal(name="bspd brake_high", start=13, length=1)
+        can.signal.Signal(name="bspd_brake_high", start=13, length=1)
     )
     signals.append(
-        can.signal.Signal(name="no accel or brake_implausability", start=14, length=1)
+        can.signal.Signal(name="no accel or_brake_implausability", start=14, length=1)
     )
 
     signals.append(
@@ -619,7 +619,7 @@ def get_mcu_status_signals():
         can.signal.Signal(name="inverter_error", start=19, length=1)
     )
     signals.append(
-        can.signal.Signal(name="energy meter_present", start=20, length=1)
+        can.signal.Signal(name="energy_meter_present", start=20, length=1)
     )
     signals.append(
         can.signal.Signal(name="activate_buzzer", start=21, length=1)
@@ -628,10 +628,10 @@ def get_mcu_status_signals():
         can.signal.Signal(name="software_ok", start=22, length=1)
     )
     signals.append(
-        can.signal.Signal(name="launch control_active", start=23, length=1)
+        can.signal.Signal(name="launch_control_active", start=23, length=1)
     )
     signals.append(
-        can.signal.Signal(name="pack charge_critical", start=24, length=2)
+        can.signal.Signal(name="pack_charge_critical", start=24, length=2)
     )
     signals.append(
         can.signal.Signal(name="max_torque", start=32, length=8)
@@ -642,7 +642,7 @@ def get_mcu_status_signals():
     )
     conv_100 = conversion.LinearConversion(scale=(1 / 100), offset=0, is_float=False)
     signals.append(
-        can.signal.Signal(name="distance traveled_m", start=48, length=16, conversion=conv_100)
+        can.signal.Signal(name="distance_traveled_m", start=48, length=16, conversion=conv_100)
     )
     return signals, length
 
@@ -652,10 +652,10 @@ def get_sab_front_readings_signals():
     length = 4
     conv_1000 = conversion.LinearConversion(scale=(1 / 1000), offset=0, is_float=False)
     signals.append(
-        can.signal.Signal(name="front left linear suspension_mm", start=0, length=16, conversion=conv_1000)
+        can.signal.Signal(name="front left linear_suspension_mm", start=0, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="front right linear suspension_mm", start=16, length=16, conversion=conv_1000)
+        can.signal.Signal(name="front right linear_suspension_mm", start=16, length=16, conversion=conv_1000)
     )
     
     return signals, length
@@ -665,18 +665,18 @@ def get_sab_rear_readings_signals():
     length = 8
     conv_1000 = conversion.LinearConversion(scale=(1 / 1000), offset=0, is_float=False)
     signals.append(
-        can.signal.Signal(name="cooling loop fluid temp_C", start=0, length=16, conversion=conv_1000)
+        can.signal.Signal(name="cooling loop fluid_temp_C", start=0, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="ambient air_tem", start=16, length=16, conversion=conv_1000)
+        can.signal.Signal(name="ambient_air_tem", start=16, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="ambient air_tem", start=32, length=16, conversion=conv_1000)
+        can.signal.Signal(name="ambient_air_tem", start=32, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="back left linear suspension_mm", start=48, length=16, conversion=conv_1000)
+        can.signal.Signal(name="back left linear_suspension_mm", start=48, length=16, conversion=conv_1000)
     )
     signals.append(
-        can.signal.Signal(name="back right linear suspension_mm", start=64, length=16, conversion=conv_1000)
+        can.signal.Signal(name="back right linear_suspension_mm", start=64, length=16, conversion=conv_1000)
     )
     return signals, length
