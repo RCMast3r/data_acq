@@ -21,7 +21,7 @@ TODO:
 - [x] dbc and proto file generation using CI
 - [ ] binary schema generation from proto file in CI
     - I am thinking for this we can just use protoc in a dev shell similar to how I did the proto and dbc creation with the script
-- [ ] platformio c/c++ library from DBC by making a platformio script (python / platformio)
+- [x] platformio c/c++ library from DBC by making a platformio script (python / platformio)
 
 ```mermaid
 flowchart TD

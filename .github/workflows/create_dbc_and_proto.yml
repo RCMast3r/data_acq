@@ -15,24 +15,27 @@ jobs:
       matrix:
         version: [23.11]
     steps:
-        - uses: cachix/install-nix-action@v23
-        - name: Get branch names
-          id: branch-name
-          uses: tj-actions/branch-names@v7
-        - uses: actions/checkout@v4
-          with:
-            repository: RCMast3r/data_acq
-            ref: refs/heads/master
-        - run: nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command ht_dbc_proto_creator.py
-        
-        - name: Get current date and time
-          id: date
-          run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H_%M_%S')"
-    
-        - name: Release
-          uses: softprops/action-gh-release@v1
-          with:
-            tag_name: ${{ steps.date.outputs.date }} 
-            files: | 
-              hytech.dbc
-              hytech.proto
+      - uses: cachix/install-nix-action@v23
+      - name: Get branch names
+        id: branch-name
+        uses: tj-actions/branch-names@v7
+      - uses: actions/checkout@v4
+        with:
+          repository: RCMast3r/data_acq
+          ref: refs/heads/master
+      - run: |
+          nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command ht_dbc_proto_creator.py 
+          nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command protoc --include_imports --descriptor_set_out=hytech.bin hytech.proto
+
+      - name: Get current date and time
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H_%M_%S')"
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.date.outputs.date }}
+          files: |
+            hytech.dbc
+            hytech.proto
+            hytech.bin
