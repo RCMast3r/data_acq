@@ -57,6 +57,7 @@
           packages = with pkgs; [
             # Development Tools
             py_dbc_proto_gen_pkg
+            protobuf
           ];
           
         };
