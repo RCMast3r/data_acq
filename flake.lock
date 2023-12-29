@@ -76,6 +76,56 @@
         "type": "github"
       }
     },
+    "nix-filter": {
+      "locked": {
+        "lastModified": 1701697642,
+        "narHash": "sha256-L217WytWZHSY8GW9Gx1A64OnNctbuDbfslaTEofXXRw=",
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "rev": "c843418ecfd0344ecb85844b082ff5675e02c443",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "nix-filter",
+        "type": "github"
+      }
+    },
+    "nix-proto": {
+      "inputs": {
+        "nix-filter": "nix-filter",
+        "nix-std": "nix-std",
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1703652955,
+        "narHash": "sha256-9kCfd8qbkRwflWRuuhs8hJM/2b+ojmBTmULvCiCl0Hg=",
+        "owner": "notalltim",
+        "repo": "nix-proto",
+        "rev": "a067a064aee705e75f38163c869a6a77456278fe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "notalltim",
+        "repo": "nix-proto",
+        "type": "github"
+      }
+    },
+    "nix-std": {
+      "locked": {
+        "lastModified": 1701658249,
+        "narHash": "sha256-KIt1TUuBvldhaVRta010MI5FeQlB8WadjqljybjesN0=",
+        "owner": "chessai",
+        "repo": "nix-std",
+        "rev": "715db541ffff4194620e48d210b76f73a74b5b5d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chessai",
+        "repo": "nix-std",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1702921762,
@@ -142,6 +192,22 @@
     },
     "nixpkgs_5": {
       "locked": {
+        "lastModified": 1703336516,
+        "narHash": "sha256-tubahnvhR0RmdCFtMtNEYKc88zKefapmm5+wykVMvCM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "78bcced5a04aa6911a0d93cb25ff6599ca2f97c6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "release-23.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_6": {
+      "locked": {
         "lastModified": 1702921762,
         "narHash": "sha256-O/rP7gulApQAB47u6szEd8Pn8Biw0d84j5iuP2tcxzY=",
         "owner": "NixOS",
@@ -162,7 +228,8 @@
         "foxglove-websocket": "foxglove-websocket",
         "mcap": "mcap",
         "mcap-protobuf": "mcap-protobuf",
-        "nixpkgs": "nixpkgs_5",
+        "nix-proto": "nix-proto",
+        "nixpkgs": "nixpkgs_6",
         "utils": "utils_5"
       }
     },

@@ -2,9 +2,11 @@ usage:
 
 TODO:
 
-- [ ] write the data storage script for saving the received CAN messages locally in the mcap 
+- [ ] write the data storage script for saving the received CAN messages locally in the mcap
+- [ ] get nix-proto working with dbc input from url for creation of python lib
+- [ ] get py_data_acq working in dev shell with nix-proto generated python lib for proto msg packing
+- [ ] make the deserialization task for unpacking received data from CAN.
 - [x] make service script that creates an instance of the mcap writer and the foxglove websocket
-- [ ] the deserialization task for unpacking received data.
 - [x] come up with a good way of associating the dbc file with the protobuf file
 
     - I will simply match the CAN frame id name to the message name, and match each signal name (spaces into underscores) to the field name in the proto. The protobuf message will be packed with the parsed and converted data from cantools.
@@ -19,16 +21,16 @@ TODO:
 
 ## automation goals
 - [x] dbc and proto file generation using CI
-- [ ] binary schema generation from proto file in CI
+- [x] binary schema generation from proto file in CI
     - I am thinking for this we can just use protoc in a dev shell similar to how I did the proto and dbc creation with the script
 - [x] platformio c/c++ library from DBC by making a platformio script (python / platformio)
 
 ```mermaid
 flowchart TD
 
-CI[remote CI generation and release of dbc / proto] --> pio[TODO local built platformio util CAN lib]
+CI[remote CI generation and release of dbc / proto] --> pio[local built platformio util CAN lib]
 CI --> np[local built nix proto gen lib]
-CI --> bin[TODO remote schema binary generation using ci devshell]
+CI --> bin[remote schema binary generation using ci devshell]
 bin --> fg[foxglove webserver service]
 np --> mc[mcap writer / CAN msg to protobuf service]
 CI --> cantools[cantools dbc load]
