@@ -1,5 +1,12 @@
-{ lib, python311Packages, mcap_support_pkg, py_mcap_pkg
-, py_foxglove_websocket_pkg, asyncudp_pkg, hytech_np_proto_py, proto_gen_pkg}:
+{ lib
+, python311Packages
+, mcap_support_pkg
+, py_mcap_pkg
+, py_foxglove_websocket_pkg
+, asyncudp_pkg
+, hytech_np_proto_py
+, proto_gen_pkg
+}:
 
 python311Packages.buildPythonApplication {
   pname = "py_data_acq";
@@ -9,6 +16,8 @@ python311Packages.buildPythonApplication {
     python311Packages.cantools
     python311Packages.systemd
     python311Packages.websockets
+    python311Packages.pprintpp
+    python311Packages.can
     asyncudp_pkg
     python311Packages.lz4
     python311Packages.zstandard

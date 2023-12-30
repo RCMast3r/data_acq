@@ -70,8 +70,8 @@
         shellHook = let icon = "f121";
         in ''
           path=${pkgs.proto_gen_pkg}
-          bin_path=path+"/bin"
-          dbc_path=path+"/dbc"
+          bin_path=$path"/bin"
+          dbc_path=$path"/dbc"
           
           export BIN_PATH=$bin_path
           export DBC_PATH=$dbc_path
@@ -96,6 +96,7 @@
         name = "nix-devshell";
         packages = with pkgs; [
           # Development Tools
+
           py_dbc_proto_gen_pkg
           protobuf
         ];
