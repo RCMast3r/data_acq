@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import asyncio
 
 from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
@@ -6,7 +8,7 @@ import logging
 from systemd.journal import JournalHandler
 import concurrent.futures
 import threading
-
+import os
 import asyncudp
 
 # TODO we may want to have a config file handling to set params such as:
@@ -39,8 +41,10 @@ async def main():
     # a sensor that inputs over UART or ethernet
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
-    
-    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", "./py_data_acq/foxglove_live/ht_data.bin")
+    path_to_bin = os.environ.get('BIN_PATH')
+    full_path = os.path.join(path_to_bin, "hytech.bin")
+    print(full_path)
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path)
 
     mcap_writer = HTPBMcapWriter(".")
     

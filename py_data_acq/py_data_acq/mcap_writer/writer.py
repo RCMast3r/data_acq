@@ -6,7 +6,7 @@ import google.protobuf.message_factory
 from collections import namedtuple
 
 from datetime import datetime
-
+from hytech_np_proto_py import hytech_pb2
 from typing import (
     Any,
     Optional,
@@ -15,15 +15,15 @@ from typing import (
 
 # TODO make these an environmental thing for nix
 # from py_data_acq.mcap_writer import all_msgs_pb2
-# from py_data_acq.mcap_writer import ht_data_pb2
+# from py_data_acq.mcap_writer import hytech_pb2
 
 # TODO move this into a schema / descriptor associator util module or class
 def list_of_message_names():
     message_names = []
     # Iterate through all attributes in the generated module
-    for attr_name in dir(ht_data_pb2):
+    for attr_name in dir(hytech_pb2):
         # Check if the attribute is a class and if it's a message type
-        attr = getattr(ht_data_pb2, attr_name)
+        attr = getattr(hytech_pb2, attr_name)
         if isinstance(attr, type) and hasattr(attr, 'DESCRIPTOR'):
             message_names.append(attr.DESCRIPTOR.name)
     return message_names
@@ -39,7 +39,7 @@ class HTPBMcapWriter(Writer):
         super().__init__(self.writing_file)
         # creating message classes via the classes available in ht_data
         for name in messages: 
-            self.message_classes[name] = google.protobuf.message_factory.GetMessageClass(ht_data_pb2.DESCRIPTOR.message_types_by_name.get(name))
+            self.message_classes[name] = google.protobuf.message_factory.GetMessageClass(hytech_pb2.DESCRIPTOR.message_types_by_name.get(name))
     def __await__(self):
         async def closure():
             print("await")
@@ -68,7 +68,7 @@ class HTPBMcapWriter(Writer):
         if data is not None:
             # des_msg = all_msgs_pb2.hytech_msg()
             # des_msg.ParseFromString(data)
-            des_msg = ht_data_pb2.ht_data()
+            des_msg = hytech_pb2.ht_data()
             # if des_msg in self.message_classes:
             # msg = self.message_classes[des_msg.msg_id]()
             

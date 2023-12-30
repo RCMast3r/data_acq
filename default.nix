@@ -1,5 +1,5 @@
 { lib, python311Packages, mcap_support_pkg, py_mcap_pkg
-, py_foxglove_websocket_pkg, asyncudp_pkg }:
+, py_foxglove_websocket_pkg, asyncudp_pkg, hytech_np_proto_py, proto_gen_pkg}:
 
 python311Packages.buildPythonApplication {
   pname = "py_data_acq";
@@ -16,6 +16,8 @@ python311Packages.buildPythonApplication {
     python311Packages.protobuf
     mcap_support_pkg
     py_mcap_pkg
+    hytech_np_proto_py
+    proto_gen_pkg
   ];
 
   src = ./py_data_acq;

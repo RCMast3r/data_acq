@@ -1,5 +1,6 @@
+# 🍳 cookin 👩‍🍳
 {
-  description = "python data aquisition package";
+  description = "python data aquisition flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
@@ -28,7 +29,7 @@
           nix-proto.mkProtoDerivation {
             name = "hytech_np";
             buildInputs = [ proto_gen_pkg ];
-            src = proto_gen_pkg.out;
+            src = proto_gen_pkg.out + "/proto";
             version = "1.0.0";
           };
       };
@@ -40,7 +41,6 @@
         mcap.overlays.default
         asyncudp.overlays.default
         foxglove-websocket.overlays.default
-
       ];
 
       pkgs = import nixpkgs {
@@ -56,7 +56,7 @@
         py_data_acq_pkg = pkgs.py_data_acq_pkg;
         py_dbc_proto_gen_pkg = pkgs.py_dbc_proto_gen_pkg;
         proto_gen_pkg = pkgs.proto_gen_pkg;
-        test_proto = pkgs.test_proto;
+        hytech_np = pkgs.hytech_np;
         hytech_np_proto_py = pkgs.hytech_np_proto_py;
         default = py_data_acq_pkg;
       };
@@ -64,11 +64,14 @@
       devShells.x86_64-linux.default = pkgs.mkShell rec {
         # Update the name to something that suites your project.
         name = "nix-devshell";
-        packages = with pkgs; [ py_data_acq_pkg py_dbc_proto_gen_pkg cmake ];
+        packages = with pkgs; [ py_data_acq_pkg py_dbc_proto_gen_pkg proto_gen_pkg cmake ];
         # Setting up the environment variables you need during
         # development.
         shellHook = let icon = "f121";
         in ''
+          path=${pkgs.proto_gen_pkg}
+          path+="/bin"
+          export BIN_PATH=$path
           export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
         '';
       };
