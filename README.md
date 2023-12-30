@@ -1,11 +1,13 @@
 usage: 
 
 TODO:
-
-- [ ] write the data storage script for saving the received CAN messages locally in the mcap
-- [ ] get nix-proto working with dbc input from url for creation of python lib
-- [ ] get py_data_acq working in dev shell with nix-proto generated python lib for proto msg packing
-- [ ] make the deserialization task for unpacking received data from CAN.
+- [ ] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
+- [ ] make the deserialization task for unpacking received data from CAN in the data acq service script.
+- [ ] make ability to start / stop / control in general the data recording via grpc calls for the mcap writer task
+- [ ] make user script / interface for the grpc calls for ease of interaction with the service
+- [ ] actually get current data from car into protobuf encoded CAN messages in an integration test
+- [x] get nix-proto working with dbc input from url for creation of python lib
+- [x] get py_data_acq working in dev shell with nix-proto generated python lib for proto msg packing
 - [x] make service script that creates an instance of the mcap writer and the foxglove websocket
 - [x] come up with a good way of associating the dbc file with the protobuf file
 
@@ -16,8 +18,6 @@ TODO:
        
         - I know that I will be using cantools to create the DBC file so I might as well extend that creation script to create the proto at the same time. Additionally, I know that I will be using tim's auto-magic nix-proto for creation of the python auto-gen code.
 
-- [ ] actually get current data from car into protobuf encoded CAN messages and send them from current TCU / SAB
-- [ ] get the raspberry pi listening to CAN messages
 
 ## automation goals
 - [x] dbc and proto file generation using CI

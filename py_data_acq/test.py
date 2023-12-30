@@ -30,7 +30,7 @@ async def write_data_to_mcap(queue, mcap_writer):
         while True:
             await mcw.write_data(queue)
 
-async def consume_data(queue, foxglove_server):
+async def fxglv_websocket_consume_data(queue, foxglove_server):
     async with foxglove_server as fz:
         while True:
             await fz.send_msgs_from_queue(queue)
@@ -50,15 +50,16 @@ async def main():
     
     receiver_task = asyncio.create_task(continuous_udp_receiver(queue, queue2))
                
-    fx_task = asyncio.create_task(consume_data(queue, fx_s))
+    fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     
     # in the mcap task I actually have to deserialize the any protobuf msg into the message ID and
     # the encoded message for the message id. I will need to handle the same association of message id
     # and schema in the foxglove websocket server. 
-    mcap_task = asyncio.create_task(write_data_to_mcap(queue, mcap_writer)) 
+    # mcap_task = asyncio.create_task(write_data_to_mcap(queue, mcap_writer)) 
     
     # TODO the data consuming MCAP file task for writing MCAP files to specific directory
-    await asyncio.gather(receiver_task, fx_task, mcap_task)
+    await asyncio.gather(receiver_task, fx_task)
+    # await asyncio.gather(receiver_task, fx_task, mcap_task)
     # await asyncio.gather(receiver_task, mcap_task)
 if __name__ == "__main__":
     asyncio.run(main())
