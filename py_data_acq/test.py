@@ -11,6 +11,7 @@ import threading
 import os
 import asyncudp
 import can
+from can.interfaces.udp_multicast import UdpMulticastBus
 import cantools
 
 # TODO we may want to have a config file handling to set params such as:
@@ -22,7 +23,7 @@ import cantools
 
 async def continuous_can_receiver(queue, q2):
     with can.Bus(
-        interface="virtual", channel="can0", receive_own_messages=True
+        channel=UdpMulticastBus.DEFAULT_GROUP_IPv6, interface='udp_multicast'
     ) as bus:
         reader = can.AsyncBufferedReader()
         listeners: List[MessageRecipient] = [
