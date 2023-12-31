@@ -72,22 +72,11 @@
           path=${pkgs.proto_gen_pkg}
           bin_path=$path"/bin"
           dbc_path=$path"/dbc"
-          
           export BIN_PATH=$bin_path
           export DBC_PATH=$dbc_path
-          # PYTHON_INTERPRETER_PATH=$(which python)
 
-          # # Path to the settings.json file in your VSCode workspace
-          # SETTINGS_JSON_FILE=".vscode/settings.json"
-
-          # # Check if the settings.json file exists, if not, create it
-          # if [ ! -f "$SETTINGS_JSON_FILE" ]; then
-          #     mkdir -p "$(dirname "$SETTINGS_JSON_FILE")"
-          #     echo "{}" > "$SETTINGS_JSON_FILE"
-          # fi
+          echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
           
-          # jq --arg pythonPath "$PYTHON_INTERPRETER_PATH" '. + { "python.pythonPath": $pythonPath }' "$SETTINGS_JSON_FILE" > "$SETTINGS_JSON_FILE.tmp" && mv "$SETTINGS_JSON_FILE.tmp" "$SETTINGS_JSON_FILE"
-
           export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
         '';
       };

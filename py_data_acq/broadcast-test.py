@@ -17,6 +17,7 @@ def main():
     full_path = os.path.join(path_to_dbc, "hytech.dbc") 
     # Serialize the message to bytes
     db = cantools.database.load_file(full_path)
+    
     msg = db.get_message_by_name("ID_MC1_TORQUE_COMMAND")
     print(msg.signals)
     data = msg.encode({'torque_command': 100})

@@ -3,3 +3,4 @@ __pycache__/
 *.mcap
 result
 result/
+.env
