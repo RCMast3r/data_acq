@@ -44,7 +44,7 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
             msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
             
             msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
-            print(msg)
+
             data = QueueData(msg.DESCRIPTOR.name, msg)
             await queue.put(data)
             # await q2.put(data)
@@ -70,24 +70,21 @@ async def main():
     full_path = os.path.join(path_to_bin, "hytech.bin")
     full_path_to_dbc = os.path.join(path_to_dbc, "hytech.dbc")
     db = cantools.db.load_file(full_path_to_dbc)
-    list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
-    
-    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
 
+
+    list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
+    
     mcap_writer = HTPBMcapWriter(".")
     
-    receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2))
-               
+    receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     
     # in the mcap task I actually have to deserialize the any protobuf msg into the message ID and
     # the encoded message for the message id. I will need to handle the same association of message id
     # and schema in the foxglove websocket server. 
-    # mcap_task = asyncio.create_task(write_data_to_mcap(queue, mcap_writer)) 
-    
     # TODO the data consuming MCAP file task for writing MCAP files to specific directory
     await asyncio.gather(receiver_task, fx_task)
-    # await asyncio.gather(receiver_task, fx_task, mcap_task)
-    # await asyncio.gather(receiver_task, mcap_task)
+
 if __name__ == "__main__":
     asyncio.run(main())

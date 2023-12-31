@@ -17,21 +17,30 @@ def main():
     full_path = os.path.join(path_to_dbc, "hytech.dbc") 
     # Serialize the message to bytes
     db = cantools.database.load_file(full_path)
-    
+ 
+ 
+ 
+ 
+ 
     msg = db.get_message_by_name("ID_MC1_TORQUE_COMMAND")
-    print(msg.signals)
+    rpm = db.get_message_by_name("ID_MC4_SETPOINTS_COMMAND")
     data = msg.encode({'torque_command': 100})
-
+    
     msg = can.Message(arbitration_id=msg.frame_id, is_extended_id=False, data=data)
-    print(msg)
+    
+    rpm_set = 100
     while(1):
-
         try:
+            rpm_set= rpm_set+1
             bus1.send(msg)
+            rpm_data = rpm.encode({'negative_torque_limit': 1, 'positive_torque_limit': 1, 'speed_setpoint_rpm': rpm_set, 'remove_error': 1, 'driver_enable': 1, 'hv_enable': 1, 'inverter_enable': 1})
+            rpm_msg = can.Message(arbitration_id=rpm.frame_id, is_extended_id=False, data=rpm_data)
+            bus1.send(rpm_msg)
+
             print("Message sent on {}".format(bus1.channel_info))
         except can.CanError:
             print("Message NOT sent!  Please verify can0 is working first")
-        time.sleep(0.2)
+        time.sleep(0.05)
 
 if __name__ == "__main__":
     main()

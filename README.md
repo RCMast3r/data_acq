@@ -2,7 +2,7 @@ usage:
 
 TODO:
 - [x] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
-- [ ] make the deserialization task for unpacking received data from CAN in the data acq service script.
+- [x] make the deserialization task for unpacking received data from CAN in the data acq service script.
 - [ ] make ability to start / stop / control in general the data recording via grpc calls for the mcap writer task
 - [ ] make user script / interface for the grpc calls for ease of interaction with the service
 - [ ] actually get current data from car into protobuf encoded CAN messages in an integration test
@@ -10,13 +10,6 @@ TODO:
 - [x] get py_data_acq working in dev shell with nix-proto generated python lib for proto msg packing
 - [x] make service script that creates an instance of the mcap writer and the foxglove websocket
 - [x] come up with a good way of associating the dbc file with the protobuf file
-
-    - I will simply match the CAN frame id name to the message name, and match each signal name (spaces into underscores) to the field name in the proto. The protobuf message will be packed with the parsed and converted data from cantools.
-    
-    - notes:
-        - I want each CAN ID to have its own protobuf message. perhaps in the protobuf message I will also include the CAN ID as a fixed part of the protobuf message in the creation of the proto file.
-       
-        - I know that I will be using cantools to create the DBC file so I might as well extend that creation script to create the proto at the same time. Additionally, I know that I will be using tim's auto-magic nix-proto for creation of the python auto-gen code.
 
 
 ## automation goals
@@ -89,3 +82,9 @@ flowchart TD
 - filter journalctl based on service: `journalctl -u nginx.service`
 
 - it looks like the PCAN sym files along with the editor is a good format and tool for creation of the CAN network
+
+- I will simply match the CAN frame id name to the message name, and match each signal name (spaces into underscores) to the field name in the proto. The protobuf message will be packed with the parsed and converted data from cantools.
+
+    - I want each CAN ID to have its own protobuf message. perhaps in the protobuf message I will also include the CAN ID as a fixed part of the protobuf message in the creation of the proto file.
+    
+    - I know that I will be using cantools to create the DBC file so I might as well extend that creation script to create the proto at the same time. Additionally, I know that I will be using tim's auto-magic nix-proto for creation of the python auto-gen code.
