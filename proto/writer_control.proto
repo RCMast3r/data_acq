@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+message WriterControl {
+  bool start = 1;
+  bool stop = 2;
+  bool pause = 3;
+}
+
+message Respose {
+  bool ack = 1;
+}
+
+service WriterControlService {
+  rpc WriterController(WriterControl) returns (Respose);
+  // Add more RPC methods if needed
+}

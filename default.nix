@@ -6,6 +6,8 @@
 , asyncudp_pkg
 , hytech_np_proto_py
 , proto_gen_pkg
+, writer_control_proto_py
+, writer_control_grpc_py
 }:
 
 python311Packages.buildPythonApplication {
@@ -27,6 +29,9 @@ python311Packages.buildPythonApplication {
     py_mcap_pkg
     hytech_np_proto_py
     proto_gen_pkg
+    
+    writer_control_proto_py
+    writer_control_grpc_py
   ];
 
   src = ./py_data_acq;

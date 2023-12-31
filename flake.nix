@@ -25,6 +25,12 @@
       };
 
       nix_protos_overlays = nix-proto.generateOverlays' {
+        writer_control = nix-proto.mkProtoDerivation {
+          name = "writer_control";
+          version = "1.0.0";
+          src = ./proto;
+        };
+
         hytech_np = { proto_gen_pkg }:
           nix-proto.mkProtoDerivation {
             name = "hytech_np";
@@ -58,13 +64,21 @@
         proto_gen_pkg = pkgs.proto_gen_pkg;
         hytech_np = pkgs.hytech_np;
         hytech_np_proto_py = pkgs.hytech_np_proto_py;
+        writer_control_proto_py = pkgs.writer_control_proto_py;
+        writer_control_grpc_py = pkgs.writer_control_grpc_py;
         default = py_data_acq_pkg;
       };
 
       devShells.x86_64-linux.default = pkgs.mkShell rec {
         # Update the name to something that suites your project.
         name = "nix-devshell";
-        packages = with pkgs; [ jq py_data_acq_pkg py_dbc_proto_gen_pkg proto_gen_pkg cmake ];
+        packages = with pkgs; [
+          jq
+          py_data_acq_pkg
+          py_dbc_proto_gen_pkg
+          proto_gen_pkg
+          cmake
+        ];
         # Setting up the environment variables you need during
         # development.
         shellHook = let icon = "f121";
@@ -76,7 +90,7 @@
           export DBC_PATH=$dbc_path
 
           echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
-          
+
           export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
         '';
       };

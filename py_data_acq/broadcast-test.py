@@ -18,10 +18,6 @@ def main():
     # Serialize the message to bytes
     db = cantools.database.load_file(full_path)
  
- 
- 
- 
- 
     msg = db.get_message_by_name("ID_MC1_TORQUE_COMMAND")
     rpm = db.get_message_by_name("ID_MC4_SETPOINTS_COMMAND")
     data = msg.encode({'torque_command': 100})
