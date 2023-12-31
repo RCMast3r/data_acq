@@ -1,7 +1,7 @@
 usage: 
 
 TODO:
-- [ ] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
+- [x] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
 - [ ] make the deserialization task for unpacking received data from CAN in the data acq service script.
 - [ ] make ability to start / stop / control in general the data recording via grpc calls for the mcap writer task
 - [ ] make user script / interface for the grpc calls for ease of interaction with the service
@@ -24,9 +24,17 @@ TODO:
 - [x] binary schema generation from proto file in CI
     - I am thinking for this we can just use protoc in a dev shell similar to how I did the proto and dbc creation with the script
 - [x] platformio c/c++ library from DBC by making a platformio script (python / platformio)
+- [ ] integrate user created pcan SYM file into automated creation of dbc and proto file
+    - [PCAN editor](https://www.peak-system.com/PCAN-Symbol-Editor-6.416.0.html?&L=1) for creating the human readable SYM files
+    - the cantools library can already use this as a description of the CAN network so the dbc file creation will be simplified a lot more
 
 ```mermaid
 flowchart TD
+
+sym[PCAN symbol editor generation of `.sym` file] --> CI
+subgraph user input
+    sym
+end
 
 CI[remote CI generation and release of dbc / proto] --> pio[local built platformio util CAN lib]
 CI --> np[local built nix proto gen lib]
@@ -79,3 +87,5 @@ flowchart TD
 
 ### notes:
 - filter journalctl based on service: `journalctl -u nginx.service`
+
+- it looks like the PCAN sym files along with the editor is a good format and tool for creation of the CAN network

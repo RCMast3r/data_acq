@@ -1,6 +1,6 @@
 import asyncio
 
-from py_data_acq.common_types.common import QueueData
+from py_data_acq.common.common_types import QueueData
 from typing import Any
 
 from foxglove_websocket import run_cancellable
@@ -19,6 +19,7 @@ class HTProtobufFoxgloveServer(FoxgloveServer):
         self.path = pb_bin_file_path
         self.schema_names = schema_names
         self.schema = standard_b64encode(open(pb_bin_file_path, "rb").read()).decode("ascii")
+        self.chan_id_dict = {}
         
     # this is run when we use this in a with statement for context management
     async def __aenter__(self): 
