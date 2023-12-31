@@ -38,16 +38,14 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
         loop = asyncio.get_running_loop()
         notifier = can.Notifier(bus, listeners, loop=loop)
         while True:
-            # data, addr = await sock.recvfrom()
             msg = await reader.get_message()
             decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
             msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
-            
             msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
 
             data = QueueData(msg.DESCRIPTOR.name, msg)
             await queue.put(data)
-            # await q2.put(data)
+            await q2.put(data)
 
 async def write_data_to_mcap(queue, mcap_writer):
     async with mcap_writer as mcw:
@@ -75,16 +73,17 @@ async def main():
     list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
     fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
     
-    mcap_writer = HTPBMcapWriter(".")
+    mcap_writer = HTPBMcapWriter(".", list_of_msg_names, msg_pb_classes)
     
     receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
+    mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))
     
     # in the mcap task I actually have to deserialize the any protobuf msg into the message ID and
     # the encoded message for the message id. I will need to handle the same association of message id
     # and schema in the foxglove websocket server. 
-    # TODO the data consuming MCAP file task for writing MCAP files to specific directory
-    await asyncio.gather(receiver_task, fx_task)
+    
+    await asyncio.gather(receiver_task, fx_task, mcap_task)
 
 if __name__ == "__main__":
     asyncio.run(main())

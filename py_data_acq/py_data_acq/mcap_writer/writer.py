@@ -1,45 +1,24 @@
 import asyncio
-import sys
+
 import time
 from mcap_protobuf.writer import Writer
-import google.protobuf.message_factory
-from collections import namedtuple
-
 from datetime import datetime
-from hytech_np_proto_py import hytech_pb2
 from typing import (
     Any,
     Optional,
     Set
 )
 
-# TODO make these an environmental thing for nix
-# from py_data_acq.mcap_writer import all_msgs_pb2
-# from py_data_acq.mcap_writer import hytech_pb2
-
-# TODO move this into a schema / descriptor associator util module or class
-def list_of_message_names():
-    message_names = []
-    # Iterate through all attributes in the generated module
-    for attr_name in dir(hytech_pb2):
-        # Check if the attribute is a class and if it's a message type
-        attr = getattr(hytech_pb2, attr_name)
-        if isinstance(attr, type) and hasattr(attr, 'DESCRIPTOR'):
-            message_names.append(attr.DESCRIPTOR.name)
-    return message_names
-
 class HTPBMcapWriter(Writer):
-    def __init__(self, mcap_base_path):
+    def __init__(self, mcap_base_path, msg_names: list[str], msg_classes):
         self.base_path = mcap_base_path
-        messages = list_of_message_names()
-        self.message_classes = {}
+        messages = msg_names
+        self.message_classes = msg_classes
         now = datetime.now()
         date_time_filename = now.strftime("%m_%d_%Y_%H_%M_%S"+".mcap")
         self.writing_file = open(date_time_filename, "wb")
         super().__init__(self.writing_file)
-        # creating message classes via the classes available in ht_data
-        for name in messages: 
-            self.message_classes[name] = google.protobuf.message_factory.GetMessageClass(hytech_pb2.DESCRIPTOR.message_types_by_name.get(name))
+
     def __await__(self):
         async def closure():
             print("await")
@@ -55,31 +34,14 @@ class HTPBMcapWriter(Writer):
         return super().finish()
     
     async def write_msg(self, msg):
-        print(int(time.time()))
-        super().write_message(topic="/ht_data", message=msg, log_time=int(time.time_ns()), publish_time=int(time.time_ns()))
+        
+        super().write_message(topic=msg.DESCRIPTOR.name+"_data", message=msg, log_time=int(time.time_ns()), publish_time=int(time.time_ns()))
         return True
-    # async def open_new(self, )
 
-    # gets the list of names via type inflection
-    # 
     async def write_data(self, queue):
-
-        data = await queue.get()
-        if data is not None:
-            # des_msg = all_msgs_pb2.hytech_msg()
-            # des_msg.ParseFromString(data)
-            des_msg = hytech_pb2.ht_data()
-            # if des_msg in self.message_classes:
-            # msg = self.message_classes[des_msg.msg_id]()
+        msg = await queue.get()
+        if msg is not None:
+            return await self.write_msg(msg.pb_msg)
             
-            des_msg.ParseFromString(data)
-            print(des_msg)
-            # TODO make this awaitable
-            print("writing")
-            return await self.write_msg(des_msg)
-            # else: 
-                # print(des_msg.msg_id)
-                # print("asdf")
-                # return True
     
                 
