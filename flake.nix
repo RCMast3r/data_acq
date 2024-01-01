@@ -11,9 +11,19 @@
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
     nix-proto = { url = "github:notalltim/nix-proto"; };
   };
+
   outputs = { self, nixpkgs, utils, mcap-protobuf, mcap, foxglove-websocket
     , asyncudp, nix-proto, ... }@inputs:
     let
+      makePackageSet = pkgs: {
+        py_data_acq_pkg = pkgs.py_data_acq_pkg;
+        py_dbc_proto_gen_pkg = pkgs.py_dbc_proto_gen_pkg;
+        proto_gen_pkg = pkgs.proto_gen_pkg;
+        hytech_np = pkgs.hytech_np;
+        hytech_np_proto_py = pkgs.hytech_np_proto_py;
+        default = pkgs.py_data_acq_pkg;
+      };
+
       py_data_acq_overlay = final: prev: {
         py_data_acq_pkg = final.callPackage ./default.nix { };
       };
@@ -42,55 +52,72 @@
         asyncudp.overlays.default
         foxglove-websocket.overlays.default
       ];
-
-      pkgs = import nixpkgs {
+      system = builtins.currentSystem;
+      x86_pkgs = import nixpkgs {
         system = "x86_64-linux";
+        # inherit system;
+        # system = builtins.currentSystem;
+        overlays = [ self.overlays.default ]
+          ++ nix-proto.lib.overlayToList nix_protos_overlays;
+      };
+
+      arm_pkgs = import nixpkgs {
+        system = "aarch64-linux";
+        # inherit system;
+        # system = builtins.currentSystem;
         overlays = [ self.overlays.default ]
           ++ nix-proto.lib.overlayToList nix_protos_overlays;
       };
       # overlay_set = nixpkgs.lib.composeManyExtensions my_overlays;
+      packageSets = {
+        "x86_64-linux" = makePackageSet x86_pkgs;
+        "aarch64-linux" = makePackageSet arm_pkgs;
+        # Add more systems as needed
+      };
     in {
 
       overlays.default = nixpkgs.lib.composeManyExtensions my_overlays;
-      packages.x86_64-linux = rec {
-        py_data_acq_pkg = pkgs.py_data_acq_pkg;
-        py_dbc_proto_gen_pkg = pkgs.py_dbc_proto_gen_pkg;
-        proto_gen_pkg = pkgs.proto_gen_pkg;
-        hytech_np = pkgs.hytech_np;
-        hytech_np_proto_py = pkgs.hytech_np_proto_py;
-        default = py_data_acq_pkg;
-      };
 
-      devShells.x86_64-linux.default = pkgs.mkShell rec {
-        # Update the name to something that suites your project.
-        name = "nix-devshell";
-        packages = with pkgs; [ jq py_data_acq_pkg py_dbc_proto_gen_pkg proto_gen_pkg cmake ];
-        # Setting up the environment variables you need during
-        # development.
-        shellHook = let icon = "f121";
-        in ''
-          path=${pkgs.proto_gen_pkg}
-          bin_path=$path"/bin"
-          dbc_path=$path"/dbc"
-          export BIN_PATH=$bin_path
-          export DBC_PATH=$dbc_path
+      
+        packages = packageSets;
 
-          echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
-          
-          export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
-        '';
-      };
-      devShells.x86_64-linux.ci = pkgs.mkShell rec {
-        # Update the name to something that suites your project.
-        name = "nix-devshell";
-        packages = with pkgs; [
-          # Development Tools
+        devShells.x86_64-linux.default = x86_pkgs.mkShell rec {
+          # Update the name to something that suites your project.
+          name = "nix-devshell";
+          packages = with x86_pkgs; [
+            jq
+            py_data_acq_pkg
+            py_dbc_proto_gen_pkg
+            proto_gen_pkg
+            cmake
+          ];
+          # Setting up the environment variables you need during
+          # development.
+          shellHook = let icon = "f121";
+          in ''
+            path=${x86_pkgs.proto_gen_pkg}
+            bin_path=$path"/bin"
+            dbc_path=$path"/dbc"
+            export BIN_PATH=$bin_path
+            export DBC_PATH=$dbc_path
 
-          py_dbc_proto_gen_pkg
-          protobuf
-        ];
+            echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
 
-      };
+            export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
+          '';
+        };
+        devShells.x86_64-linux.ci = x86_pkgs.mkShell rec {
+          # Update the name to something that suites your project.
+          name = "nix-devshell";
+          packages = with x86_pkgs; [
+            # Development Tools
 
+            py_dbc_proto_gen_pkg
+            protobuf
+          ];
+
+        };
+
+      
     };
 }

@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 import asyncio
 
@@ -7,16 +6,14 @@ from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 from py_data_acq.common.common_types import QueueData
 import py_data_acq.common.protobuf_helpers as pb_helpers
 from hytech_np_proto_py import hytech_pb2
-import logging 
 from systemd.journal import JournalHandler
 import concurrent.futures
-import threading
+
 import os
-import asyncudp
 import can
 from can.interfaces.udp_multicast import UdpMulticastBus
 import cantools
-
+import logging
 
 # TODO we may want to have a config file handling to set params such as:
 #      - file save interval for MCAP file
@@ -57,7 +54,7 @@ async def fxglv_websocket_consume_data(queue, foxglove_server):
         while True:
             await fz.send_msgs_from_queue(queue)
 
-async def main():
+async def run(logger):
     
     # for example, we will have CAN as our only input as of right now but we may need to add in 
     # a sensor that inputs over UART or ethernet
@@ -73,17 +70,21 @@ async def main():
     list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
     fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
     
-    mcap_writer = HTPBMcapWriter(".", list_of_msg_names, msg_pb_classes)
+    mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
     
     receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))
-    
+    logger.info("created tasks")
     # in the mcap task I actually have to deserialize the any protobuf msg into the message ID and
     # the encoded message for the message id. I will need to handle the same association of message id
     # and schema in the foxglove websocket server. 
     
     await asyncio.gather(receiver_task, fx_task, mcap_task)
 
+
 if __name__ == "__main__":
-    asyncio.run(main())
+    logging.basicConfig()
+    logger = logging.getLogger('data_writer_service')
+    logger.setLevel(logging.INFO)
+    asyncio.run(run(logger))

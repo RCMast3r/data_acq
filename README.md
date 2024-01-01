@@ -3,8 +3,10 @@ usage:
 TODO:
 - [x] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
 - [x] make the deserialization task for unpacking received data from CAN in the data acq service script.
-- [ ] make ability to start / stop / control in general the data recording via grpc calls for the mcap writer task
-- [ ] make user script / interface for the grpc calls for ease of interaction with the service
+- [ ] create nixos module for py_data_acq
+- [ ] make ability to start / stop / control in general the data recording via grpc calls for the mcap writer task (pending nix-proto adjustment)
+- [ ] make user script / interface for the grpc calls for ease of interaction with the service (pending nix-proto adjustment)
+
 - [ ] actually get current data from car into protobuf encoded CAN messages in an integration test
 - [x] get nix-proto working with dbc input from url for creation of python lib
 - [x] get py_data_acq working in dev shell with nix-proto generated python lib for proto msg packing
