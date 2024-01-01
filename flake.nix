@@ -51,7 +51,7 @@
         mcap.overlays.default
         asyncudp.overlays.default
         foxglove-websocket.overlays.default
-      ];
+      ] ++ nix-proto.lib.overlayToList nix_protos_overlays;
       system = builtins.currentSystem;
       x86_pkgs = import nixpkgs {
         system = "x86_64-linux";
@@ -68,7 +68,7 @@
         overlays = [ self.overlays.default ]
           ++ nix-proto.lib.overlayToList nix_protos_overlays;
       };
-      # overlay_set = nixpkgs.lib.composeManyExtensions my_overlays;
+
       packageSets = {
         "x86_64-linux" = makePackageSet x86_pkgs;
         "aarch64-linux" = makePackageSet arm_pkgs;
@@ -78,46 +78,44 @@
 
       overlays.default = nixpkgs.lib.composeManyExtensions my_overlays;
 
-      
-        packages = packageSets;
+      packages = packageSets;
 
-        devShells.x86_64-linux.default = x86_pkgs.mkShell rec {
-          # Update the name to something that suites your project.
-          name = "nix-devshell";
-          packages = with x86_pkgs; [
-            jq
-            py_data_acq_pkg
-            py_dbc_proto_gen_pkg
-            proto_gen_pkg
-            cmake
-          ];
-          # Setting up the environment variables you need during
-          # development.
-          shellHook = let icon = "f121";
-          in ''
-            path=${x86_pkgs.proto_gen_pkg}
-            bin_path=$path"/bin"
-            dbc_path=$path"/dbc"
-            export BIN_PATH=$bin_path
-            export DBC_PATH=$dbc_path
+      devShells.x86_64-linux.default = x86_pkgs.mkShell rec {
+        # Update the name to something that suites your project.
+        name = "nix-devshell";
+        packages = with x86_pkgs; [
+          jq
+          py_data_acq_pkg
+          py_dbc_proto_gen_pkg
+          proto_gen_pkg
+          cmake
+        ];
+        # Setting up the environment variables you need during
+        # development.
+        shellHook = let icon = "f121";
+        in ''
+          path=${x86_pkgs.proto_gen_pkg}
+          bin_path=$path"/bin"
+          dbc_path=$path"/dbc"
+          export BIN_PATH=$bin_path
+          export DBC_PATH=$dbc_path
 
-            echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
+          echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
 
-            export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
-          '';
-        };
-        devShells.x86_64-linux.ci = x86_pkgs.mkShell rec {
-          # Update the name to something that suites your project.
-          name = "nix-devshell";
-          packages = with x86_pkgs; [
-            # Development Tools
+          export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
+        '';
+      };
+      devShells.x86_64-linux.ci = x86_pkgs.mkShell rec {
+        # Update the name to something that suites your project.
+        name = "nix-devshell";
+        packages = with x86_pkgs; [
+          # Development Tools
 
-            py_dbc_proto_gen_pkg
-            protobuf
-          ];
+          py_dbc_proto_gen_pkg
+          protobuf
+        ];
 
-        };
+      };
 
-      
     };
 }
