@@ -8,7 +8,7 @@ import py_data_acq.common.protobuf_helpers as pb_helpers
 from hytech_np_proto_py import hytech_pb2
 from systemd.journal import JournalHandler
 import concurrent.futures
-
+import sys
 import os
 import can
 from can.interfaces.udp_multicast import UdpMulticastBus
@@ -60,8 +60,16 @@ async def run(logger):
     # a sensor that inputs over UART or ethernet
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
-    path_to_bin = os.environ.get('BIN_PATH')
-    path_to_dbc = os.environ.get('DBC_PATH')
+    path_to_bin = ""
+    path_to_dbc = ""
+    
+    if len(sys.argv) > 2:
+        path_to_bin = sys.argv[1]
+        path_to_dbc = sys.argv[2]
+    else:
+        path_to_bin = os.environ.get('BIN_PATH')
+        path_to_dbc = os.environ.get('DBC_PATH')
+
     full_path = os.path.join(path_to_bin, "hytech.bin")
     full_path_to_dbc = os.path.join(path_to_dbc, "hytech.dbc")
     db = cantools.db.load_file(full_path_to_dbc)
