@@ -53,7 +53,7 @@ async def fxglv_websocket_consume_data(queue, foxglove_server):
     async with foxglove_server as fz:
         while True:
             await fz.send_msgs_from_queue(queue)
-
+PORT = 8770
 async def run(logger):
     
     # for example, we will have CAN as our only input as of right now but we may need to add in 
@@ -76,7 +76,9 @@ async def run(logger):
 
 
     list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
-    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
+    
+    logger.info(f"Start server with port {PORT}")
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", PORT, "asdf", full_path, list_of_msg_names)
     
     mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
     

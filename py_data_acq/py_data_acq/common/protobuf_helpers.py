@@ -23,5 +23,17 @@ def pack_protobuf_msg(cantools_dict: dict, msg_name: str, message_classes):
     if msg_name in message_classes:
         pb_msg = message_classes[msg_name]()
     for key in cantools_dict.keys():
-        setattr(pb_msg, key, cantools_dict[key])
+        try:
+            setattr(pb_msg, key, cantools_dict[key])
+        except TypeError as e:
+            print(f"Caught TypeError: {e}")
+            expected_type = type(getattr(pb_msg, key))
+            
+            try:
+                converted_value = expected_type(cantools_dict[key])
+                setattr(pb_msg, key, converted_value)
+                print(f"Successfully set {key} to {converted_value}")
+            except ValueError:
+                print(f"Unable to convert {cantools_dict[key]} to {expected_type.__name__}")
+
     return pb_msg
