@@ -39,7 +39,7 @@ def main():
             rpm_msg = can.Message(arbitration_id=rpm.frame_id, is_extended_id=False, data=rpm_data)
             bus1.send(rpm_msg)
 
-            print("Message sent on {}".format(bus1.channel_info))
+            # print("Message sent on {}".format(bus1.channel_info))
         except can.CanError:
             print("Message NOT sent!  Please verify can0 is working first")
         time.sleep(0.01)

@@ -36,26 +36,55 @@ BS_:
 BU_: vcu bms inverter dash
 
 
-BO_ 196 VCU_PEDAL_READINGS: 8 Vector__XXX
- SG_ STEERING : 48|16@1+ (0.001220703125,0) [0|12] "" Vector__XXX
- SG_ BSE1 : 32|16@1+ (0.001220703125,0) [0|12] "" Vector__XXX
- SG_ APPS2 : 16|16@1+ (0.001220703125,0) [0|12] "" Vector__XXX
- SG_ APPS1 : 0|16@1+ (0.001220703125,0) [0|12] "" Vector__XXX
+BO_ 196 VCU_PEDAL_READINGS: 8 vcu
+ SG_ STEERING : 48|16@1+ (0.001220703125,0) [0|12] "volts" Vector__XXX
+ SG_ BSE1 : 32|16@1+ (0.001220703125,0) [0|12] "volts" Vector__XXX
+ SG_ APPS2 : 16|16@1+ (0.001220703125,0) [0|12] "volts" Vector__XXX
+ SG_ APPS1 : 0|16@1+ (0.001220703125,0) [0|12] "volts" Vector__XXX
 
-BO_ 198 VCU_WHEELSPEED_READINGS: 8 Vector__XXX
- SG_ RPM_FR : 32|32@1+ (0.01,0) [0|4294967296] "" Vector__XXX
- SG_ RPM_FL : 0|32@1+ (0.01,0) [0|4294967296] "" Vector__XXX
+BO_ 201 VCU_BOARD_READINGS_ONE: 8 vcu
+ SG_ VCU_5V_VOLTAGE : 48|16@1+ (1,0) [0|65535] "bits" Vector__XXX
+ SG_ VCU_BSPD_VOLTAGE : 32|16@1+ (1,0) [0|65535] "bits" Vector__XXX
+ SG_ VCU_GLV_VOLTAGE : 16|16@1+ (1,0) [0|65535] "bits" Vector__XXX
+ SG_ VCU_GLV_CURRENT : 0|16@1+ (1,0) [0|65535] "bits" Vector__XXX
 
-BO_ 195 VCU_STATUS: 7 Vector__XXX
+BO_ 202 VCU_BOARD_READINGS_TWO: 8 vcu
+ SG_ VCU_AIN10_VOLTAGE : 48|16@1+ (1,0) [0|65535] "bits" Vector__XXX
+ SG_ VCU_AIN9_VOLTAGE : 32|16@1+ (1,0) [0|65535] "bits" Vector__XXX
+ SG_ VCU_SDC_CURRENT : 16|16@1+ (1,0) [0|65535] "bits" Vector__XXX
+ SG_ VCU_SDC_VOLTAGE : 0|16@1+ (1,0) [0|65535] "bits" Vector__XXX
+
+BO_ 198 VCU_WHEELSPEED_READINGS: 8 vcu
+ SG_ RPM_FR : 32|32@1+ (0.01,0) [0|4294967296] "rpm" Vector__XXX
+ SG_ RPM_FL : 0|32@1+ (0.01,0) [0|4294967296] "rpm" Vector__XXX
+
+BO_ 195 VCU_STATUS: 7 vcu
  SG_ DISTANCE_TRAVELLED : 40|16@1+ (1,0) [0|65535] "" Vector__XXX
  SG_ TORQUE_MODE : 32|8@1+ (1,0) [0|255] "" Vector__XXX
  SG_ MAX_TORQUE : 24|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ ECU_STATES : 16|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ PEDAL_STATES : 8|8@1+ (1,0) [0|255] "" Vector__XXX
- SG_ SHUTDOWN_STATES : 0|8@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_LAUNCH_CONTROL_ACTIVE : 23|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SOFTWARE_OK : 22|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_ACTIVATE_BUZZER : 21|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_ENERGY_METER_PRESENT : 20|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_INVERTER_POWERED : 19|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_STATEMACHINE_STATE : 16|3@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_ACCEL_BRAKE_IMPLAUSIBLE : 15|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_BSPD_BRAKE_HIGH : 14|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_BSPD_CURRENT_HIGH : 13|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_BRAKE_ACTIVE : 12|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_BRAKE_IMPLAUSIBLE : 9|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_ACCEL_IMPLAUSIBLE : 8|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SHUTDOWN_E_OK_HIGH : 7|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SOFTWARE_OK_HIGH : 6|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SHUTDOWN_D_OK_HIGH : 5|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_BSPD_OK_HIGH : 4|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SHUTDOWN_C_OK_HIGH : 3|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_BMS_OK_HIGH : 2|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_SHUTDOWN_B_OK_HIGH : 1|1@1+ (1,0) [0|255] "" Vector__XXX
+ SG_ VCU_IMD_OK_HIGH : 0|1@1+ (1,0) [0|255] "" Vector__XXX
 
 BO_ 200 vcu_firmware_version: 4 vcu
- SG_ fw_version : 0|32@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ vcu_fw_version : 0|32@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 235 dash_buttons: 8 dash
  SG_ dash_button6status : 5|1@1+ (1,0) [0|0] "" Vector__XXX
@@ -793,7 +822,28 @@ BO_ 1520 megasquirt_gp0: 8 Vector__XXX
 
 CM_ BU_ vcu "the vehicle control unit";
 CM_ BO_ 196 "VCU analog pedal readings";
+CM_ BO_ 201 "VCU PCB health readings";
+CM_ SG_ 201 VCU_5V_VOLTAGE "VCU pcb voltage sense of the 5v rail";
+CM_ SG_ 201 VCU_BSPD_VOLTAGE "VCU pcb voltage sense of the BSPD signal to close relay";
+CM_ SG_ 201 VCU_GLV_VOLTAGE "VCU pcb voltage sense of glv rail";
+CM_ SG_ 201 VCU_GLV_CURRENT "VCU pcb current sense of the glv rail";
+CM_ BO_ 202 "VCU PCB health readings";
+CM_ SG_ 202 VCU_AIN10_VOLTAGE "VCU pcb non specific analog channel";
+CM_ SG_ 202 VCU_AIN9_VOLTAGE "VCU pcb non specific analog channel";
+CM_ SG_ 202 VCU_SDC_CURRENT "VCU PCB current sense of shutdown circuit";
+CM_ SG_ 202 VCU_SDC_VOLTAGE "VCU pcb voltage sense of the shutdown circuit input";
 CM_ BO_ 198 "VCU wheel speed sensor readings";
+CM_ SG_ 198 RPM_FR "front right wheel speed sensor";
+CM_ SG_ 198 RPM_FL "front left wheel speed sensor";
+CM_ SG_ 195 VCU_STATEMACHINE_STATE "0 = STARTUP, 1 = TS NOT ACTIVE, 2 = TS ACTIVE, 3 = ENABLING INVERTER, 4 = WAIT RTD SOUND, 5=RTD";
+CM_ SG_ 195 VCU_SHUTDOWN_E_OK_HIGH "(UNUSED) Shutdown loop voltage at point E, high = good";
+CM_ SG_ 195 VCU_SOFTWARE_OK_HIGH "(UNUSED) VCU heartbeat status, high = good";
+CM_ SG_ 195 VCU_SHUTDOWN_D_OK_HIGH "(UNUSED) Shutdown loop voltage at point D, high = good";
+CM_ SG_ 195 VCU_BSPD_OK_HIGH "BSPD status, high = good (latched)";
+CM_ SG_ 195 VCU_SHUTDOWN_C_OK_HIGH "(UNUSED) Shutdown loop voltage at point C, high = good";
+CM_ SG_ 195 VCU_BMS_OK_HIGH "BMS status, high = good";
+CM_ SG_ 195 VCU_SHUTDOWN_B_OK_HIGH "(UNUSED) Shutdown loop voltage at point D, high = good";
+CM_ SG_ 195 VCU_IMD_OK_HIGH "IMD status, high = good";
 CM_ BO_ 200 "commit hash of the firmware on the VCU";
 CM_ BO_ 235 "commit hash of the firmware on the VCU";
 CM_ BO_ 26 "raw ADC voltage reading of module1 cells 1-6";

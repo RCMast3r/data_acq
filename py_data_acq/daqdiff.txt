@@ -1,0 +1,70 @@
+diff --git a/py_data_acq/broadcast-test.py b/py_data_acq/broadcast-test.py
+index cb6a6d1..0d2e043 100644
+--- a/py_data_acq/broadcast-test.py
++++ b/py_data_acq/broadcast-test.py
+@@ -39,7 +39,7 @@ def main():
+             rpm_msg = can.Message(arbitration_id=rpm.frame_id, is_extended_id=False, data=rpm_data)
+             bus1.send(rpm_msg)
+ 
+-            print("Message sent on {}".format(bus1.channel_info))
++            # print("Message sent on {}".format(bus1.channel_info))
+         except can.CanError:
+             print("Message NOT sent!  Please verify can0 is working first")
+         time.sleep(0.01)
+diff --git a/py_data_acq/runner.py b/py_data_acq/runner.py
+index 03e5309..06b030e 100644
+--- a/py_data_acq/runner.py
++++ b/py_data_acq/runner.py
+@@ -26,7 +26,7 @@ import logging
+ 
+ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2):
+     with can.Bus(
+-        channel=UdpMulticastBus.DEFAULT_GROUP_IPv6, interface='udp_multicast'
++        interface='socketcan', channel='can0', bitrate=500000
+     ) as bus:
+         reader = can.AsyncBufferedReader()
+         listeners: List[MessageRecipient] = [
+@@ -36,14 +36,16 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
+         notifier = can.Notifier(bus, listeners, loop=loop)
+         while True:
+             msg = await reader.get_message()
+-            decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
+-            msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
+-            msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
+-
+-            data = QueueData(msg.DESCRIPTOR.name, msg)
+-            await queue.put(data)
+-            await q2.put(data)
+-
++            try:
++            	decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
++            	msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
++            	msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
++            	data = QueueData(msg.DESCRIPTOR.name, msg)
++            	await queue.put(data)
++            	await q2.put(data)
++            except:
++            	logger.error("Error on message decode")
++            	continue
+ async def write_data_to_mcap(queue, mcap_writer):
+     async with mcap_writer as mcw:
+         while True:
+@@ -97,4 +99,4 @@ if __name__ == "__main__":
+     logging.basicConfig()
+     logger = logging.getLogger('data_writer_service')
+     logger.setLevel(logging.INFO)
+-    asyncio.run(run(logger))
+\ No newline at end of file
++    asyncio.run(run(logger))
+diff --git a/run_server.sh b/run_server.sh
+index a12624a..0d54236 100755
+--- a/run_server.sh
++++ b/run_server.sh
+@@ -1,4 +1,4 @@
+ #! /bin/bash
+ # nix develop --extra-experimental-features nix-command --extra-experimental-features flakes
+-sh -c 'python3 ./py_data_acq/broadcast-test.py' &
+-python3 ./py_data_acq/runner.py
+\ No newline at end of file
++# sh -c 'python3 ./py_data_acq/broadcast-test.py' &
++python3 ./py_data_acq/runner.py
