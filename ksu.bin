@@ -1,0 +1,837 @@
+
+∞ô
+	ksu.proto"p
+vcu_pedal_readings
+APPS1 (RAPPS1
+APPS2 (RAPPS2
+BSE1 (RBSE1
+STEERING (RSTEERING"G
+vcu_wheelspeed_readings
+RPM_FL (RRPMFL
+RPM_FR (RRPMFR"Ê
+
+vcu_status'
+SHUTDOWN_STATES (RSHUTDOWNSTATES!
+PEDAL_STATES (RPEDALSTATES
+
+ECU_STATES (R	ECUSTATES
+
+MAX_TORQUE (R	MAXTORQUE
+TORQUE_MODE (R
+TORQUEMODE-
+DISTANCE_TRAVELLED (RDISTANCETRAVELLED"5
+vcu_firmware_version
+
+fw_version (R	fwVersion"®
+dash_buttons-
+dash_button1status (RdashButton1status-
+dash_button2status (RdashButton2status-
+dash_button3status (RdashButton3status-
+dash_button4status (RdashButton4status-
+dash_button5status (RdashButton5status-
+dash_button6status (RdashButton6status"â
+segment1_temps1
+	cell1temp (R	cell1temp
+	cell2temp (R	cell2temp
+	cell3temp (R	cell3temp
+	cell4temp (R	cell4temp
+	cell5temp (R	cell5temp
+	cell6temp (R	cell6temp 
+mintemp1to6 (Rmintemp1to6 
+maxtemp1to6 (Rmaxtemp1to6"ì
+segment1_temps2
+	cell7temp (R	cell7temp
+	cell8temp (R	cell8temp
+	cell9temp (R	cell9temp
+
+cell10temp (R
+cell10temp
+
+cell11temp (R
+cell11temp
+
+cell12temp (R
+cell12temp"
+mintemp7to12 (Rmintemp7to12"
+maxtemp7to12 (Rmaxtemp7to12"ù
+segment2_temps1
+
+cell13temp (R
+cell13temp
+
+cell14temp (R
+cell14temp
+
+cell15temp (R
+cell15temp
+
+cell16temp (R
+cell16temp
+
+cell17temp (R
+cell17temp
+
+cell18temp (R
+cell18temp$
+mintemp13to18 (Rmintemp13to18$
+maxtemp13to18 (Rmaxtemp13to18"ù
+segment2_temps2
+
+cell19temp (R
+cell19temp
+
+cell20temp (R
+cell20temp
+
+cell21temp (R
+cell21temp
+
+cell22temp (R
+cell22temp
+
+cell23temp (R
+cell23temp
+
+cell24temp (R
+cell24temp$
+mintemp19to24 (Rmintemp19to24$
+maxtemp19to24 (Rmaxtemp19to24"ù
+segment3_temps1
+
+cell25temp (R
+cell25temp
+
+cell26temp (R
+cell26temp
+
+cell27temp (R
+cell27temp
+
+cell28temp (R
+cell28temp
+
+cell29temp (R
+cell29temp
+
+cell30temp (R
+cell30temp$
+mintemp25to30 (Rmintemp25to30$
+maxtemp25to30 (Rmaxtemp25to30"ù
+segment3_temps2
+
+cell31temp (R
+cell31temp
+
+cell32temp (R
+cell32temp
+
+cell33temp (R
+cell33temp
+
+cell34temp (R
+cell34temp
+
+cell35temp (R
+cell35temp
+
+cell36temp (R
+cell36temp$
+mintemp31to36 (Rmintemp31to36$
+maxtemp31to36 (Rmaxtemp31to36"ù
+segment4_temps1
+
+cell37temp (R
+cell37temp
+
+cell38temp (R
+cell38temp
+
+cell39temp (R
+cell39temp
+
+cell40temp (R
+cell40temp
+
+cell41temp (R
+cell41temp
+
+cell42temp (R
+cell42temp$
+mintemp37to42 (Rmintemp37to42$
+maxtemp37to42 (Rmaxtemp37to42"ù
+segment4_temps2
+
+cell43temp (R
+cell43temp
+
+cell44temp (R
+cell44temp
+
+cell45temp (R
+cell45temp
+
+cell46temp (R
+cell46temp
+
+cell47temp (R
+cell47temp
+
+cell48temp (R
+cell48temp$
+mintemp43to48 (Rmintemp43to48$
+maxtemp43to48 (Rmaxtemp43to48"ù
+segment5_temps1
+
+cell49temp (R
+cell49temp
+
+cell50temp (R
+cell50temp
+
+cell51temp (R
+cell51temp
+
+cell52temp (R
+cell52temp
+
+cell53temp (R
+cell53temp
+
+cell54temp (R
+cell54temp$
+mintemp49to54 (Rmintemp49to54$
+maxtemp49to54 (Rmaxtemp49to54"ù
+segment5_temps2
+
+cell55temp (R
+cell55temp
+
+cell56temp (R
+cell56temp
+
+cell57temp (R
+cell57temp
+
+cell58temp (R
+cell58temp
+
+cell59temp (R
+cell59temp
+
+cell60temp (R
+cell60temp$
+mintemp55to60 (Rmintemp55to60$
+maxtemp55to60 (Rmaxtemp55to60"ù
+segment6_temps1
+
+cell61temp (R
+cell61temp
+
+cell62temp (R
+cell62temp
+
+cell63temp (R
+cell63temp
+
+cell64temp (R
+cell64temp
+
+cell65temp (R
+cell65temp
+
+cell66temp (R
+cell66temp$
+mintemp61to66 (Rmintemp61to66$
+maxtemp61to66 (Rmaxtemp61to66"ù
+segment6_temps2
+
+cell67temp (R
+cell67temp
+
+cell68temp (R
+cell68temp
+
+cell69temp (R
+cell69temp
+
+cell70temp (R
+cell70temp
+
+cell71temp (R
+cell71temp
+
+cell72temp (R
+cell72temp$
+mintemp67to72 (Rmintemp67to72$
+maxtemp67to72 (Rmaxtemp67to72"Î
+msgid_0x6b1
+Pack_DCL (RPackDCL
+Pack_CCL (RPackCCL)
+High_Temperature (RHighTemperature'
+Low_Temperature (RLowTemperature/
+Average_Temperature (RAverageTemperature!
+CRC_Checksum (RCRCChecksum"∏
+msgid_0x6b2!
+Pack_Current (RPackCurrent*
+Pack_Open_Voltage (RPackOpenVoltage*
+Pack_Inst_Voltage (RPackInstVoltage.
+Pack_Summed_Voltage (RPackSummedVoltage"∏
+msgid_0x6b3
+Pack_SOC (RPackSOC
+Blank1 (RBlank1
+Blank2 (RBlank2
+Blank3 (RBlank3
+Blank4 (RBlank4
+Blank5 (RBlank5
+Blank6 (RBlank6"–
+m173_modulation_and_flux_info.
+D1_Modulation_Index (RD1ModulationIndex7
+D2_Flux_Weakening_Output (RD2FluxWeakeningOutput"
+D3_Id_Command (RD3IdCommand"
+D4_Iq_Command (RD4IqCommand"•
+m172_torque_and_timer_info.
+D1_Commanded_Torque (RD1CommandedTorque,
+D2_Torque_Feedback (RD2TorqueFeedback)
+D3_Power_On_Timer (RD3PowerOnTimer"∑
+m194_read_write_param_responseA
+D1_Parameter_Address_Response (RD1ParameterAddressResponse(
+D2_Write_Success (RD2WriteSuccess(
+D3_Data_Response (RD3DataResponse"ª
+m193_read_write_param_command?
+D1_Parameter_Address_Command (RD1ParameterAddressCommand1
+D2_Read_Write_Command (RD2ReadWriteCommand&
+D3_Data_Command (RD3DataCommand"≈
+m192_command_message%
+Torque_Command (RTorqueCommand#
+Speed_Command (RSpeedCommand+
+Direction_Command (	RDirectionCommand'
+Inverter_Enable (	RInverterEnable-
+Inverter_Discharge (	RInverterDischarge*
+Speed_Mode_Enable (RSpeedModeEnable0
+Torque_Limit_Command (RTorqueLimitCommand"≤
+m171_fault_codes'
+D1_Post_Fault_Lo (RD1PostFaultLo'
+D2_Post_Fault_Hi (RD2PostFaultHi%
+D3_Run_Fault_Lo (RD3RunFaultLo%
+D4_Run_Fault_Hi (RD4RunFaultHi"ê
+m170_internal_states 
+D1_VSM_State (	R
+D1VSMState*
+D2_Inverter_State (	RD2InverterState)
+D3_Relay_1_Status (RD3Relay1Status)
+D3_Relay_2_Status (RD3Relay2Status)
+D3_Relay_3_Status (RD3Relay3Status)
+D3_Relay_4_Status (RD3Relay4Status)
+D3_Relay_5_Status (RD3Relay5Status)
+D3_Relay_6_Status (RD3Relay6Status/
+D4_Inverter_Run_Mode	 (RD4InverterRunMode=
+D4_Inverter_Discharge_State
+ (RD4InverterDischargeState7
+D5_Inverter_Command_Mode (RD5InverterCommandMode7
+D6_Inverter_Enable_State (RD6InverterEnableState;
+D6_Inverter_Enable_Lockout (RD6InverterEnableLockout0
+D7_Direction_Command (RD7DirectionCommand"
+D7_BMS_Active (RD7BMSActive3
+D7_BMS_Torque_Limiting (RD7BMSTorqueLimiting"˙
+m169_internal_voltages6
+D1_Reference_Voltage_1_5 (RD1ReferenceVoltage156
+D2_Reference_Voltage_2_5 (RD2ReferenceVoltage256
+D3_Reference_Voltage_5_0 (RD3ReferenceVoltage508
+D4_Reference_Voltage_12_0 (RD4ReferenceVoltage120"í
+m168_flux_id_iq_info&
+D1_Flux_Command (RD1FluxCommand(
+D2_Flux_Feedback (RD2FluxFeedback
+D3_Id (RD3Id
+D4_Iq (RD4Iq"¿
+m167_voltage_info)
+D1_DC_Bus_Voltage (RD1DCBusVoltage*
+D2_Output_Voltage (RD2OutputVoltage)
+D3_VAB_Vd_Voltage (RD3VABVdVoltage)
+D4_VBC_Vq_Voltage (RD4VBCVqVoltage"≈
+m166_current_info+
+D1_Phase_A_Current (RD1PhaseACurrent+
+D2_Phase_B_Current (RD2PhaseBCurrent+
+D3_Phase_C_Current (RD3PhaseCCurrent)
+D4_DC_Bus_Current (RD4DCBusCurrent"˝
+m165_motor_position_info9
+D1_Motor_Angle_Electrical (RD1MotorAngleElectrical$
+D2_Motor_Speed (RD2MotorSpeedC
+D3_Electrical_Output_Frequency (RD3ElectricalOutputFrequency;
+D4_Delta_Resolver_Filtered (RD4DeltaResolverFiltered"É
+m164_digital_input_status+
+D1_Digital_Input_1 (RD1DigitalInput1+
+D2_Digital_Input_2 (RD2DigitalInput2+
+D3_Digital_Input_3 (RD3DigitalInput3+
+D4_Digital_Input_4 (RD4DigitalInput4+
+D5_Digital_Input_5 (RD5DigitalInput5+
+D6_Digital_Input_6 (RD6DigitalInput6+
+D7_Digital_Input_7 (RD7DigitalInput7+
+D8_Digital_Input_8 (RD8DigitalInput8"û
+m163_analog_input_voltages)
+D1_Analog_Input_1 (RD1AnalogInput1)
+D2_Analog_Input_2 (RD2AnalogInput2)
+D3_Analog_Input_3 (RD3AnalogInput3)
+D4_Analog_Input_4 (RD4AnalogInput4)
+D5_Analog_Input_5 (RD5AnalogInput5)
+D6_Analog_Input_6 (RD6AnalogInput6"÷
+m162_temperature_set_3.
+D1_RTD4_Temperature (RD1RTD4Temperature.
+D2_RTD5_Temperature (RD2RTD5Temperature0
+D3_Motor_Temperature (RD3MotorTemperature*
+D4_Torque_Shudder (RD4TorqueShudder"È
+m161_temperature_set_2?
+D1_Control_Board_Temperature (RD1ControlBoardTemperature.
+D2_RTD1_Temperature (RD2RTD1Temperature.
+D3_RTD2_Temperature (RD3RTD2Temperature.
+D4_RTD3_Temperature (RD4RTD3Temperature"©
+m160_temperature_set_1
+D1_Module_A (R	D1ModuleA
+D2_Module_B (R	D2ModuleB
+D3_Module_C (R	D3ModuleC/
+D4_Gate_Driver_Board (RD4GateDriverBoard"¬
+m174_firmware_info4
+D1_Project_Code_EEP_Ver (RD1ProjectCodeEEPVer"
+D2_SW_Version (RD2SWVersion(
+D3_DateCode_MMDD (RD3DateCodeMMDD(
+D4_DateCode_YYYY (RD4DateCodeYYYY"’
+m175_diag_data(
+D1_Buffer_Record (RD1BufferRecord*
+D2_Buffer_Segment (RD2BufferSegment#
+D3_Diag_Data_1 (RD3DiagData1#
+D4_Diag_Data_2 (RD4DiagData2#
+D5_Diag_Data_3 (RD5DiagData3"^
+m187_u2c_command_txd
+
+D1_ID_Byte (RD1IDByte(
+D2_Setpoint_Calc (RD2SetpointCalc"ê
+m188_u2c_message_rxdK
+#D1_HV_Input_Current_Sensor_Validity (RD1HVInputCurrentSensorValidity-
+D2_14V_Master_Fault (RD214VMasterFault-
+D3_HV_Input_Current (RD3HVInputCurrent"
+D4_DTC_Status (RD4DTCStatus 
+D5_DTC_Index (R
+D5DTCIndex$
+D6_14V_Monitor (RD614VMonitor,
+D7_14V_Conditional (RD714VConditional3
+D8_14V_Current_Monitor (RD814VCurrentMonitor"
+bms_current_limit7
+D1_Max_Discharge_Current (RD1MaxDischargeCurrent1
+D2_Max_Charge_Current (RD2MaxChargeCurrent"ó
+megasquirt_gp50
+	map_accel (RmapAccel
+total_accel (R
+totalAccel!
+launch_timer (RlaunchTimer#
+launch_retard (RlaunchRetard"¿
+megasquirt_gp63*
+generic_pid_duty1 (RgenericPidDuty1*
+generic_pid_duty2 (RgenericPidDuty2
+	spare63_1 (Rspare631
+	spare63_2 (Rspare632
+	spare63_3 (Rspare633"û
+megasquirt_gp62
+gps_west (RgpsWest
+gps_altk (RgpsAltk
+gps_altm (RgpsAltm
+	gps_speed (RgpsSpeed
+
+gps_course (R	gpsCourse"œ
+megasquirt_gp61
+
+gps_latdeg (R	gpsLatdeg
+
+gps_latmin (R	gpsLatmin
+gps_latmmin (R
+gpsLatmmin
+
+gps_londeg (R	gpsLondeg
+
+gps_lonmin (R	gpsLonmin
+gps_lonmmin (R
+gpsLonmmin"•
+megasquirt_gp60#
+launch_timing (RlaunchTiming!
+step3_timing (Rstep3Timing)
+vsslaunch_retard (RvsslaunchRetard
+cel_status2 (R
+celStatus2"î
+megasquirt_gp59#
+revlim_retard (RrevlimRetard
+
+als_timing (R	alsTiming
+ext_advance (R
+extAdvance
+	deadtime1 (R	deadtime1"a
+megasquirt_gp58
+adv1 (Radv1
+adv2 (Radv2
+adv3 (Radv3
+adv4 (Radv4"†
+megasquirt_gp57!
+base_advance (RbaseAdvance(
+idle_cor_advance (RidleCorAdvance
+
+mat_retard (R	matRetard!
+flex_advance (RflexAdvance"ã
+megasquirt_gp56
+	tc_retard (RtcRetard
+
+cel_retard (R	celRetard
+	fc_retard (RfcRetard
+als_addfuel (R
+alsAddfuel"†
+megasquirt_gp55
+looptime (Rlooptime!
+fueltemp_cor (RfueltempCor#
+fuelpress_cor (RfuelpressCor
+ltt_cor (RlttCor
+sp1 (Rsp1"π
+megasquirt_gp54
+batt_cur (RbattCur
+
+cel_status (R	celStatus
+fp_duty (RfpDuty
+alt_duty (RaltDuty
+	load_duty (RloadDuty
+	alt_targv (RaltTargv"ë
+megasquirt_gp53
+fuel_press1 (R
+fuelPress1
+fuel_press2 (R
+fuelPress2
+
+fuel_temp1 (R	fuelTemp1
+
+fuel_temp2 (R	fuelTemp2"™
+megasquirt_gp52
+canin1 (Rcanin1
+canin2 (Rcanin2
+canout (Rcanout
+knk_rtd (RknkRtd
+fuelflow (Rfuelflow
+fuelcons (Rfuelcons"‘
+megasquirt_gp51
+porta (Rporta
+portb (Rportb
+porteh (Rporteh
+portk (Rportk
+portmj (Rportmj
+portp (Rportp
+portt (Rportt#
+cel_errorcode (RcelErrorcode"ó
+megasquirt_gp49
+
+knock_cyl9 (R	knockCyl9
+knock_cyl10 (R
+knockCyl10
+knock_cyl11 (R
+knockCyl11
+knock_cyl12 (R
+knockCyl12
+knock_cyl13 (R
+knockCyl13
+knock_cyl14 (R
+knockCyl14
+knock_cyl15 (R
+knockCyl15
+knock_cyl16 (R
+knockCyl16"â
+megasquirt_gp48
+
+knock_cyl1 (R	knockCyl1
+
+knock_cyl2 (R	knockCyl2
+
+knock_cyl3 (R	knockCyl3
+
+knock_cyl4 (R	knockCyl4
+
+knock_cyl5 (R	knockCyl5
+
+knock_cyl6 (R	knockCyl6
+
+knock_cyl7 (R	knockCyl7
+
+knock_cyl8 (R	knockCyl8"m
+megasquirt_gp47
+fuel_pct (RfuelPct
+	tps_accel (RtpsAccel
+SS1 (RSS1
+SS2 (RSS2"—
+megasquirt_gp46
+	vvt_duty1 (RvvtDuty1
+	vvt_duty2 (RvvtDuty2
+	vvt_duty3 (RvvtDuty3
+	vvt_duty4 (RvvtDuty4$
+inj_timing_pri (RinjTimingPri$
+inj_timing_sec (RinjTimingSec"ï
+megasquirt_gp45
+vvt_target1 (R
+vvtTarget1
+vvt_target2 (R
+vvtTarget2
+vvt_target3 (R
+vvtTarget3
+vvt_target4 (R
+vvtTarget4"}
+megasquirt_gp44
+vvt_ang1 (RvvtAng1
+vvt_ang2 (RvvtAng2
+vvt_ang3 (RvvtAng3
+vvt_ang4 (RvvtAng4"‹
+megasquirt_gp43
+synccnt (Rsynccnt
+
+syncreason (R
+syncreason
+
+sd_filenum (R	sdFilenum
+sd_error (RsdError
+sd_phase (RsdPhase
+	sd_status (RsdStatus
+
+timing_err (R	timingErr"a
+megasquirt_gp42
+VSS1 (RVSS1
+VSS2 (RVSS2
+VSS3 (RVSS3
+VSS4 (RVSS4"y
+megasquirt_gp39
+EGOcor5 (REGOcor5
+EGOcor6 (REGOcor6
+EGOcor7 (REGOcor7
+EGOcor8 (REGOcor8"Å
+megasquirt_gp41
+EGOcor13 (REGOcor13
+EGOcor14 (REGOcor14
+EGOcor15 (REGOcor15
+EGOcor16 (REGOcor16"
+megasquirt_gp40
+EGOcor9 (REGOcor9
+EGOcor10 (REGOcor10
+EGOcor11 (REGOcor11
+EGOcor12 (REGOcor12"y
+megasquirt_gp38
+EGOcor1 (REGOcor1
+EGOcor2 (REGOcor2
+EGOcor3 (REGOcor3
+EGOcor4 (REGOcor4"q
+megasquirt_gp37
+EGOv13 (REGOv13
+EGOv14 (REGOv14
+EGOv15 (REGOv15
+EGOv16 (REGOv16"o
+megasquirt_gp36
+EGOv9 (REGOv9
+EGOv10 (REGOv10
+EGOv11 (REGOv11
+EGOv12 (REGOv12"i
+megasquirt_gp35
+EGOv5 (REGOv5
+EGOv6 (REGOv6
+EGOv7 (REGOv7
+EGOv8 (REGOv8"i
+megasquirt_gp34
+EGOv1 (REGOv1
+EGOv2 (REGOv2
+EGOv3 (REGOv3
+EGOv4 (REGOv4"Ì
+megasquirt_gp33
+	duty_pwm1 (RdutyPwm1
+	duty_pwm2 (RdutyPwm2
+	duty_pwm3 (RdutyPwm3
+	duty_pwm4 (RdutyPwm4
+	duty_pwm5 (RdutyPwm5
+	duty_pwm6 (RdutyPwm6
+gear (Rgear
+status8 (Rstatus8"ø
+megasquirt_gp32
+AFR9 (RAFR9
+AFR10 (RAFR10
+AFR11 (RAFR11
+AFR12 (RAFR12
+AFR13 (RAFR13
+AFR14 (RAFR14
+AFR15 (RAFR15
+AFR16 (RAFR16"±
+megasquirt_gp31
+AFR1 (RAFR1
+AFR2 (RAFR2
+AFR3 (RAFR3
+AFR4 (RAFR4
+AFR5 (RAFR5
+AFR6 (RAFR6
+AFR7 (RAFR7
+AFR8 (RAFR8"õ
+megasquirt_gp30
+accelx (Raccelx
+accely (Raccely
+accelz (Raccelz!
+stream_level (RstreamLevel
+
+water_duty (R	waterDuty"}
+megasquirt_gp29
+EAEfcor1 (REAEfcor1
+EAEfcor2 (REAEfcor2
+VSS1dot (RVSS1dot
+VSS2dot (RVSS2dot"Ü
+megasquirt_gp28'
+cl_idle_targ_rpm (RclIdleTargRpm
+tpsadc (Rtpsadc
+eaeload (Reaeload
+afrload (Rafrload"â
+megasquirt_gp27
+	canpwmin1 (R	canpwmin1
+	canpwmin2 (R	canpwmin2
+	canpwmin3 (R	canpwmin3
+	canpwmin4 (R	canpwmin4"«
+megasquirt_gp26#
+nitrous1_duty (Rnitrous1Duty#
+nitrous2_duty (Rnitrous2Duty*
+nitrous_timer_out (RnitrousTimerOut
+n2o_addfuel (R
+n2oAddfuel
+
+n2o_retard (R	n2oRetard"i
+megasquirt_gp25
+egt13 (Regt13
+egt14 (Regt14
+egt15 (Regt15
+egt16 (Regt16"g
+megasquirt_gp24
+egt9 (Regt9
+egt10 (Regt10
+egt11 (Regt11
+egt12 (Regt12"a
+megasquirt_gp23
+egt5 (Regt5
+egt6 (Regt6
+egt7 (Regt7
+egt8 (Regt8"a
+megasquirt_gp22
+egt1 (Regt1
+egt2 (Regt2
+egt3 (Regt3
+egt4 (Regt4"y
+megasquirt_gp21
+pwseq13 (Rpwseq13
+pwseq14 (Rpwseq14
+pwseq15 (Rpwseq15
+pwseq16 (Rpwseq16"w
+megasquirt_gp20
+pwseq9 (Rpwseq9
+pwseq10 (Rpwseq10
+pwseq11 (Rpwseq11
+pwseq12 (Rpwseq12"q
+megasquirt_gp19
+pwseq5 (Rpwseq5
+pwseq6 (Rpwseq6
+pwseq7 (Rpwseq7
+pwseq8 (Rpwseq8"q
+megasquirt_gp18
+pwseq1 (Rpwseq1
+pwseq2 (Rpwseq2
+pwseq3 (Rpwseq3
+pwseq4 (Rpwseq4"∞
+megasquirt_gp17 
+boost_targ_1 (R
+boostTarg1 
+boost_targ_2 (R
+boostTarg2
+	boostduty (R	boostduty
+
+boostduty2 (R
+boostduty2
+	maf_volts (RmafVolts"â
+megasquirt_gp16
+	sensors13 (R	sensors13
+	sensors14 (R	sensors14
+	sensors15 (R	sensors15
+	sensors16 (R	sensors16"á
+megasquirt_gp15
+sensors9 (Rsensors9
+	sensors10 (R	sensors10
+	sensors11 (R	sensors11
+	sensors12 (R	sensors12"Å
+megasquirt_gp14
+sensors5 (Rsensors5
+sensors6 (Rsensors6
+sensors7 (Rsensors7
+sensors8 (Rsensors8"Å
+megasquirt_gp13
+sensors1 (Rsensors1
+sensors2 (Rsensors2
+sensors3 (Rsensors3
+sensors4 (Rsensors4"M
+megasquirt_gp12
+	wallfuel1 (R	wallfuel1
+	wallfuel2 (R	wallfuel2"
+megasquirt_gp11
+	fuelload2 (R	fuelload2
+ignload (Rignload
+ignload2 (Rignload2
+airtemp (Rairtemp"«
+megasquirt_gp10
+status1 (Rstatus1
+status2 (Rstatus2
+status3 (Rstatus3
+status4 (Rstatus4
+status5 (Rstatus5
+status6 (Rstatus6
+status7 (Rstatus7"o
+megasquirt_gp9
+egoV1 (RegoV1
+egoV2 (RegoV2
+dwell (Rdwell
+	dwell_trl (RdwellTrl"r
+megasquirt_gp8
+MAFload (RMAFload
+fuelload (Rfuelload
+fuelcor (Rfuelcor
+MAF (RMAF"z
+megasquirt_gp7 
+cold_adv_deg (R
+coldAdvDeg
+TPSdot (RTPSdot
+MAPdot (RMAPdot
+RPMdot (RRPMdot"j
+megasquirt_gp6
+totalcor (Rtotalcor
+ve1 (Rve1
+ve2 (Rve2
+iacstep (Riacstep"Ä
+megasquirt_gp5
+warmcor (Rwarmcor
+tpsaccel (Rtpsaccel
+
+tpsfuelcut (R
+tpsfuelcut
+barocor (Rbarocor"r
+megasquirt_gp4
+knock (Rknock
+egocor1 (Regocor1
+egocor2 (Regocor2
+aircor (Raircor"l
+megasquirt_gp3
+tps (Rtps
+batt (Rbatt
+afr1_old (Rafr1Old
+afr2_old (Rafr2Old"Z
+megasquirt_gp2
+baro (Rbaro
+map (Rmap
+mat (Rmat
+clt (Rclt"√
+megasquirt_gp1
+adv_deg (RadvDeg
+squirt (Rsquirt
+engine (Rengine
+afrtgt1 (Rafrtgt1
+afrtgt2 (Rafrtgt2
+wbo2_en1 (Rwbo2En1
+wbo2_en2 (Rwbo2En2"`
+megasquirt_gp0
+seconds (Rseconds
+pw1 (Rpw1
+pw2 (Rpw2
+rpm (Rrpmbproto3

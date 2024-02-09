@@ -26,7 +26,7 @@ import logging
 
 async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2):
     with can.Bus(
-        channel=UdpMulticastBus.DEFAULT_GROUP_IPv6, interface='udp_multicast'
+        interface='socketcan', channel='can0', bitrate=500000
     ) as bus:
         reader = can.AsyncBufferedReader()
         listeners: List[MessageRecipient] = [
@@ -36,14 +36,16 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
         notifier = can.Notifier(bus, listeners, loop=loop)
         while True:
             msg = await reader.get_message()
-            decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
-            msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
-            msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
-
-            data = QueueData(msg.DESCRIPTOR.name, msg)
-            await queue.put(data)
-            await q2.put(data)
-
+            try:
+            	decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
+            	msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
+            	msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
+            	data = QueueData(msg.DESCRIPTOR.name, msg)
+            	await queue.put(data)
+            	await q2.put(data)
+            except:
+            	logger.error("Error on message decode")
+            	continue
 async def write_data_to_mcap(queue, mcap_writer):
     async with mcap_writer as mcw:
         while True:
@@ -53,7 +55,7 @@ async def fxglv_websocket_consume_data(queue, foxglove_server):
     async with foxglove_server as fz:
         while True:
             await fz.send_msgs_from_queue(queue)
-
+PORT = 8770
 async def run(logger):
     
     # for example, we will have CAN as our only input as of right now but we may need to add in 
@@ -76,7 +78,9 @@ async def run(logger):
 
 
     list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
-    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
+    
+    logger.info(f"Start server with port {PORT}")
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", PORT, "asdf", full_path, list_of_msg_names)
     
     mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
     
