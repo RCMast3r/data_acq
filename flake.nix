@@ -9,11 +9,12 @@
     mcap.url = "github:RCMast3r/py_mcap_nix";
     foxglove-websocket.url = "github:RCMast3r/py_foxglove_webserver_nix";
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
+    ht_can_pkg_flake.url = "github:hytech-racing/ht_can";
     nix-proto = { url = "github:notalltim/nix-proto"; };
   };
 
   outputs = { self, nixpkgs, utils, mcap-protobuf, mcap, foxglove-websocket
-    , asyncudp, nix-proto, ... }@inputs:
+    , asyncudp, nix-proto, ht_can_pkg_flake, ... }@inputs:
     let
       makePackageSet = pkgs: {
         py_data_acq_pkg = pkgs.py_data_acq_pkg;
@@ -47,6 +48,7 @@
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
+        ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
         mcap.overlays.default
         asyncudp.overlays.default
@@ -88,6 +90,7 @@
           py_data_acq_pkg
           py_dbc_proto_gen_pkg
           proto_gen_pkg
+          ht_can_pkg
           cmake
         ];
         # Setting up the environment variables you need during
@@ -96,12 +99,11 @@
         in ''
           path=${x86_pkgs.proto_gen_pkg}
           bin_path=$path"/bin"
-          dbc_path=$path"/dbc"
+          dbc_path=${x86_pkgs.ht_can_pkg}
           export BIN_PATH=$bin_path
           export DBC_PATH=$dbc_path
 
           echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
-
           export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
         '';
       };
@@ -110,10 +112,18 @@
         name = "nix-devshell";
         packages = with x86_pkgs; [
           # Development Tools
-
           py_dbc_proto_gen_pkg
-          protobuf
+          proto_gen_pkg
+          ht_can_pkg
         ];
+        shellHook =
+        ''
+          path=${x86_pkgs.proto_gen_pkg}
+          bin_path=$path"/bin"
+          dbc_path=${x86_pkgs.ht_can_pkg}
+          export BIN_PATH=$bin_path
+          export DBC_PATH=$dbc_path
+        '';
 
       };
 
