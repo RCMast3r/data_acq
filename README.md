@@ -19,7 +19,7 @@ TODO:
 - [x] binary schema generation from proto file in CI
     - I am thinking for this we can just use protoc in a dev shell similar to how I did the proto and dbc creation with the script
 - [x] platformio c/c++ library from DBC by making a platformio script (python / platformio)
-- [ ] integrate user created pcan SYM file into automated creation of dbc and proto file
+- [x] integrate user created pcan SYM file into automated creation of dbc and proto file
     - [PCAN editor](https://www.peak-system.com/PCAN-Symbol-Editor-6.416.0.html?&L=1) for creating the human readable SYM files
     - the cantools library can already use this as a description of the CAN network so the dbc file creation will be simplified a lot more
 
