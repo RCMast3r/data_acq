@@ -28,7 +28,6 @@ jobs:
       - run: |
           nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command dbc_to_proto.py
           nix develop .#ci --override-input nixpkgs github:NixOS/nixpkgs/release-${{ matrix.version}} --command protoc --include_imports --descriptor_set_out=hytech.bin hytech.proto
-          rm -rf $HOME
       - name: Get current date and time
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H_%M_%S')"
