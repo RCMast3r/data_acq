@@ -22,11 +22,14 @@ import logging
 #      - protobuf binary schema file location and file name
 #      - config to inform io handler (say for different CAN baudrates)
 
+can_methods = {
+    "debug": [UdpMulticastBus.DEFAULT_GROUP_IPv6, 'udp_multicast'],
+    "local_can_usb_KV": [0, 'kvaser'],
+}
 
-
-async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2):
+async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2, config):
     with can.Bus(
-        channel=UdpMulticastBus.DEFAULT_GROUP_IPv6, interface='udp_multicast'
+        channel=config[0], interface=config[1]
     ) as bus:
         reader = can.AsyncBufferedReader()
         listeners: List[MessageRecipient] = [
@@ -80,7 +83,7 @@ async def run(logger):
     
     mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
     
-    receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2))           
+    receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2, can_methods["debug"]))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))
     logger.info("created tasks")
