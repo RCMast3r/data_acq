@@ -115,6 +115,7 @@
           py_dbc_proto_gen_pkg
           proto_gen_pkg
           ht_can_pkg
+          protobuf
         ];
         shellHook =
         ''
