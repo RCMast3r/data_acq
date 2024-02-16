@@ -5,6 +5,7 @@ from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 from py_data_acq.common.common_types import QueueData
 import py_data_acq.common.protobuf_helpers as pb_helpers
+from py_data_acq.web_server.mcap_server import MCAPServer
 from hytech_np_proto_py import hytech_pb2
 from systemd.journal import JournalHandler
 import concurrent.futures
@@ -42,7 +43,7 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
             decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
             msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
             msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
-
+            
             data = QueueData(msg.DESCRIPTOR.name, msg)
             await queue.put(data)
             await q2.put(data)
@@ -82,16 +83,17 @@ async def run(logger):
     fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
     
     mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
-    
+    mcap_server = MCAPServer(mcap_writer=mcap_writer)
     receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2, can_methods["debug"]))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))
+    srv_task = asyncio.create_task(mcap_server.start_server())
     logger.info("created tasks")
     # in the mcap task I actually have to deserialize the any protobuf msg into the message ID and
     # the encoded message for the message id. I will need to handle the same association of message id
     # and schema in the foxglove websocket server. 
     
-    await asyncio.gather(receiver_task, fx_task, mcap_task)
+    await asyncio.gather(receiver_task, fx_task, mcap_task, srv_task)
 
 
 if __name__ == "__main__":
