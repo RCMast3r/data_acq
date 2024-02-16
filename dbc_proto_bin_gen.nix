@@ -10,7 +10,6 @@ pkgs.stdenv.mkDerivation rec {
   # Define the build phase to execute the scripts
   buildPhase = ''
     # Run the Python script
-    echo ${ht_can_pkg}
     dbc_to_proto.py ${ht_can_pkg}
     protoc --include_imports --descriptor_set_out=hytech.bin hytech.proto
   '';

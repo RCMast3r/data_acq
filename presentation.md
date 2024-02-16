@@ -42,7 +42,10 @@
     - we can use DBC files to create these proto files via a simple python script which has been implemented here:
         - https://github.com/RCMast3r/data_acq/blob/master/py_dbc_proto_gen/dbc_to_proto.py
 
-- foxglove studio (live view)
+- foxglove studio (live view and )
+    - foxglove studio can graph, show live video feed, and even show our GPS position on a google maps overlay.
+    - can run soley in a browser with no downloads required
+    - can re-play mcap data  
 
 - mcap files (run to run data reccording)
     - comparison to database approaches
