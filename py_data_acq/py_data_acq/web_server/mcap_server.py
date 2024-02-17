@@ -6,7 +6,7 @@ import py_data_acq.common.protobuf_helpers as pb_helpers
 from typing import Any
 
 class MCAPServer:
-    def __init__(self, host='127.0.0.1', port=6969, mcap_writer=None):
+    def __init__(self, host='0.0.0.0', port=6969, mcap_writer=None):
         self.host = host
         self.port = port
         self.mcap_writer = mcap_writer

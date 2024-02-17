@@ -1,4 +1,4 @@
-
+#!/usr/bin/env python
 import asyncio
 
 from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
