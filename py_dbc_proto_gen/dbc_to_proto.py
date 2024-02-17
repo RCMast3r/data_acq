@@ -28,7 +28,8 @@ def append_proto_message_from_CAN_message(file, can_msg: can.message.Message):
     line_index = 0
     for sig in can_msg.signals:
         line_index += 1
-        if sig.is_float or (
+        
+        if sig.is_float or ((sig.scale is not None) and (sig.scale != 1.0)) or (
             type(sig.conversion)
             is not type(conversion.IdentityConversion(is_float=False))
             and not type(
@@ -44,7 +45,7 @@ def append_proto_message_from_CAN_message(file, can_msg: can.message.Message):
                 + str(line_index)
                 + ";"
             )
-        elif sig.choices is not None:
+        elif sig.choices is not None and sig.length is not 1:
             line = (
                 "    string "
                 + create_field_name(sig.name)
