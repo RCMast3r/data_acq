@@ -1,5 +1,22 @@
 usage: 
 
+to get into a dev environment locally (on linux):
+1. install nix:
+
+```bash
+sh <(curl -L https://nixos.org/nix/install) --daemon
+```
+
+2. enable flakes:
+    - Add the following to `~/.config/nix/nix.conf` or `/etc/nix/nix.conf`:
+    ```
+    experimental-features = nix-command flakes
+    ```
+
+3. run `nix develop` to enter dev shell
+
+4. run `runner.py` for the local usb to CAN listener on host machine
+
 TODO:
 - [x] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
 - [x] make the deserialization task for unpacking received data from CAN in the data acq service script.
