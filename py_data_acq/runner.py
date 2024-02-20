@@ -26,27 +26,38 @@ import logging
 can_methods = {
     "debug": [UdpMulticastBus.DEFAULT_GROUP_IPv6, 'udp_multicast'],
     "local_can_usb_KV": [0, 'kvaser'],
+    "local_debug": ["vcan0", 'socketcan']
 }
+def find_can_interface():
+    """Find a CAN interface by checking /sys/class/net/."""
+    for interface in os.listdir('/sys/class/net/'):
+        if interface.startswith('can'):
+            return interface
+    return None
 
-async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2, config):
-    with can.Bus(
-        channel=config[0], interface=config[1]
-    ) as bus:
-        reader = can.AsyncBufferedReader()
-        listeners: List[MessageRecipient] = [
-            reader  # AsyncBufferedReader() listener
-        ]
-        loop = asyncio.get_running_loop()
-        notifier = can.Notifier(bus, listeners, loop=loop)
-        while True:
-            msg = await reader.get_message()
+async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2, can_bus):
+    loop = asyncio.get_event_loop()
+    reader = can.AsyncBufferedReader()
+    notifier = can.Notifier(can_bus, [reader], loop=loop)
+
+    while True:
+        # Wait for the next message from the buffer
+        msg = await reader.get_message()
+        try:
+
             decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
             msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
             msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
-            
             data = QueueData(msg.DESCRIPTOR.name, msg)
+            # await asyncio.sleep(1)
             await queue.put(data)
             await q2.put(data)
+        except:
+            pass
+
+    # Don't forget to stop the notifier to clean up resources.
+    notifier.stop()
+
 
 async def write_data_to_mcap(queue, mcap_writer):
     async with mcap_writer as mcw:
@@ -62,6 +73,23 @@ async def run(logger):
     
     # for example, we will have CAN as our only input as of right now but we may need to add in 
     # a sensor that inputs over UART or ethernet
+
+    can_interface = find_can_interface()
+    
+    if can_interface:
+        print(f"Found CAN interface: {can_interface}")
+        try:
+            # Attempt to initialize the CAN bus
+            bus = can.interface.Bus(channel=can_interface, bustype='socketcan')
+            print(f"Successfully initialized CAN bus on {can_interface}")
+            # Interface exists and bus is initialized, but this doesn't ensure the interface is 'up'
+        except can.CanError as e:
+            print(f"Failed to initialize CAN bus on {can_interface}: {e}")
+    else:
+
+        print("defaulting to using virtual can interface vcan0")
+        bus = can.Bus(interface='socketcan', channel='vcan0', receive_own_messages=True)
+
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
     path_to_bin = ""
@@ -84,7 +112,7 @@ async def run(logger):
     
     mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
     mcap_server = MCAPServer(mcap_writer=mcap_writer)
-    receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2, can_methods["debug"]))           
+    receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2, bus))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))
     srv_task = asyncio.create_task(mcap_server.start_server())
@@ -94,7 +122,10 @@ async def run(logger):
     # and schema in the foxglove websocket server. 
     
     await asyncio.gather(receiver_task, fx_task, mcap_task, srv_task)
+    # await asyncio.gather(receiver_task, fx_task, mcap_task)
 
+    # await asyncio.gather(receiver_task, mcap_task, srv_task)
+    # await asyncio.gather(receiver_task)
 
 if __name__ == "__main__":
     logging.basicConfig()

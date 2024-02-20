@@ -1,5 +1,6 @@
 from hytech_np_proto_py import hytech_pb2
 import google.protobuf.message_factory
+from cantools.database import *
 
 
 def get_msg_names_and_classes():
@@ -23,5 +24,8 @@ def pack_protobuf_msg(cantools_dict: dict, msg_name: str, message_classes):
     if msg_name in message_classes:
         pb_msg = message_classes[msg_name]()
     for key in cantools_dict.keys():
-        setattr(pb_msg, key, cantools_dict[key])
+        if(type(cantools_dict[key]) is namedsignalvalue.NamedSignalValue):
+            setattr(pb_msg, key, cantools_dict[key].value)
+        else:
+            setattr(pb_msg, key, cantools_dict[key])
     return pb_msg

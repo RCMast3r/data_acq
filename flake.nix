@@ -92,6 +92,7 @@
           proto_gen_pkg
           ht_can_pkg
           cmake
+          can-utils
         ];
         # Setting up the environment variables you need during
         # development.
