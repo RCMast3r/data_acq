@@ -17,8 +17,8 @@ class HTPBMcapWriter(Writer):
         self.message_classes = msg_classes
         now = datetime.now()
         date_time_filename = now.strftime("%m_%d_%Y_%H_%M_%S"+".mcap")
-        actual_path = os.path.join(mcap_base_path, date_time_filename)
-        self.writing_file = open(actual_path, "wb")
+        self.actual_path = os.path.join(mcap_base_path, date_time_filename)
+        self.writing_file = open(self.actual_path, "wb")
         super().__init__(self.writing_file)
 
     def __await__(self):

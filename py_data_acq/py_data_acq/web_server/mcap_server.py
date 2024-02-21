@@ -6,10 +6,11 @@ import py_data_acq.common.protobuf_helpers as pb_helpers
 from typing import Any
 
 class MCAPServer:
-    def __init__(self, host='0.0.0.0', port=6969, mcap_writer=None):
+    def __init__(self, host='0.0.0.0', port=6969, mcap_writer=None,path='.'):
         self.host = host
         self.port = port
         self.mcap_writer = mcap_writer
+        self.path = path
         if mcap_writer is not None:
             self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
         else:
@@ -77,7 +78,7 @@ class MCAPServer:
     async def start_mcap_generation(self):
         if self.mcap_writer is None:
             list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
-            self.mcap_writer = HTPBMcapWriter('.', list_of_msg_names, msg_pb_classes)
+            self.mcap_writer = HTPBMcapWriter(self.path, list_of_msg_names, msg_pb_classes)
         self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
 
     async def stop_mcap_generation(self):
