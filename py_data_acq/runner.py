@@ -108,7 +108,8 @@ async def run(logger):
 
     list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
     fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
-    if(os.path.exists('/etc/nixos')): 
+    if(os.path.exists('/etc/nixos')):
+        logger.info("detected running on nixos")
         mcap_writer = HTPBMcapWriter("/home/nixos/recordings", list_of_msg_names, True)
     else:
         mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
