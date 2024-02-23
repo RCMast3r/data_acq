@@ -2,6 +2,8 @@ import os
 import can
 import asyncio
 import cantools
+from ..common import protobuf_helpers
+from ..common.common_types import QueueData
 from can.interfaces.udp_multicast import UdpMulticastBus
 
 can_methods = {
@@ -26,7 +28,7 @@ def init_can():
         print(f"Found CAN interface: {can_interface}")
         try:
             # Attempt to initialize the CAN bus
-            bus = can.interface.Bus(channel=can_interface, bustype="socketcan")
+            bus = can.Bus(channel=can_interface, bustype="socketcan")
             print(f"Successfully initialized CAN bus on {can_interface}")
             # Interface exists and bus is initialized, but this doesn't ensure the interface is 'up'
         except can.CanError as e:
@@ -42,12 +44,11 @@ def init_can():
     return bus
 
 
-async def can_receiver(
-    can_msg_decoder: cantools.db.Database, message_classes, queue, q2
-):
+async def can_receiver(can_msg_decoder: cantools.db.Database, message_classes, q1, q2):
     # Get bus
     can_bus = init_can()
 
+    # Set some asyncio vars
     loop = asyncio.get_event_loop()
     reader = can.AsyncBufferedReader()
     notifier = can.Notifier(can_bus, [reader], loop=loop)
@@ -60,12 +61,12 @@ async def can_receiver(
                 msg.arbitration_id, msg.data, decode_containers=True
             )
             msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
-            msg = pb_helpers.pack_protobuf_msg(
+            msg = protobuf_helpers.pack_protobuf_msg(
                 decoded_msg, msg.name.lower(), message_classes
             )
             data = QueueData(msg.DESCRIPTOR.name, msg)
             # await asyncio.sleep(1)
-            await queue.put(data)
+            await q1.put(data)
             await q2.put(data)
         except:
             pass

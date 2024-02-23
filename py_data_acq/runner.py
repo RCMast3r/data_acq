@@ -5,7 +5,8 @@ from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 import py_data_acq.common.protobuf_helpers as pb_helpers
 from py_data_acq.web_server.mcap_server import MCAPServer
-from py_data_acq.io_handler.can_handle import can_receiver, init_can
+from py_data_acq.io_handler.can_handle import can_receiver
+from py_data_acq.io_handler.serial_handle import serial_reciever
 
 # from py_data_acq.io_handler.serial_handle import
 import sys
@@ -35,7 +36,7 @@ async def fxglv_websocket_consume_data(queue, foxglove_server):
 
 async def run(logger):
     # Init some bois
-    queue = asyncio.Queue()
+    queue1 = asyncio.Queue()
     queue2 = asyncio.Queue()
     path_to_bin = ""
     path_to_dbc = ""
@@ -68,10 +69,18 @@ async def run(logger):
     mcap_server = MCAPServer(mcap_writer=mcap_writer, path=path_to_mcap)
 
     # Setup receiver_task to listen to CAN
-    receiver_task = asyncio.create_task(can_receiver(db, msg_pb_classes, queue, queue2))
+    # receiver_task = asyncio.create_task(
+    #     can_receiver(db, msg_pb_classes, queue1, queue2)
+    # )
+
+    # BUG: This shit breaks and crashes everything, fix it
+    # And another for serial
+    receiver_task = asyncio.create_task(
+        serial_reciever(db, msg_pb_classes, queue1, queue2)
+    )
 
     # Setup other guys to respective asyncio tasks
-    fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
+    fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue1, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))
     srv_task = asyncio.create_task(mcap_server.start_server())
     logger.info("created tasks")

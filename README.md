@@ -1,4 +1,11 @@
-usage: 
+# Base person usage:
+1. Download foxglove studio at https://github.com/foxglove/studio/releases 
+2. Connect to the Pi's network 
+3. Open foxglove studio 
+4. Open a connection to the Pi's IP on port 8765 
+5. Look at data
+
+# dev usage: 
 
 to get into a dev environment locally (on linux):
 1. install nix:

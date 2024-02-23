@@ -18,6 +18,7 @@ python311Packages.buildPythonApplication {
     python311Packages.websockets
     python311Packages.pprintpp
     python311Packages.can
+    python311Packages.pyserial-asyncio
     asyncudp_pkg
     python311Packages.lz4
     python311Packages.zstandard

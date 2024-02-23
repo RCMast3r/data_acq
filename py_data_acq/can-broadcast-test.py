@@ -4,7 +4,7 @@ import can
 import cantools
 import os
 
-# Define the IP and port for the UDP socket
+# Define the bus to yap on
 bus1 = can.Bus(channel="vcan0", interface="socketcan")
 
 
