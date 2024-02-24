@@ -7,7 +7,6 @@ from py_data_acq.common.common_types import QueueData
 import py_data_acq.common.protobuf_helpers as pb_helpers
 from py_data_acq.web_server.mcap_server import MCAPServer
 from hytech_np_proto_py import hytech_pb2
-from systemd.journal import JournalHandler
 import concurrent.futures
 import sys
 import os
@@ -109,9 +108,13 @@ async def run(logger):
 
     list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
     fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "asdf", full_path, list_of_msg_names)
+    path_to_mcap = "."
+    if(os.path.exists('/etc/nixos')):
+        logger.info("detected running on nixos")
+        path_to_mcap = "/home/nixos/recordings"
     
-    mcap_writer = HTPBMcapWriter(".", list_of_msg_names, True)
-    mcap_server = MCAPServer(mcap_writer=mcap_writer)
+    mcap_writer = HTPBMcapWriter(path_to_mcap, list_of_msg_names, True)
+    mcap_server = MCAPServer(mcap_writer=mcap_writer, path=path_to_mcap)
     receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2, bus))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))

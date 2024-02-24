@@ -9,7 +9,7 @@ if ! ip link show up | grep -q can0; then
     sudo modprobe can_raw
 
     # Set the bitrate for can0
-    sudo ip link set can0 type can bitrate 5000000
+    sudo ip link set can0 type can bitrate 500000
 
     # Bring up can0 interface
     sudo ip link set up can0

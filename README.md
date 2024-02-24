@@ -17,14 +17,21 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 
 4. run `runner.py` for the local usb to CAN listener on host machine
 
+
+usage notes:
+- update to newest hytech CAN description:
+
+`nix flake lock --update-input ht_can_pkg_flake`
+
+by default, it uses a fixed version of the hytech CAN library and it must be manually updated. downstream usage of this can update this too via specifying it in the flake input as well if need be.
 TODO:
 - [x] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
 - [x] make the deserialization task for unpacking received data from CAN in the data acq service script.
-- [ ] create nixos module for py_data_acq
-- [ ] make ability to start / stop / control in general the data recording via grpc calls for the mcap writer task (pending nix-proto adjustment)
-- [ ] make user script / interface for the grpc calls for ease of interaction with the service (pending nix-proto adjustment)
+- [x] create nixos module for py_data_acq
+- [x] make ability to start / stop / control in general the data recording via grpc calls for the mcap writer task (pending nix-proto adjustment)
+- [x] make user script / interface for the grpc calls for ease of interaction with the service (pending nix-proto adjustment)
 
-- [ ] actually get current data from car into protobuf encoded CAN messages in an integration test
+- [x] actually get current data from car into protobuf encoded CAN messages in an integration test
 - [x] get nix-proto working with dbc input from url for creation of python lib
 - [x] get py_data_acq working in dev shell with nix-proto generated python lib for proto msg packing
 - [x] make service script that creates an instance of the mcap writer and the foxglove websocket
