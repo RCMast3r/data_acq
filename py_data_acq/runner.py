@@ -68,15 +68,16 @@ async def run(logger):
     mcap_writer = HTPBMcapWriter(path_to_mcap, list_of_msg_names, True)
     mcap_server = MCAPServer(mcap_writer=mcap_writer, path=path_to_mcap)
 
-    # Setup receiver_task to listen to CAN
-    # receiver_task = asyncio.create_task(
-    #     can_receiver(db, msg_pb_classes, queue1, queue2)
-    # )
-
-    # Setup receiver_task to listen to SERIAL
-    receiver_task = asyncio.create_task(
-        serial_reciever(db, msg_pb_classes, queue1, queue2)
-    )
+    # Get data source
+    match os.environ.get("D_SOURCE"):
+        case "SERIAL":
+            receiver_task = asyncio.create_task(
+                serial_reciever(db, msg_pb_classes, queue1, queue2)
+            )
+        case _:
+            receiver_task = asyncio.create_task(
+                can_receiver(db, msg_pb_classes, queue1, queue2)
+            )
 
     # Setup other guys to respective asyncio tasks
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue1, fx_s))
