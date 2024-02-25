@@ -51,7 +51,7 @@ async def run(logger):
 
     # Load everything
     fp_proto = os.path.join(path_to_bin, "hytech.bin")
-    fp_dbc = os.path.join(path_to_dbc, "hytech.dbc")
+    fp_dbc = os.path.join(path_to_dbc, "car.dbc")
     db = cantools.db.load_file(fp_dbc)
 
     # Start foxglove websocket and send message list
@@ -73,8 +73,7 @@ async def run(logger):
     #     can_receiver(db, msg_pb_classes, queue1, queue2)
     # )
 
-    # BUG: This shit breaks and crashes everything, fix it
-    # And another for serial
+    # Setup receiver_task to listen to SERIAL
     receiver_task = asyncio.create_task(
         serial_reciever(db, msg_pb_classes, queue1, queue2)
     )

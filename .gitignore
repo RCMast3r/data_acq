@@ -5,3 +5,4 @@ result
 result/
 .env
 hytech.proto
+dbc_to.proto

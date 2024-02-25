@@ -14,11 +14,6 @@ async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2)
         # Wait for the next message from the buffer, then break it into parts using the byte value for ","
         nl_byte = await reader.readline()
         vals = nl_byte.split(b",")
-        print(vals)
-        # This is fine
-        print(vals[0])
-        # BUG: This crashes everything, even with the rest of this commented out...
-        print(vals[1])
 
         try:
             # Get message data for foxglove
@@ -39,4 +34,5 @@ async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2)
             await q1.put(data)
             await q2.put(data)
         except:
+            print("Fail")
             pass

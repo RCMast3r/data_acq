@@ -9,12 +9,12 @@
     mcap.url = "github:RCMast3r/py_mcap_nix";
     foxglove-websocket.url = "github:RCMast3r/py_foxglove_webserver_nix";
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
-    ht_can_pkg_flake.url = "github:hytech-racing/ht_can";
-    nix-proto = { url = "github:notalltim/nix-proto"; };
+    can_pkg_flake.url = "github:KSU-MS/Nix_CAN";
+    nix-proto.url = "github:notalltim/nix-proto";
   };
 
   outputs = { self, nixpkgs, utils, mcap-protobuf, mcap, foxglove-websocket
-    , asyncudp, nix-proto, ht_can_pkg_flake, ... }@inputs:
+    , asyncudp, nix-proto, can_pkg_flake, ... }@inputs:
     let
       makePackageSet = pkgs: {
         py_data_acq_pkg = pkgs.py_data_acq_pkg;
@@ -48,7 +48,7 @@
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
-        ht_can_pkg_flake.overlays.default
+        can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
         mcap.overlays.default
         asyncudp.overlays.default
@@ -90,7 +90,7 @@
           py_data_acq_pkg
           py_dbc_proto_gen_pkg
           proto_gen_pkg
-          ht_can_pkg
+          can_pkg
           cmake
           can-utils
         ];
@@ -100,7 +100,7 @@
         in ''
           path=${x86_pkgs.proto_gen_pkg}
           bin_path=$path"/bin"
-          dbc_path=${x86_pkgs.ht_can_pkg}
+          dbc_path=${x86_pkgs.can_pkg}
           export BIN_PATH=$bin_path
           export DBC_PATH=$dbc_path
 
@@ -115,14 +115,14 @@
           # Development Tools
           py_dbc_proto_gen_pkg
           proto_gen_pkg
-          ht_can_pkg
+          can_pkg
           protobuf
         ];
         shellHook =
         ''
           path=${x86_pkgs.proto_gen_pkg}
           bin_path=$path"/bin"
-          dbc_path=${x86_pkgs.ht_can_pkg}
+          dbc_path=${x86_pkgs.can_pkg}
           export BIN_PATH=$bin_path
           export DBC_PATH=$dbc_path
         '';

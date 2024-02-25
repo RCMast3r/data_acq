@@ -1,25 +1,26 @@
 #!/usr/bin/env python
 import time
 import can
-import cantools
+import math
 import os
+from cantools import database
 
 # Define the bus to yap on
 bus1 = can.Bus(channel="vcan0", interface="socketcan")
 
 
+def generate_sine_wave(amplitude, frequency, phase_shift, time_variable):
+    return amplitude * math.sin(2 * math.pi * frequency * time_variable + phase_shift)
+
+
 def main():
+    # Load DBC into
     path_to_dbc = os.environ.get("DBC_PATH")
-    full_path = os.path.join(path_to_dbc, "hytech.dbc")
-    db = cantools.database.load_file(full_path)
+    full_path = os.path.join(path_to_dbc, "car.dbc")
+    db = database.load_file(full_path)
 
-    # Setup fake messages
-    msg = db.get_message_by_name("MC1_TORQUE_COMMAND")
-    rpm = db.get_message_by_name("MC4_SETPOINTS_COMMAND")
-
-    # Serialize the message to bytes
-    data = msg.encode({"torque_command": 100})
-    msg = can.Message(arbitration_id=msg.frame_id, is_extended_id=False, data=data)
+    # Setup fake message
+    rpm = db.get_message_by_name("M165_Motor_Position_Info")
 
     rpm_set = 100
     while 1:
@@ -27,19 +28,14 @@ def main():
             # Iterate example vals
             rpm_set = rpm_set + 1
 
-            # Send the guy
-            bus1.send(msg)
-
             # Serialize the message to bytes
+            rpm_set = generate_sine_wave(3000, 1, 90, time.time()) + 3000
             rpm_data = rpm.encode(
                 {
-                    "negative_torque_limit": 1,
-                    "positive_torque_limit": 1,
-                    "speed_setpoint_rpm": rpm_set,
-                    "remove_error": 1,
-                    "driver_enable": 1,
-                    "hv_enable": 1,
-                    "inverter_enable": 1,
+                    "D4_Delta_Resolver_Filtered": int(1),
+                    "D3_Electrical_Output_Frequency": int(1),
+                    "D2_Motor_Speed": rpm_set,
+                    "D1_Motor_Angle_Electrical": int(1),
                 }
             )
             rpm_msg = can.Message(
@@ -47,7 +43,7 @@ def main():
             )
             bus1.send(rpm_msg)
 
-            print("Message sent on {}".format(bus1.channel_info))
+            # print("Message sent on {}".format(bus1.channel_info))
         except can.CanError:
             print("Message NOT sent!  Please verify can0 is working first")
         time.sleep(0.1)
