@@ -7,7 +7,7 @@ from ..common.common_types import QueueData
 async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2):
     # Start asyncio on the port
     reader, writer = await serial_asyncio.open_serial_connection(
-        url="/dev/ttyUSB0", baudrate=230400
+        url="/dev/xboi", baudrate=230400
     )
 
     while True:
