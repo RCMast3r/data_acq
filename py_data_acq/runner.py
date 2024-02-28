@@ -87,7 +87,7 @@ async def run(logger):
     else:
 
         print("defaulting to using virtual can interface vcan0")
-        bus = can.Bus(interface='socketcan', channel='vcan0', receive_own_messages=True)
+        bus = can.Bus(channel=UdpMulticastBus.DEFAULT_GROUP_IPv6, interface='udp_multicast')
 
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
