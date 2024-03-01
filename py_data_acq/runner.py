@@ -23,7 +23,7 @@ import logging
 #      - config to inform io handler (say for different CAN baudrates)
 
 can_methods = {
-    "debug": [UdpMulticastBus.DEFAULT_GROUP_IPv6, 'udp_multicast'],
+    "debug": [UdpMulticastBus.DEFAULT_GROUP_IPv4, 'udp_multicast'],
     "local_can_usb_KV": [0, 'kvaser'],
     "local_debug": ["vcan0", 'socketcan']
 }
@@ -43,7 +43,6 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
         # Wait for the next message from the buffer
         msg = await reader.get_message()
         try:
-
             decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
             msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
             msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
@@ -87,7 +86,7 @@ async def run(logger):
     else:
 
         print("defaulting to using virtual can interface vcan0")
-        bus = can.Bus(interface='socketcan', channel='vcan0', receive_own_messages=True)
+        bus = can.Bus(channel=UdpMulticastBus.DEFAULT_GROUP_IPv6, interface='udp_multicast')
 
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
@@ -114,7 +113,7 @@ async def run(logger):
         path_to_mcap = "/home/nixos/recordings"
     
     mcap_writer = HTPBMcapWriter(path_to_mcap, list_of_msg_names, True)
-    mcap_server = MCAPServer(mcap_writer=mcap_writer, path=path_to_mcap)
+    mcap_server = MCAPServer(mcap_writer=mcap_writer, path=path_to_mcap, )
     receiver_task = asyncio.create_task(continuous_can_receiver(db, msg_pb_classes, queue, queue2, bus))           
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(queue2, mcap_writer))
