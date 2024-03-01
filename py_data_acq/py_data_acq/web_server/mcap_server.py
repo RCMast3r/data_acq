@@ -83,8 +83,9 @@ class MCAPServer:
 
     async def stop_mcap_generation(self):
         if self.mcap_writer is not None:
-            await self.mcap_writer.__aexit__(None, None, None)
+            # await self.mcap_writer.__aexit__(None, None, None)
             self.mcap_writer.finish()
+            self.mcap_writer.writing_file.close()
             self.mcap_status_message = "No MCAP file is being written."
             self.mcap_writer = None
 
