@@ -1,20 +1,18 @@
-import {useState} from "react";
+import React, {useState} from "react";
 
-export function StartStopButton() {
-
-    const [started, setStarted] = useState(false)
+export function StartStopButton({recording, setRecording}: {recording: boolean, setRecording: React.Dispatch<React.SetStateAction<boolean>>}) {
 
     function getButtonStyle() : string {
-        return started ? "btn btn-error" : "btn btn-success"
+        return recording ? "btn btn-error" : "btn btn-success"
     }
 
     function getButtonText() : string{
-        return started? "Stop Recording" : "Start Recording"
+        return recording ? "Stop Recording" : "Start Recording"
     }
 
     function toggleRecording() {
         //TODO: POST request
-        setStarted(!started)
+        setRecording(!recording)
     }
 
     return (
