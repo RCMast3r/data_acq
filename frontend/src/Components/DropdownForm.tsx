@@ -15,7 +15,6 @@ export function DropdownForm({title, options, data, setData, recording}:
                 <h4>{title + ':'}</h4>
             </article>
             <div className={"grow w-max"}/>
-            `
             <select value={data} className={"select select-bordered w-64"} onChange={e => setData(e.target.value)} disabled={recording}>
                 {options.map((option) => <option value={option}>{option}</option>)}
             </select>
