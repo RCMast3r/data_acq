@@ -10,7 +10,6 @@ export function TextForm({title, isNum, data, setData, recording}:
                              }) {
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        console.log("test1")
         if (isNum) {
             let newStr: string = ""
             for (let i = 0; i < e.target.value.length; i++) {
