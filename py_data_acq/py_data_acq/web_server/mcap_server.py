@@ -5,6 +5,7 @@ from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 from flask import Flask, request, jsonify
 import py_data_acq.common.protobuf_helpers as pb_helpers
 from typing import Any
+import os
 
 class MCAPServer:
     def __init__(self, host='0.0.0.0', port=6969, mcap_writer=None,path='.'):
@@ -82,6 +83,11 @@ class MCAPServer:
 
         @app.route('/stop', methods=['POST'])
         def stop_recording():
+            return jsonify()
+
+        @app.route('/offload', methods=['POST'])
+        def offload_data():
+            os.system("rsync -a ~/dir/to/MCAP_file username@192.168.1.101:~/destination/of/data")
             return jsonify()
 
         return app
