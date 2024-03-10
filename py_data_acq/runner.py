@@ -42,15 +42,22 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
     while True:
         # Wait for the next message from the buffer
         msg = await reader.get_message()
+
+        # print("got msg")
+        id = msg.arbitration_id 
         try:
             decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)
+            # print("decoded msg")
             msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
+            # print("got msg by id")
             msg = pb_helpers.pack_protobuf_msg(decoded_msg, msg.name.lower(), message_classes)
+            # print("created pb msg successfully")
             data = QueueData(msg.DESCRIPTOR.name, msg)
-            # await asyncio.sleep(1)
             await queue.put(data)
             await q2.put(data)
-        except:
+        except Exception as e:
+            # print(id)
+            # print(e)
             pass
 
     # Don't forget to stop the notifier to clean up resources.

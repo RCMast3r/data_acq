@@ -44,16 +44,16 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1709087269,
-        "narHash": "sha256-CvfLrX2s9ivtrGoenRLsAsQ1xOuSsHBOWB5WeXTcyKg=",
+        "lastModified": 1710043594,
+        "narHash": "sha256-4e3xRQKFDsTctkldh2kGMcDAsCmq4PoyNRJs7RYxqeQ=",
         "owner": "hytech-racing",
         "repo": "ht_can",
-        "rev": "2ca70d9bd3a7c7564f2e9c57616f100024bbf0bb",
+        "rev": "73b9092e1ee8c469d20738a0add07de287bcbfc8",
         "type": "github"
       },
       "original": {
         "owner": "hytech-racing",
-        "ref": "TPMS_add",
+        "ref": "23",
         "repo": "ht_can",
         "type": "github"
       }
