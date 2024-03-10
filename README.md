@@ -1,4 +1,4 @@
-usage: 
+## usage and development
 
 to get into a dev environment locally (on linux):
 1. install nix:
@@ -24,7 +24,9 @@ usage notes:
 `nix flake lock --update-input ht_can_pkg_flake`
 
 by default, it uses a fixed version of the hytech CAN library and it must be manually updated. downstream usage of this can update this too via specifying it in the flake input as well if need be.
-TODO:
+
+
+### TODO:
 - [x] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line
 - [x] make the deserialization task for unpacking received data from CAN in the data acq service script.
 - [x] create nixos module for py_data_acq
