@@ -40,6 +40,9 @@ class HTPBMcapWriter(Writer):
         super().write_message(topic=msg.DESCRIPTOR.name+"_data", message=msg, log_time=int(time.time_ns()), publish_time=int(time.time_ns()))
         return True
 
+    async def write_metadata(self, topic, message):
+        super().write_message(topic=topic, message=message)
+
     async def write_data(self, queue):
         msg = await queue.get()
         if msg is not None:

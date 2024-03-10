@@ -2,6 +2,7 @@ import socket
 import asyncio
 import json
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
+from flask import Flask, request, jsonify
 import py_data_acq.common.protobuf_helpers as pb_helpers
 from typing import Any
 
@@ -15,46 +16,6 @@ class MCAPServer:
             self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
         else:
             self.mcap_status_message = "No MCAP file is being written."
-        self.html_content = b"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCAP &#128064;</title>
-    <script>
-        function sendCommand(command) {
-        fetch('/' + command, { method: 'POST' })
-            .then(response => response.text())
-            .then(data => {
-                alert(data);
-                setTimeout(updateStatus, 1000)
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Error sending command: ' + command);
-            });
-        }
-        function updateStatus() {
-            fetch('/status') // Assume '/status' endpoint returns the current MCAP status
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('mcapStatus').innerText = data.statusMessage;
-                    document.getElementById('startBtn').disabled = data.isRecording;
-                    document.getElementById('stopBtn').disabled = !data.isRecording;
-                });
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            updateStatus();
-        }, false);
-    </script>
-</head>
-<body>
-    <h1>MCAP Control Panel</h1>
-    <button id="startBtn" onclick="sendCommand('start')">Start</button>
-    <button id="stopBtn" onclick="sendCommand('stop')">Stop</button>
-    <div id="mcapStatus">{{mcap_status}}</div>
-</body>
-</html>"""
 
     def __await__(self):
         async def closure():
@@ -68,18 +29,21 @@ class MCAPServer:
         return self
     async def __aexit__(self, exc_type: Any, exc_val: Any, traceback: Any):
         return self.stop_mcap_generation()
-    
-    # Creates page from inline html and updates with mcap_status
-    async def serve_file(self):
-        current_html_content = self.html_content.replace(b'{{mcap_status}}', self.mcap_status_message.encode())
-        header = b"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
-        return header + current_html_content
-        
-    async def start_mcap_generation(self):
+
+    async def start_mcap_generation(self, driver, trackName, eventType, carSetupId, drivetrainType, mass, wheelbase, firmwareRev):
         if self.mcap_writer is None:
             list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
             self.mcap_writer = HTPBMcapWriter(self.path, list_of_msg_names, msg_pb_classes)
         self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
+
+        await self.mcap_writer.write_metadata('driver', driver)
+        await self.mcap_writer.write_metadata('trackName', trackName)
+        await self.mcap_writer.write_metadata('eventType', eventType)
+        await self.mcap_writer.write_metadata('carSetupId', carSetupId)
+        await self.mcap_writer.write_metadata('drivetrainType', drivetrainType)
+        await self.mcap_writer.write_metadata('mass', mass)
+        await self.mcap_writer.write_metadata('wheelbase', wheelbase)
+        await self.mcap_writer.write_metadata('firmwareRev', firmwareRev)
 
     async def stop_mcap_generation(self):
         if self.mcap_writer is not None:
@@ -97,41 +61,31 @@ class MCAPServer:
         else:
             return "Command not recognized."
 
+    def create_app(self):
+        app = Flask(__name__)
 
-    # Checks if client connected and updates them on different actions
-    async def handle_client(self, reader, writer):
-        addr = writer.get_extra_info('peername')
-        print(f"Connected with {addr}")
-        
-        data = await reader.read(1024)
-        request = data.decode('utf-8').strip()
-        method, url, _ = request.split(' ', 2)
+        @app.route('/start', methods=['POST'])
+        def start_recording():
 
-        if method == 'POST':
-            response_text = self.handle_command(url)
-            response = (f"HTTP/1.1 200 OK\r\n"
-                        f"Content-Type: text/plain\r\n\r\n"
-                        f"{response_text}").encode('utf-8')
-        elif url == '/status':
-            status_response = {
-                "statusMessage": self.mcap_status_message,
-                "isRecording": self.mcap_writer is not None
-            }
-            response_bytes = json.dumps(status_response).encode('utf-8')
-            response = (f"HTTP/1.1 200 OK\r\n"
-                        f"Content-Type: application/json\r\n\r\n").encode('utf-8') + response_bytes
-        else:
-            response = await self.serve_file()
+            requestData = request.get_json()
+            driver = requestData['driver']
+            trackName = requestData['trackName']
+            eventType = requestData['eventType']
+            carSetupId = requestData['carSetupId']
+            drivetrainType = requestData['drivetrainType']
+            mass = requestData['mass']
+            wheelbase = requestData['wheelbase']
+            firmwareRev = requestData['firmwareRev']
 
-        writer.write(response)
-        await writer.drain()
-        writer.close()
-        await writer.wait_closed()
-        
+            asyncio.create_task(self.start_mcap_generation(driver, trackName, eventType, carSetupId, drivetrainType, mass, wheelbase, firmwareRev))
+            return jsonify(message='success')
+
+        @app.route('/stop', methods=['POST'])
+        def stop_recording():
+            return jsonify()
+
+        return app
+
     async def start_server(self):
-        url = f"http://{self.host}:{self.port}"
-        print(f"MCAP Server started on {url}")
-        server = await asyncio.start_server(self.handle_client, self.host, self.port)
-
-        async with server:
-            await server.serve_forever()
+        app = self.create_app()
+        app.run(host=self.host, port=self.port)
