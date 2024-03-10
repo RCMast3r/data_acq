@@ -6,6 +6,7 @@ from flask import Flask, request, jsonify
 import py_data_acq.common.protobuf_helpers as pb_helpers
 from py_data_acq.common.common_types import MCAPServerStatusQueueData, MCAPFileWriterCommand
 from typing import Any
+import os
 
 class MCAPServer:
     def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969):
@@ -88,6 +89,11 @@ class MCAPServer:
 
         @app.route('/stop', methods=['POST'])
         def stop_recording():
+            return jsonify()
+
+        @app.route('/offload', methods=['POST'])
+        def offload_data():
+            os.system("rsync -a ~/dir/to/MCAP_file username@192.168.1.101:~/destination/of/data")
             return jsonify()
 
         return app

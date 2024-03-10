@@ -4,6 +4,7 @@ import {StartStopButton} from "./Components/StartStopButton";
 import {PageTitle} from "./Components/PageTitle";
 import {TextForm} from "./Components/TextForm";
 import {DropdownForm} from "./Components/DropdownForm";
+import {OffloadButton} from "./OffloadButton";
 
 const drivers = ["Driver 1", "Driver 2", "Driver 3"]
 const tracks = ["Track 1", "Track 2", "Track 3"]
@@ -40,6 +41,8 @@ function App() {
             <div className={"flex"}>
                 <StartStopButton recording={recording} setRecording={setRecording} driverInput={driverInput} trackNameInput={trackNameInput} eventTypeInput={eventTypeInput} carSetupIdInput={carSetupIdInput} drivetrainTypeInput={drivetrainTypeInput} massInput={massInput} wheelbaseInput={wheelbaseInput} firmwareRevInput={firmwareRevInput}/>
             </div>
+
+            <OffloadButton/>
         </div>
     );
 }
