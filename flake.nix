@@ -34,6 +34,9 @@
       proto_gen_overlay = final: prev: {
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
+      frontend_overlay = final: prev: {
+        frontend_pkg = final.callPackage ./frontend.nix
+      };
 
       nix_protos_overlays = nix-proto.generateOverlays' {
         hytech_np = { proto_gen_pkg }:
@@ -48,6 +51,7 @@
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
+        frontend_overlay
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
         mcap.overlays.default
@@ -90,6 +94,7 @@
           py_data_acq_pkg
           py_dbc_proto_gen_pkg
           proto_gen_pkg
+          frontend_pkg
           ht_can_pkg
           cmake
           can-utils
@@ -116,6 +121,7 @@
           py_dbc_proto_gen_pkg
           proto_gen_pkg
           ht_can_pkg
+          frontend_pkg
           protobuf
         ];
         shellHook =
