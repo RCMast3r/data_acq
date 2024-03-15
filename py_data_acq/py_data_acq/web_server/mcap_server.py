@@ -87,7 +87,7 @@ class MCAPServer:
 
         @app.route('/offload', methods=['POST'])
         def offload_data():
-            os.system("rsync -a ~/dir/to/MCAP_file username@192.168.1.101:~/destination/of/data")
+            os.system("rsync -a ~/recordings urname@192.168.1.101:~/destination/of/data")
             return jsonify()
 
         return app
