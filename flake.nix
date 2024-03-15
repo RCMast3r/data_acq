@@ -24,10 +24,11 @@
         hytech_np_proto_py = pkgs.hytech_np_proto_py;
         default = pkgs.py_data_acq_pkg;
       };
-
+      
       py_data_acq_overlay = final: prev: {
         py_data_acq_pkg = final.callPackage ./default.nix { };
       };
+      
       py_dbc_proto_gen_overlay = final: prev: {
         py_dbc_proto_gen_pkg = final.callPackage ./dbc_proto_gen_script.nix { };
       };
@@ -35,7 +36,7 @@
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
       frontend_overlay = final: prev: {
-        frontend_pkg = final.callPackage ./frontend.nix
+        frontend_pkg = final.callPackage ./frontend.nix { };
       };
 
       nix_protos_overlays = nix-proto.generateOverlays' {
@@ -75,9 +76,27 @@
           ++ nix-proto.lib.overlayToList nix_protos_overlays;
       };
 
+      darwin_pkgs = import nixpkgs {
+        system = "aarch64-darwin";
+        # inherit system;
+        # system = builtins.currentSystem;
+        overlays = [ self.overlays.default ]
+          ++ nix-proto.lib.overlayToList nix_protos_overlays;
+      };
+
+      x86_darwin_pkgs = import nixpkgs {
+        system = "x86_64-darwin";
+        # inherit system;
+        # system = builtins.currentSystem;
+        overlays = [ self.overlays.default ]
+          ++ nix-proto.lib.overlayToList nix_protos_overlays;
+      };
+
       packageSets = {
         "x86_64-linux" = makePackageSet x86_pkgs;
         "aarch64-linux" = makePackageSet arm_pkgs;
+        "aarch64-darwin" = makePackageSet darwin_pkgs;
+        "x86_64-darwin" = makePackageSet x86_darwin_pkgs;
         # Add more systems as needed
       };
     in {
@@ -113,6 +132,50 @@
           export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
         '';
       };
+      devShells.aarch64-darwin.default = darwin_pkgs.mkShell rec {
+        # Update the name to something that suites your project.
+        name = "nix-devshell";
+        packages = with darwin_pkgs; [
+          # Development Tools
+          py_dbc_proto_gen_pkg
+          proto_gen_pkg
+          ht_can_pkg
+          frontend_pkg
+          protobuf
+        ];
+        shellHook =
+        ''
+          path=${darwin_pkgs.proto_gen_pkg}
+          bin_path=$path"/bin"
+          dbc_path=${darwin_pkgs.ht_can_pkg}
+          export BIN_PATH=$bin_path
+          export DBC_PATH=$dbc_path
+        '';
+
+      };
+
+      devShells.x86_64-darwin.default = x86_darwin_pkgs.mkShell rec {
+        # Update the name to something that suites your project.
+        name = "nix-devshell";
+        packages = with x86_darwin_pkgs; [
+          # Development Tools
+          py_dbc_proto_gen_pkg
+          proto_gen_pkg
+          ht_can_pkg
+          frontend_pkg
+          protobuf
+        ];
+        shellHook =
+        ''
+          path=${darwin_pkgs.proto_gen_pkg}
+          bin_path=$path"/bin"
+          dbc_path=${darwin_pkgs.ht_can_pkg}
+          export BIN_PATH=$bin_path
+          export DBC_PATH=$dbc_path
+        '';
+
+      };
+
       devShells.x86_64-linux.ci = x86_pkgs.mkShell rec {
         # Update the name to something that suites your project.
         name = "nix-devshell";
@@ -134,6 +197,5 @@
         '';
 
       };
-
     };
 }
