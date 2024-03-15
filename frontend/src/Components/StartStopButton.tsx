@@ -1,13 +1,12 @@
 import React from "react";
 
 export function StartStopButton({recording, setRecording, driverInput, trackNameInput, eventTypeInput,
-                                 carSetupIdInput, drivetrainTypeInput, massInput, wheelbaseInput, firmwareRevInput}: {
+                                 drivetrainTypeInput, massInput, wheelbaseInput, firmwareRevInput}: {
     recording: boolean,
     setRecording: React.Dispatch<React.SetStateAction<boolean>>,
     driverInput: string,
     trackNameInput: string,
     eventTypeInput: string,
-    carSetupIdInput: string,
     drivetrainTypeInput: string,
     massInput: string,
     wheelbaseInput: string,
@@ -26,7 +25,6 @@ export function StartStopButton({recording, setRecording, driverInput, trackName
         if(driverInput.length === 0) return true
         if(trackNameInput.length === 0) return true
         if(eventTypeInput.length === 0) return true
-        if(carSetupIdInput.length === 0) return true
         if(drivetrainTypeInput.length === 0) return true
         if(massInput.length === 0) return true
         if(wheelbaseInput.length === 0) return true
@@ -55,7 +53,6 @@ export function StartStopButton({recording, setRecording, driverInput, trackName
                 driver: driverInput,
                 trackName: trackNameInput,
                 eventType: eventTypeInput,
-                carSetupId: carSetupIdInput,
                 drivetrainType: drivetrainTypeInput,
                 mass: parseFloat(massInput),
                 wheelbase: parseFloat(wheelbaseInput),
