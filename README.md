@@ -120,3 +120,8 @@ flowchart TD
 
 kvaser u100 pinout:
 ![Alt text](image.png)
+
+
+get files from the car: 
+
+```rsync -azP nixos@192.168.40.1:/home/nixos/recordings ~/hytech_mcaps```

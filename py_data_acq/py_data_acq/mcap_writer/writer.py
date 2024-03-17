@@ -34,12 +34,13 @@ class HTPBMcapWriter(Writer):
     def __aenter__(self):
         return self
     async def __aexit__(self, exc_type: Any, exc_val: Any, traceback: Any):
+        super().finish()
         self.writing_file.close()
-        return super().finish()
     
     async def write_msg(self, msg):
         
         super().write_message(topic=msg.DESCRIPTOR.name+"_data", message=msg, log_time=int(time.time_ns()), publish_time=int(time.time_ns()))
+        self.writing_file.flush()
         return True
 
     async def write_data(self, queue):
