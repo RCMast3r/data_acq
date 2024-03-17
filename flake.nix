@@ -11,10 +11,12 @@
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
     ht_can_pkg_flake.url = "github:hytech-racing/ht_can";
     nix-proto = { url = "github:notalltim/nix-proto"; };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs = { self, nixpkgs, utils, mcap-protobuf, mcap, foxglove-websocket
-    , asyncudp, nix-proto, ht_can_pkg_flake, ... }@inputs:
+    , asyncudp, nix-proto, ht_can_pkg_flake, flake-utils, ... } @inputs:
+    flake-utils.lib.eachSystem ["aarch64-darwin" "aarch64-linux" "x86_64-linux" "x86_64-darwin"] (system:
     let
       makePackageSet = pkgs: {
         py_data_acq_pkg = pkgs.py_data_acq_pkg;
@@ -48,6 +50,9 @@
             version = "1.0.0";
           };
       };
+
+
+
       my_overlays = [
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
@@ -59,56 +64,19 @@
         asyncudp.overlays.default
         foxglove-websocket.overlays.default
       ] ++ nix-proto.lib.overlayToList nix_protos_overlays;
-      system = builtins.currentSystem;
-      x86_pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        # inherit system;
-        # system = builtins.currentSystem;
-        overlays = [ self.overlays.default ]
-          ++ nix-proto.lib.overlayToList nix_protos_overlays;
+
+      pkgs = import nixpkgs {
+        inherit system;
+        config = {
+          #allowUnsupportedSystem = true;
+        };
+        overlays = my_overlays;
       };
 
-      arm_pkgs = import nixpkgs {
-        system = "aarch64-linux";
-        # inherit system;
-        # system = builtins.currentSystem;
-        overlays = [ self.overlays.default ]
-          ++ nix-proto.lib.overlayToList nix_protos_overlays;
-      };
 
-      darwin_pkgs = import nixpkgs {
-        system = "aarch64-darwin";
-        # inherit system;
-        # system = builtins.currentSystem;
-        overlays = [ self.overlays.default ]
-          ++ nix-proto.lib.overlayToList nix_protos_overlays;
-      };
-
-      x86_darwin_pkgs = import nixpkgs {
-        system = "x86_64-darwin";
-        # inherit system;
-        # system = builtins.currentSystem;
-        overlays = [ self.overlays.default ]
-          ++ nix-proto.lib.overlayToList nix_protos_overlays;
-      };
-
-      packageSets = {
-        "x86_64-linux" = makePackageSet x86_pkgs;
-        "aarch64-linux" = makePackageSet arm_pkgs;
-        "aarch64-darwin" = makePackageSet darwin_pkgs;
-        "x86_64-darwin" = makePackageSet x86_darwin_pkgs;
-        # Add more systems as needed
-      };
-    in {
-
-      overlays.default = nixpkgs.lib.composeManyExtensions my_overlays;
-
-      packages = packageSets;
-
-      devShells.x86_64-linux.default = x86_pkgs.mkShell rec {
-        # Update the name to something that suites your project.
+      shared_shell = pkgs.mkShell {
         name = "nix-devshell";
-        packages = with x86_pkgs; [
+        buildInputs = with pkgs; [
           jq
           py_data_acq_pkg
           py_dbc_proto_gen_pkg
@@ -118,13 +86,11 @@
           cmake
           can-utils
         ];
-        # Setting up the environment variables you need during
-        # development.
-        shellHook = let icon = "f121";
+        shellHook = let icon = "f121";  name = "nix-devshell";
         in ''
-          path=${x86_pkgs.proto_gen_pkg}
+          path=${pkgs.proto_gen_pkg}
           bin_path=$path"/bin"
-          dbc_path=${x86_pkgs.ht_can_pkg}
+          dbc_path=${pkgs.ht_can_pkg}
           export BIN_PATH=$bin_path
           export DBC_PATH=$dbc_path
 
@@ -132,70 +98,14 @@
           export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
         '';
       };
-      devShells.aarch64-darwin.default = darwin_pkgs.mkShell rec {
-        # Update the name to something that suites your project.
-        name = "nix-devshell";
-        packages = with darwin_pkgs; [
-          # Development Tools
-          py_dbc_proto_gen_pkg
-          proto_gen_pkg
-          ht_can_pkg
-          frontend_pkg
-          protobuf
-        ];
-        shellHook =
-        ''
-          path=${darwin_pkgs.proto_gen_pkg}
-          bin_path=$path"/bin"
-          dbc_path=${darwin_pkgs.ht_can_pkg}
-          export BIN_PATH=$bin_path
-          export DBC_PATH=$dbc_path
-        '';
-
+      
+    in {
+      overlays.default = nixpkgs.lib.composeManyExtensions my_overlays;
+      
+      devShells = {
+        default = shared_shell;
       };
+      
 
-      devShells.x86_64-darwin.default = x86_darwin_pkgs.mkShell rec {
-        # Update the name to something that suites your project.
-        name = "nix-devshell";
-        packages = with x86_darwin_pkgs; [
-          # Development Tools
-          py_dbc_proto_gen_pkg
-          proto_gen_pkg
-          ht_can_pkg
-          frontend_pkg
-          protobuf
-        ];
-        shellHook =
-        ''
-          path=${darwin_pkgs.proto_gen_pkg}
-          bin_path=$path"/bin"
-          dbc_path=${darwin_pkgs.ht_can_pkg}
-          export BIN_PATH=$bin_path
-          export DBC_PATH=$dbc_path
-        '';
-
-      };
-
-      devShells.x86_64-linux.ci = x86_pkgs.mkShell rec {
-        # Update the name to something that suites your project.
-        name = "nix-devshell";
-        packages = with x86_pkgs; [
-          # Development Tools
-          py_dbc_proto_gen_pkg
-          proto_gen_pkg
-          ht_can_pkg
-          frontend_pkg
-          protobuf
-        ];
-        shellHook =
-        ''
-          path=${x86_pkgs.proto_gen_pkg}
-          bin_path=$path"/bin"
-          dbc_path=${x86_pkgs.ht_can_pkg}
-          export BIN_PATH=$bin_path
-          export DBC_PATH=$dbc_path
-        '';
-
-      };
-    };
+    });
 }
