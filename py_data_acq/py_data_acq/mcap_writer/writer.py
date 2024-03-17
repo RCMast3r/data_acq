@@ -30,9 +30,11 @@ class HTPBMcapWriter(Writer):
         return self
     def __exit__(self, exc_, exc_type_, tb_):
         super().finish()
+        self.writing_file.close()
     def __aenter__(self):
         return self
     async def __aexit__(self, exc_type: Any, exc_val: Any, traceback: Any):
+        self.writing_file.close()
         return super().finish()
     
     async def write_msg(self, msg):
