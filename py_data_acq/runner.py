@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import asyncio
 
 from py_data_acq.can_interface import continuous_can_receiver
 from py_data_acq.vectornav_interface import continuous_vn_receiver
@@ -20,6 +19,7 @@ import can
 from can.interfaces.udp_multicast import UdpMulticastBus
 import cantools
 import logging
+import asyncio
 
 
 # TODO we may want to have a config file handling to set params such as:

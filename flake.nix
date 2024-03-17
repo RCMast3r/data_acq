@@ -9,12 +9,13 @@
     mcap.url = "github:RCMast3r/py_mcap_nix";
     foxglove-websocket.url = "github:RCMast3r/py_foxglove_webserver_nix";
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
-    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/27";
+    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/vectornav_msgs";
+    py_vn_driver.url = "github:hytech-racing/py_vn_driver";
     nix-proto = { url = "github:notalltim/nix-proto"; };
   };
 
   outputs = { self, nixpkgs, utils, mcap-protobuf, mcap, foxglove-websocket
-    , asyncudp, nix-proto, ht_can_pkg_flake, ... }@inputs:
+    , asyncudp, nix-proto, ht_can_pkg_flake, py_vn_driver, ... }@inputs:
     let
       makePackageSet = pkgs: {
         py_data_acq_pkg = pkgs.py_data_acq_pkg;
@@ -34,6 +35,9 @@
       proto_gen_overlay = final: prev: {
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
+      py_foxglove_protobuf_schemas_overlay = final: prev: {
+        py_foxglove_protobuf_schemas = final.callPackage ./py_foxglove_protobuf_schemas.nix { };
+      };
 
       nix_protos_overlays = nix-proto.generateOverlays' {
         hytech_np = { proto_gen_pkg }:
@@ -48,8 +52,11 @@
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
+        py_foxglove_protobuf_schemas_overlay
+        
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
+        py_vn_driver.overlays.default
         mcap.overlays.default
         asyncudp.overlays.default
         foxglove-websocket.overlays.default

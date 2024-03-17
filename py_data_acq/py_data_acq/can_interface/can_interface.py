@@ -1,3 +1,8 @@
+import asyncio
+import can
+import concurrent.futures
+import cantools
+
 async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2, can_bus):
     loop = asyncio.get_event_loop()
     reader = can.AsyncBufferedReader()
