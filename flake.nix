@@ -12,6 +12,7 @@
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
     ht_can_pkg_flake.url = "github:hytech-racing/ht_can/41";
     nix-proto = { url = "github:notalltim/nix-proto"; };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs =
