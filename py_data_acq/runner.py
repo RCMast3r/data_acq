@@ -155,7 +155,7 @@ async def run(logger):
         logger.info("detected running on nixos")
         path_to_mcap = "/home/nixos/recordings"
 
-    init_writing_on_start = False
+    init_writing_on_start = True
     mcap_writer_status_queue = asyncio.Queue(maxsize=1)
     mcap_writer_cmd_queue = asyncio.Queue(maxsize=1)
     mcap_writer = HTPBMcapWriter(path_to_mcap, init_writing_on_start)
