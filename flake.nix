@@ -48,6 +48,18 @@
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
 
+      crccheck_overlay = final: prev: {
+        python3Packages = prev.python3Packages // {
+          crccheck = prev.python3Packages.crccheck.overridePythonAttrs
+            (oldAttrs: {
+              # Adjust these attributes as necessary for your build
+              buildInputs = oldAttrs.buildInputs ++ [ prev.stdenv.cc ] ++ (if prev.stdenv.isDarwin then [ prev.darwin.apple_sdk.frameworks.CoreFoundation ] else [ ]);
+              doCheck = false; # Optionally disable checks
+            });
+        };
+      };
+
+
       nix_protos_overlays = nix-proto.generateOverlays' {
         hytech_np = { proto_gen_pkg }:
           nix-proto.mkProtoDerivation {
@@ -61,6 +73,7 @@
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
+        crccheck_overlay
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
         mcap.overlays.default
