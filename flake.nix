@@ -93,6 +93,7 @@
           ht_can_pkg
           cmake
           can-utils
+          python311Packages.scipy
         ];
         # Setting up the environment variables you need during
         # development.
