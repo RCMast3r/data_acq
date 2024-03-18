@@ -49,8 +49,8 @@
       };
 
       crccheck_overlay = final: prev: {
-        python3Packages = prev.python3Packages // {
-          crccheck = prev.python3Packages.crccheck.overridePythonAttrs
+        python311Packages = prev.python311Packages // {
+          crccheck = prev.python311Packages.crccheck.overridePythonAttrs
             (oldAttrs: {
               # Adjust these attributes as necessary for your build
               buildInputs = oldAttrs.buildInputs ++ [ prev.stdenv.cc ] ++ (if prev.stdenv.isDarwin then [ prev.darwin.apple_sdk.frameworks.CoreFoundation ] else [ ]);
