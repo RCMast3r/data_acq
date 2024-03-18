@@ -10,8 +10,8 @@ import os
 from hytech_np_proto_py import hytech_pb2
 
 # Define the IP and port for the UDP socket
-# bus1 = can.interface.Bus('can0', bustype='virtual')
-bus1 = can.Bus(channel="can0", interface='socketcan')
+bus1 = can.interface.Bus(channel=UdpMulticastBus.DEFAULT_GROUP_IPv6, interface="udp_multicast")
+# bus1 = can.Bus(channel="can0", interface='socketcan')
 def main():
     path_to_dbc = os.environ.get('DBC_PATH')
     full_path = os.path.join(path_to_dbc, "hytech.dbc") 

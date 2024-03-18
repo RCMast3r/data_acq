@@ -3,19 +3,25 @@ import asyncio
 import json
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 import py_data_acq.common.protobuf_helpers as pb_helpers
+from py_data_acq.common.common_types import MCAPServerStatusQueueData, MCAPFileWriterCommand
 from typing import Any
 
 class MCAPServer:
-    def __init__(self, host='0.0.0.0', port=6969, mcap_writer=None,path='.'):
+    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969):
         self.host = host
         self.port = port
-        self.mcap_writer = mcap_writer
-        self.path = path
-        if mcap_writer is not None:
-            self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
+        
+        self.is_writing = init_writing
+        self.cmd_queue = writer_command_queue
+        self.status_queue = writer_status_queue
+        
+        if(init_writing):
+            self.is_writing = True
+            self.mcap_status_message = f"An MCAP file is being written: {init_filename}"
         else:
+            self.is_writing = False
             self.mcap_status_message = "No MCAP file is being written."
-        self.html_content = b"""<!DOCTYPE html>
+        self.html_content = b"""<!DOCTYPE html>    
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -75,30 +81,29 @@ class MCAPServer:
         header = b"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n"
         return header + current_html_content
         
-    async def start_mcap_generation(self):
-        if self.mcap_writer is None:
-            list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
-            self.mcap_writer = HTPBMcapWriter(self.path, list_of_msg_names, msg_pb_classes)
-        self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
-
-    async def stop_mcap_generation(self):
-        if self.mcap_writer is not None:
-            # await self.mcap_writer.__aexit__(None, None, None)
-            self.mcap_writer.finish()
-            self.mcap_writer.writing_file.close()
-            self.mcap_status_message = "No MCAP file is being written."
-            self.mcap_writer = None
+    async def start_stop_mcap_generation(self, input_cmd: bool):
+        await self.cmd_queue.put(MCAPFileWriterCommand(input_cmd))
+        while True:
+            # Wait for the next message from the queue
+            message = await self.status_queue.get()
+            if message.is_writing:
+                self.is_writing = True
+                self.mcap_status_message = f"An MCAP file is being written: {message.writing_file}"
+            else:
+                self.is_writing = False
+                self.mcap_status_message = f"No MCAP file is being written."
+                # Important: Mark the current task as done to allow the queue to proceed
+            self.status_queue.task_done()
 
     def handle_command(self, command):
         if command == '/start':
-            asyncio.create_task(self.start_mcap_generation())
+            asyncio.create_task(self.start_stop_mcap_generation(True))
             return "MCAP generation started."
         elif command == '/stop':
-            asyncio.create_task(self.stop_mcap_generation())
+            asyncio.create_task(self.start_stop_mcap_generation(False))
             return "MCAP generation stopped."
         else:
             return "Command not recognized."
-
 
     # Checks if client connected and updates them on different actions
     async def handle_client(self, reader, writer):
@@ -117,7 +122,7 @@ class MCAPServer:
         elif url == '/status':
             status_response = {
                 "statusMessage": self.mcap_status_message,
-                "isRecording": self.mcap_writer is not None
+                "isRecording": self.is_writing 
             }
             response_bytes = json.dumps(status_response).encode('utf-8')
             response = (f"HTTP/1.1 200 OK\r\n"
