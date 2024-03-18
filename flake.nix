@@ -68,8 +68,8 @@
         foxglove-websocket.overlays.default
       ] ++ nix-proto.lib.overlayToList nix_protos_overlays;
       pkgs = import nixpkgs {
-        inherit system;
         overlays = my_overlays;
+        inherit system;
       };
 
       shared_shell = pkgs.mkShell rec {
@@ -122,8 +122,7 @@
       };
     in
     {
-
-      overlays.default = nixpkgs.lib.composeManyExtensions my_overlays;
+      overlays = my_overlays;
       devShells = {
         default = shared_shell;
         ci = ci_shell;
