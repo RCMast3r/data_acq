@@ -12,7 +12,6 @@
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
     ht_can_pkg_flake.url = "github:hytech-racing/ht_can/41";
     nix-proto = { url = "github:notalltim/nix-proto"; };
-    flake-utils.url = "github:numtide/flake-utils";
   };
 
   outputs =
@@ -40,11 +39,10 @@
         vn_protos_np_proto_py = pkgs.vn_protos_np_proto_py;
         default = pkgs.py_data_acq_pkg;
       };
-      
+
       py_data_acq_overlay = final: prev: {
         py_data_acq_pkg = final.callPackage ./default.nix { };
       };
-      
       py_dbc_proto_gen_overlay = final: prev: {
         py_dbc_proto_gen_pkg = final.callPackage ./dbc_proto_gen_script.nix { };
       };
@@ -114,7 +112,6 @@
           py_data_acq_pkg
           py_dbc_proto_gen_pkg
           proto_gen_pkg
-          frontend_pkg
           ht_can_pkg
           cmake
           can-utils
