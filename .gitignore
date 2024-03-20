@@ -7,3 +7,4 @@ result/
 .idea/
 *.mat
 *.log
+.DS_Store
