@@ -15,7 +15,8 @@ python311Packages.buildPythonApplication {
   version = "1.0.1";
 
   propagatedBuildInputs = [
-    python311Packages.cantools
+    (python311Packages.cantools.overridePythonAttrs (_: { doCheck = false; }))
+    #python311Packages.cantools
     #python311Packages.systemd
     python311Packages.websockets
     python311Packages.pprintpp
