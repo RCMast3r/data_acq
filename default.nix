@@ -28,6 +28,7 @@ python311Packages.buildPythonApplication {
     py_mcap_pkg
     hytech_np_proto_py
     proto_gen_pkg
+    python311Packages.flask
   ];
 
   src = ./py_data_acq;
