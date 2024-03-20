@@ -103,6 +103,9 @@
       pkgs = import nixpkgs {
         overlays = my_overlays;
         inherit system;
+        config = {
+          allowUnsupportedSystem = true;
+        };
       };
 
       shared_shell = pkgs.mkShell rec {
