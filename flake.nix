@@ -10,7 +10,7 @@
     mcap.url = "github:RCMast3r/py_mcap_nix";
     foxglove-websocket.url = "github:RCMast3r/py_foxglove_webserver_nix";
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
-    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/27";
+    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/e4066438c1101371ebf5fffc72f6a9bc9b71031c";
     nix-proto = { url = "github:notalltim/nix-proto"; };
   };
 
@@ -79,7 +79,7 @@
           py_data_acq_pkg
           py_dbc_proto_gen_pkg
           proto_gen_pkg
-          ht_can_pkg
+          ht_can_pkg_flake.devShells.aarch64-darwin.default
           cmake
           #can-utils
           python311Packages.scipy
