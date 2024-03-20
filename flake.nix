@@ -115,7 +115,7 @@
           py_data_acq_pkg
           py_dbc_proto_gen_pkg
           proto_gen_pkg
-          ht_can_pkg_flake.devShells.aarch64-darwin.default
+          ht_can_pkg
           cmake
           can-utils
           python311Packages.scipy

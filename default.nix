@@ -32,6 +32,7 @@ python311Packages.buildPythonApplication {
     proto_gen_pkg
     py_foxglove_protobuf_schemas
     vn_protos_np_proto_py
+    python311Packages.flask
   ];
 
   src = ./py_data_acq;
