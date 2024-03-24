@@ -1,17 +1,17 @@
 import React from "react";
 
-export function StartStopButton({recording, setRecording, driverInput, trackNameInput, eventTypeInput,
-                                 drivetrainTypeInput, massInput, wheelbaseInput, firmwareRevInput}: {
-    recording: boolean,
-    setRecording: React.Dispatch<React.SetStateAction<boolean>>,
-    driverInput: string,
-    trackNameInput: string,
-    eventTypeInput: string,
-    drivetrainTypeInput: string,
-    massInput: string,
-    wheelbaseInput: string,
-    firmwareRevInput: string
-}) {
+export function StartStopButton({ recording, setRecording, driverInput, trackNameInput, eventTypeInput,
+    drivetrainTypeInput, massInput, wheelbaseInput, firmwareRevInput }: {
+        recording: boolean,
+        setRecording: React.Dispatch<React.SetStateAction<boolean>>,
+        driverInput: string,
+        trackNameInput: string,
+        eventTypeInput: string,
+        drivetrainTypeInput: string,
+        massInput: string,
+        wheelbaseInput: string,
+        firmwareRevInput: string
+    }) {
 
     function getButtonStyle(): string {
         return recording ? "btn btn-error" : "btn btn-success"
@@ -22,13 +22,13 @@ export function StartStopButton({recording, setRecording, driverInput, trackName
     }
 
     function isDisabled(): boolean {
-        if(driverInput.length === 0) return true
-        if(trackNameInput.length === 0) return true
-        if(eventTypeInput.length === 0) return true
-        if(drivetrainTypeInput.length === 0) return true
-        if(massInput.length === 0) return true
-        if(wheelbaseInput.length === 0) return true
-        if(firmwareRevInput.length === 0) return true
+        if (driverInput.length === 0) return true
+        if (trackNameInput.length === 0) return true
+        if (eventTypeInput.length === 0) return true
+        if (drivetrainTypeInput.length === 0) return true
+        if (massInput.length === 0) return true
+        if (wheelbaseInput.length === 0) return true
+        if (firmwareRevInput.length === 0) return true
         return false
     }
 
@@ -70,12 +70,12 @@ export function StartStopButton({recording, setRecording, driverInput, trackName
     async function toggleRecording() {
         if (recording) {
             const stoppedRecording = await stopRecording()
-            if(stoppedRecording){
+            if (stoppedRecording) {
                 setRecording(false)
             }
         } else {
             const startedRecording = await startRecording()
-            if(startedRecording){
+            if (startedRecording) {
                 setRecording(true)
             }
         }

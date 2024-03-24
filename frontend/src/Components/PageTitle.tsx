@@ -1,3 +1,5 @@
+import React from 'react'
+
 export function PageTitle() {
     return (
         <article className={"prose"}>

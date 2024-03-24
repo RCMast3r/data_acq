@@ -1,13 +1,13 @@
 import React from "react";
 
-export function TextForm({title, isNum, data, setData, recording}:
-                             {
-                                 title: string,
-                                 isNum: boolean,
-                                 data: string,
-                                 setData: React.Dispatch<React.SetStateAction<string>>,
-                                 recording: boolean
-                             }) {
+export function TextForm({ title, isNum, data, setData, recording }:
+    {
+        title: string,
+        isNum: boolean,
+        data: string,
+        setData: React.Dispatch<React.SetStateAction<string>>,
+        recording: boolean
+    }) {
 
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         if (isNum) {
@@ -28,9 +28,9 @@ export function TextForm({title, isNum, data, setData, recording}:
             <article className={"prose"}>
                 <h4>{title + ':'}</h4>
             </article>
-            <div className={"grow w-max"}/>
+            <div className={"grow w-max"} />
             <input value={data} onChange={handleChange} className={"input input-bordered w-64"}
-                   disabled={recording}/>
+                disabled={recording} />
         </div>
     )
 }
