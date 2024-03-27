@@ -48,6 +48,10 @@
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
 
+      frontend_overlay = final: prev: {
+        frontend_pkg = final.callPackage ./frontend.nix { };
+      };
+
       nix_protos_overlays = nix-proto.generateOverlays' {
         hytech_np = { proto_gen_pkg }:
           nix-proto.mkProtoDerivation {
@@ -58,6 +62,7 @@
           };
       };
       my_overlays = [
+        frontend_overlay 
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
@@ -132,6 +137,7 @@
       };
 
       packages = rec {
+        frontend_pkg = pkgs.frontend_pkg.frontend;
         default = pkgs.py_data_acq_pkg;
         py_dbc_proto_gen_pkg = pkgs.py_data_acq_pkg;
         proto_gen_pkg = pkgs.proto_gen_pkg;
