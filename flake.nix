@@ -89,6 +89,7 @@
           proto_gen_pkg
           ht_can_pkg
           cmake
+          nodejs
           #can-utils
           python311Packages.scipy
         ];
@@ -117,6 +118,7 @@
           proto_gen_pkg
           ht_can_pkg
           protobuf
+          frontend_pkg
         ];
         shellHook =
           ''

@@ -27,11 +27,19 @@ in
         
         ln -s ${generated.nodeDependencies}/lib/node_modules ./node_modules
         export PATH="${generated.nodeDependencies}/bin:$PATH"
+        
         npm run build
       '';
       installPhase = ''
         ls
+        mkdir -p $out/build
+        cp tailwind.config.js $out/
+        cp tsconfig.json $out/
+        cp -r public $out/
+        cp -r src $out/
         cp -r build $out/
+        cp package.json $out/
+        ln -sf ${generated.nodeDependencies}/lib/node_modules $out/node_modules
       '';
     };
 }
