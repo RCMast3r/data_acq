@@ -133,6 +133,8 @@
           ht_can_pkg
           cmake
           can-utils
+          nodejs
+          #can-utils
           python311Packages.scipy
         ];
         # Setting up the environment variables you need during
@@ -161,6 +163,7 @@
           ht_can_pkg
           frontend_pkg
           protobuf
+          frontend_pkg
         ];
         shellHook =
           ''

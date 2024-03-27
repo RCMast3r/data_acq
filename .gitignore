@@ -8,3 +8,4 @@ result/
 *.mat
 *.log
 .DS_Store
+*.mat
