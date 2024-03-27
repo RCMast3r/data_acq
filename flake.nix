@@ -52,6 +52,20 @@
       py_foxglove_protobuf_schemas_overlay = final: prev: {
         py_foxglove_protobuf_schemas = final.callPackage ./py_foxglove_protobuf_schemas.nix { };
       };
+
+      frontend_overlay = final: prev: {
+        frontend_pkg = final.callPackage ./frontend.nix { };
+      };
+
+      nix_protos_overlays = nix-proto.generateOverlays' {
+        hytech_np = { proto_gen_pkg }:
+          nix-proto.mkProtoDerivation {
+            name = "hytech_np";
+            buildInputs = [ proto_gen_pkg ];
+            src = proto_gen_pkg.out + "/proto";
+            version = "1.0.0";
+          };
+      };
       frontend_overlay = final: prev: {
         frontend_pkg = final.callPackage ./frontend.nix { };
       };
@@ -88,6 +102,7 @@
             };
           });
         })
+
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
@@ -166,6 +181,7 @@
       };
 
       packages = rec {
+        frontend_pkg = pkgs.frontend_pkg.frontend;
         default = pkgs.py_data_acq_pkg;
         py_dbc_proto_gen_pkg = pkgs.py_data_acq_pkg;
         proto_gen_pkg = pkgs.proto_gen_pkg;
