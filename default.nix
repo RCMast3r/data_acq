@@ -15,7 +15,7 @@ python311Packages.buildPythonApplication {
   propagatedBuildInputs = [
     (python311Packages.cantools.overridePythonAttrs (_: { doCheck = false; }))
     #python311Packages.cantools
-    #python311Packages.systemd
+    #python311Packages.systemd   #commented out cuz linux only
     python311Packages.websockets
     python311Packages.pprintpp
     python311Packages.can
@@ -29,6 +29,8 @@ python311Packages.buildPythonApplication {
     hytech_np_proto_py
     proto_gen_pkg
     python311Packages.flask
+
+    
   ];
 
   src = ./py_data_acq;
