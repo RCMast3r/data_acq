@@ -43,14 +43,18 @@ class MCAPServer:
             self.mcap_writer = HTPBMcapWriter(self.path, list_of_msg_names, msg_pb_classes)
         self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
 
-        await self.mcap_writer.write_metadata('driver', driver)
-        await self.mcap_writer.write_metadata('trackName', trackName)
-        await self.mcap_writer.write_metadata('eventType', eventType)
-        await self.mcap_writer.write_metadata('carSetupId', carSetupId)
-        await self.mcap_writer.write_metadata('drivetrainType', drivetrainType)
-        await self.mcap_writer.write_metadata('mass', mass)
-        await self.mcap_writer.write_metadata('wheelbase', wheelbase)
-        await self.mcap_writer.write_metadata('firmwareRev', firmwareRev)
+        metadata = {
+            "driver": driver,
+            "trackName": trackName,
+            "eventType": eventType,
+            "carSetupId": carSetupId,
+            "drivetrainType": drivetrainType,
+            "mass": mass,
+            "wheelbase": wheelbase,
+            "firmwareRev": firmwareRev
+        }
+
+        await self.mcap_writer.write_metadata('setup', metadata)
 
     async def stop_mcap_generation(self):
         if self.mcap_writer is not None:

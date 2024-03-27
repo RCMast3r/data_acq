@@ -78,8 +78,8 @@ class HTPBMcapWriter:
             self.writing_file.flush()
         return True
 
-    async def write_metadata(self, topic, message):
-        super().write_message(topic=topic, message=message)
+    async def write_metadata(self, name, metadata):
+        self.mcap_writer_class._writer.add_metadata(name=name, data=metadata)
 
     async def write_data(self, queue):
         msg = await queue.get()
