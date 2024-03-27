@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - master
-    paths:
-      - py_dbc_proto_gen/**
   pull_request:
     branches:
       - master

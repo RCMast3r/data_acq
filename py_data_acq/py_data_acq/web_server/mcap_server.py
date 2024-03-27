@@ -4,18 +4,24 @@ import json
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 from flask import Flask, request, jsonify
 import py_data_acq.common.protobuf_helpers as pb_helpers
+from py_data_acq.common.common_types import MCAPServerStatusQueueData, MCAPFileWriterCommand
 from typing import Any
 import os
 
 class MCAPServer:
-    def __init__(self, host='0.0.0.0', port=6969, mcap_writer=None,path='.'):
+    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969):
         self.host = host
         self.port = port
-        self.mcap_writer = mcap_writer
-        self.path = path
-        if mcap_writer is not None:
-            self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
+        
+        self.is_writing = init_writing
+        self.cmd_queue = writer_command_queue
+        self.status_queue = writer_status_queue
+        
+        if(init_writing):
+            self.is_writing = True
+            self.mcap_status_message = f"An MCAP file is being written: {init_filename}"
         else:
+            self.is_writing = False
             self.mcap_status_message = "No MCAP file is being written."
 
     def __await__(self):
@@ -54,10 +60,10 @@ class MCAPServer:
 
     def handle_command(self, command):
         if command == '/start':
-            asyncio.create_task(self.start_mcap_generation())
+            asyncio.create_task(self.start_stop_mcap_generation(True))
             return "MCAP generation started."
         elif command == '/stop':
-            asyncio.create_task(self.stop_mcap_generation())
+            asyncio.create_task(self.start_stop_mcap_generation(False))
             return "MCAP generation stopped."
         else:
             return "Command not recognized."

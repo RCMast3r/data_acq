@@ -10,7 +10,7 @@
     mcap.url = "github:RCMast3r/py_mcap_nix";
     foxglove-websocket.url = "github:RCMast3r/py_foxglove_webserver_nix";
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
-    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/e4066438c1101371ebf5fffc72f6a9bc9b71031c";
+    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/37";
     nix-proto = { url = "github:notalltim/nix-proto"; };
   };
 
@@ -63,6 +63,16 @@
       };
       my_overlays = [
         frontend_overlay 
+        (self: super: {
+            cantools = super.cantools.overridePythonAttrs (old: rec {
+              version = "39.4.5";
+              src = old.fetchPypi {
+                pname = "cantools";
+                inherit version;
+                # hash = "sha256-JQn+rtpy/OA2deLszSKEuxyttqBzcAil50H+JDHUdCE=";
+              };
+            });
+          })
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay

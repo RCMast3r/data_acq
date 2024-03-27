@@ -25,7 +25,7 @@ def pack_protobuf_msg(cantools_dict: dict, msg_name: str, message_classes):
         pb_msg = message_classes[msg_name]()
     for key in cantools_dict.keys():
         if(type(cantools_dict[key]) is namedsignalvalue.NamedSignalValue):
-            setattr(pb_msg, key, cantools_dict[key].value)
+            setattr(pb_msg, key, str(cantools_dict[key].value))
         else:
             setattr(pb_msg, key, cantools_dict[key])
     return pb_msg
