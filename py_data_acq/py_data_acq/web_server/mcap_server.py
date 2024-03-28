@@ -38,36 +38,19 @@ class MCAPServer:
     async def __aexit__(self, exc_type: Any, exc_val: Any, traceback: Any):
         return self.stop_mcap_generation()
 
-    async def start_mcap_generation(self, driver, trackName, eventType, carSetupId, drivetrainType, mass, wheelbase, firmwareRev):
-        if self.mcap_writer is None:
-            list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
-            self.mcap_writer = HTPBMcapWriter(self.path, list_of_msg_names, msg_pb_classes)
-        self.mcap_status_message = f"An MCAP file is being written: {self.mcap_writer.writing_file.name}"
-
-        await self.mcap_writer.write_metadata('driver', driver)
-        await self.mcap_writer.write_metadata('trackName', trackName)
-        await self.mcap_writer.write_metadata('eventType', eventType)
-        await self.mcap_writer.write_metadata('carSetupId', carSetupId)
-        await self.mcap_writer.write_metadata('drivetrainType', drivetrainType)
-        await self.mcap_writer.write_metadata('mass', mass)
-        await self.mcap_writer.write_metadata('wheelbase', wheelbase)
-        await self.mcap_writer.write_metadata('firmwareRev', firmwareRev)
-
-    async def stop_mcap_generation(self):
-        if self.mcap_writer is not None:
-            await self.mcap_writer.__aexit__(None, None, None)
-            self.mcap_status_message = "No MCAP file is being written."
-            self.mcap_writer = None
-
-    def handle_command(self, command):
-        if command == '/start':
-            asyncio.create_task(self.start_stop_mcap_generation(True))
-            return "MCAP generation started."
-        elif command == '/stop':
-            asyncio.create_task(self.start_stop_mcap_generation(False))
-            return "MCAP generation stopped."
-        else:
-            return "Command not recognized."
+    async def start_stop_mcap_generation(self, input_cmd: bool):
+        await self.cmd_queue.put(MCAPFileWriterCommand(input_cmd))
+        while True:
+            # Wait for the next message from the queue
+            message = await self.status_queue.get()
+            if message.is_writing:
+                self.is_writing = True
+                self.mcap_status_message = f"An MCAP file is being written: {message.writing_file}"
+            else:
+                self.is_writing = False
+                self.mcap_status_message = f"No MCAP file is being written."
+                # Important: Mark the current task as done to allow the queue to proceed
+            self.status_queue.task_done()
 
     def create_app(self):
         app = Flask(__name__)
@@ -75,26 +58,27 @@ class MCAPServer:
 
         @app.route('/start', methods=['POST'])
         def start_recording():
-            #
-            # requestData = request.get_json()
-            # driver = requestData['driver']
-            # trackName = requestData['trackName']
-            # eventType = requestData['eventType']
-            # drivetrainType = requestData['drivetrainType']
-            # mass = requestData['mass']
-            # wheelbase = requestData['wheelbase']
-            # firmwareRev = requestData['firmwareRev']
-            #
-            # asyncio.create_task(self.start_mcap_generation(driver, trackName, eventType, drivetrainType, mass, wheelbase, firmwareRev))
+
+            requestData = request.get_json()
+            driver = requestData['driver']
+            trackName = requestData['trackName']
+            eventType = requestData['eventType']
+            drivetrainType = requestData['drivetrainType']
+            mass = requestData['mass']
+            wheelbase = requestData['wheelbase']
+            firmwareRev = requestData['firmwareRev']
+
+            asyncio.create_task(self.start_stop_mcap_generation(True))
             return jsonify(message='success')
 
         @app.route('/stop', methods=['POST'])
         def stop_recording():
+            asyncio.create_task(self.start_stop_mcap_generation(False))
             return jsonify()
 
         @app.route('/offload', methods=['POST'])
         def offload_data():
-            os.system("rsync -a ~/recordings urname@192.168.1.101:~/destination/of/data")
+            # os.system("rsync -a ~/recordings urname@192.168.1.101:~/destination/of/data")
             return jsonify()
 
         return app
