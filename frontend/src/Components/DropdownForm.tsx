@@ -18,6 +18,9 @@ export function DropdownForm({ title, options, data, setData, recording }:
             <select value={data} className={"select select-bordered w-64"} onChange={e => setData(e.target.value)} disabled={recording}>
                 {options.map((option) => <option value={option}>{option}</option>)}
             </select>
+            <button className={"btn"}>
+                +
+            </button>
         </div>
 
     )

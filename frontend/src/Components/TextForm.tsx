@@ -24,7 +24,7 @@ export function TextForm({ title, isNum, data, setData, recording }:
     }
 
     return (
-        <div className={"flex flex-row items-center w-96"}>
+        <div className={"flex flex-row items-center w-80"}>
             <article className={"prose"}>
                 <h4>{title + ':'}</h4>
             </article>
