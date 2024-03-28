@@ -33,8 +33,7 @@ python311Packages.buildPythonApplication {
     py_foxglove_protobuf_schemas
     vn_protos_np_proto_py
     python311Packages.flask
-
-    
+    python311Packages.flask-cors
   ];
 
   src = ./py_data_acq;

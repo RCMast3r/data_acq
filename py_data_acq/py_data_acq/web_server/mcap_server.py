@@ -3,6 +3,7 @@ import asyncio
 import json
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import py_data_acq.common.protobuf_helpers as pb_helpers
 from py_data_acq.common.common_types import MCAPServerStatusQueueData, MCAPFileWriterCommand
 from typing import Any
@@ -99,4 +100,5 @@ class MCAPServer:
 
     async def start_server(self):
         app = self.create_app()
+        CORS(app)
         app.run(host=self.host, port=self.port)
