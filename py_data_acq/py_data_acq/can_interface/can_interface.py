@@ -3,6 +3,7 @@ import can
 import concurrent.futures
 import cantools
 
+from py_data_acq.common.common_types import QueueData
 async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message_classes, queue, q2, can_bus):
     loop = asyncio.get_event_loop()
     reader = can.AsyncBufferedReader()
@@ -12,7 +13,6 @@ async def continuous_can_receiver(can_msg_decoder: cantools.db.Database, message
         # Wait for the next message from the buffer
         msg = await reader.get_message()
 
-        # print("got msg")
         id = msg.arbitration_id 
         try:
             decoded_msg = can_msg_decoder.decode_message(msg.arbitration_id, msg.data, decode_containers=True)

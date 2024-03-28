@@ -78,7 +78,6 @@ class HTPBMcapWriter:
             self.writing_file.flush()
         return True
 
-    async def write_data(self, queue):
-        msg = await queue.get()
-        if msg is not None:
-            return await self.write_msg(msg.pb_msg)
+    async def write_data(self, data):
+        if data is not None:
+            return await self.write_msg(data.pb_msg)

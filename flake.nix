@@ -12,7 +12,6 @@
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
     ht_can_pkg_flake.url = "github:hytech-racing/ht_can/40";
     nix-proto = { url = "github:notalltim/nix-proto"; };
-    vn_driver_lib.url = "github:RCMast3r/vn_driver_lib";
   };
 
   outputs =
@@ -36,7 +35,9 @@
         py_dbc_proto_gen_pkg = pkgs.py_dbc_proto_gen_pkg;
         proto_gen_pkg = pkgs.proto_gen_pkg;
         hytech_np = pkgs.hytech_np;
+        vn_protos_np = pkgs.vn_protos_np;
         hytech_np_proto_py = pkgs.hytech_np_proto_py;
+        vn_protos_np_proto_py = pkgs.vn_protos_np_proto_py;
         default = pkgs.py_data_acq_pkg;
       };
 
@@ -53,31 +54,42 @@
         py_foxglove_protobuf_schemas = final.callPackage ./py_foxglove_protobuf_schemas.nix { };
       };
 
-      nix_protos_overlays = nix-proto.generateOverlays' {
-        hytech_np = { proto_gen_pkg }:
-          nix-proto.mkProtoDerivation {
-            name = "hytech_np";
-            buildInputs = [ proto_gen_pkg ];
-            src = proto_gen_pkg.out + "/proto";
-            version = "1.0.0";
-          };
-      };
+      nix_protos_overlays = nix-proto.generateOverlays'
+        {
+          hytech_np = { proto_gen_pkg }:
+            nix-proto.mkProtoDerivation {
+              name = "hytech_np";
+              buildInputs = [ proto_gen_pkg ];
+              src = proto_gen_pkg.out + "/proto";
+              version = "1.0.0";
+            };
+          vn_protos_np = { hytech_np }:
+            nix-proto.mkProtoDerivation {
+              name = "vn_protos_np";
+              src = nix-proto.lib.srcFromNamespace {
+                root = ./proto;
+                namespace = "vectornav_proto";
+              };
+              version = "1.0.0";
+              protoDeps = [ hytech_np ];
+            };
+        };
       my_overlays = [
         (self: super: {
-            cantools = super.cantools.overridePythonAttrs (old: rec {
-              version = "39.4.5";
-              src = old.fetchPypi {
-                pname = "cantools";
-                inherit version;
-                # hash = "sha256-JQn+rtpy/OA2deLszSKEuxyttqBzcAil50H+JDHUdCE=";
-              };
-            });
-          })
+          cantools = super.cantools.overridePythonAttrs (old: rec {
+            version = "39.4.5";
+            src = old.fetchPypi {
+              pname = "cantools";
+              inherit version;
+              # hash = "sha256-JQn+rtpy/OA2deLszSKEuxyttqBzcAil50H+JDHUdCE=";
+            };
+          });
+        })
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
         py_foxglove_protobuf_schemas_overlay
-        
+
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
         vn_driver_lib.overlays.default
@@ -98,7 +110,7 @@
           py_dbc_proto_gen_pkg
           proto_gen_pkg
           ht_can_pkg
-          cmake
+          cmak>e
           can-utils
           python311Packages.scipy
         ];
@@ -151,7 +163,9 @@
         py_dbc_proto_gen_pkg = pkgs.py_data_acq_pkg;
         proto_gen_pkg = pkgs.proto_gen_pkg;
         hytech_np = pkgs.hytech_np;
+        vn_protos_np = pkgs.vn_protos_np;
         hytech_np_proto_py = pkgs.hytech_np_proto_py;
+        vn_protos_np_proto_py = pkgs.vn_protos_np_proto_py;
       };
 
     });

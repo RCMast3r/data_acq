@@ -1,22 +1,39 @@
-from vectornav_lib import *
 import asyncio
-import can
-import concurrent.futures
+import socket
+import asyncudp
 
-# TODO import standard foxglove protos
-# TODO import generated vectornav protos
-
-async def continuous_standalone_vn_receiver(queue, q2, message_classes):
-    vn = VNUSB_lib(sys.argv[1], 115200)
+from py_data_acq.common.common_types import QueueData
+from vn_protos_np_proto_py.vectornav_proto import wrapper_pb2
+async def receive_message_over_udp(addr, port, mcap_data_out_queue, fxglv_data_out_queue):
+    sock = await asyncudp.create_socket(local_addr=(addr, port))
     while True:
-        # Wait for the next message
-        result = await vn.poll_data_async()
-        print(results)
+        data, addr = await sock.recvfrom()
+        wrapper = wrapper_pb2.VNWrapper()
+        wrapper.ParseFromString(data)
+        recv = False
+        if wrapper.HasField("vn_ypr_data"):
+            data = QueueData(wrapper.vn_ypr_data.DESCRIPTOR.name, wrapper.vn_ypr_data)
+            recv = True
+        elif wrapper.HasField("vn_linear_accel_data"):
+            data = QueueData(wrapper.vn_linear_accel_data.DESCRIPTOR.name, wrapper.vn_linear_accel_data)
+            recv = True
+        elif wrapper.HasField("vn_linear_accel_uncomp_data"):
+            data = QueueData(wrapper.vn_linear_accel_uncomp_data.DESCRIPTOR.name, wrapper.vn_linear_accel_uncomp_data)
+            recv = True
+        elif wrapper.HasField("vn_ypr_data"):
+            data = QueueData(wrapper.vn_ypr_data.DESCRIPTOR.name, wrapper.vn_ypr_data)
+            recv = True
+        elif wrapper.HasField("vn_lat_lon_data"):
+            data = QueueData(wrapper.vn_lat_lon_data.DESCRIPTOR.name, wrapper.vn_lat_lon_data)
+            recv = True
+        elif wrapper.HasField("vn_gps_time_data"):
+            data = QueueData(wrapper.vn_gps_time_data.DESCRIPTOR.name, wrapper.vn_gps_time_data)
+            recv = True
+        elif wrapper.HasField("vn_status_data"):
+            data = QueueData(wrapper.vn_status_data.DESCRIPTOR.name, wrapper.vn_status_data)
+            recv = True
 
-        # data = QueueData(msg.DESCRIPTOR.name, msg)
-        # await queue.put(data)
-    # await q2.put(data)
-    
-    # Don't forget to stop the notifier to clean up resources.
-    notifier.stop()
+        if recv:
+            await mcap_data_out_queue.put(data)
+            await fxglv_data_out_queue.put(data)
 
