@@ -18,7 +18,7 @@ export function OffloadButton() {
     }
 
     return (
-        <button className={"btn"} onClick={offload}>
+        <button className={"btn"} onClick={offload} disabled={true}>
             Offload
         </button>
     )

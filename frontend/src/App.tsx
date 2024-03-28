@@ -31,9 +31,9 @@ function App() {
                 <PageTitle/>
             </div>
 
-            <DropdownForm title={"Driver"} options={drivers} data={driverInput} setData={setDriverInput} recording={recording}/>
-            <DropdownForm title={"Track Name"} options={tracks} data={trackNameInput} setData={setTrackNameInput} recording={recording}/>
-            <DropdownForm title={"Event Type"} options={events} data={eventTypeInput} setData={setEventTypeInput} recording={recording}/>
+            <TextForm title={"Driver"} isNum={false} data={driverInput} setData={setDriverInput} recording={recording}/>
+            <TextForm title={"Track Name"} isNum={false} data={trackNameInput} setData={setTrackNameInput} recording={recording}/>
+            <TextForm title={"Event Type"} isNum={false} data={eventTypeInput} setData={setEventTypeInput} recording={recording}/>
             <TextForm title={"Drivetrain"} isNum={false} data={drivetrainTypeInput} setData={setDrivetrainTypeInput} recording={recording}/>
             <TextForm title={"Mass"} isNum={true} data={massInput} setData={setMassInput} recording={recording}/>
             <TextForm title={"Wheelbase"} isNum={true} data={wheelbaseInput} setData={setWheelbaseInput} recording={recording}/>
