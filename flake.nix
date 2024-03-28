@@ -25,7 +25,6 @@
     , nix-proto
     , ht_can_pkg_flake
     , flake-utils
-    , vn_driver_lib
     , ...
     }@inputs:
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" "aarch64-linux" ] (system:
@@ -92,7 +91,6 @@
 
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
-        vn_driver_lib.overlays.default
         mcap.overlays.default
         asyncudp.overlays.default
         foxglove-websocket.overlays.default
