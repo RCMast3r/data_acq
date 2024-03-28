@@ -74,14 +74,14 @@ class MCAPServer:
         @app.route('/start', methods=['POST'])
         def start_recording():
 
-            requestData = request.get_json()
-            driver = requestData['driver']
-            trackName = requestData['trackName']
-            eventType = requestData['eventType']
-            drivetrainType = requestData['drivetrainType']
-            mass = requestData['mass']
-            wheelbase = requestData['wheelbase']
-            firmwareRev = requestData['firmwareRev']
+            # requestData = request.get_json()
+            # driver = requestData['driver']
+            # trackName = requestData['trackName']
+            # eventType = requestData['eventType']
+            # drivetrainType = requestData['drivetrainType']
+            # mass = requestData['mass']
+            # wheelbase = requestData['wheelbase']
+            # firmwareRev = requestData['firmwareRev']
 
             # asyncio.create_task(self.start_mcap_generation(driver, trackName, eventType, drivetrainType, mass, wheelbase, firmwareRev))
             return jsonify(message='success')
