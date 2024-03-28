@@ -1,3 +1,4 @@
+import logging
 import socket
 import asyncio
 import json
@@ -39,26 +40,31 @@ class MCAPServer:
         return self.stop_mcap_generation()
 
     async def start_stop_mcap_generation(self, input_cmd: bool, metadata=None):
+        logging.log("Starting/Stopping MCAP generation")
         await self.cmd_queue.put(MCAPFileWriterCommand(input_cmd, metadata))
+        logging.log("MCAP command put in queue")
         while True:
             # Wait for the next message from the queue
             message = await self.status_queue.get()
             if message.is_writing:
+                logging.log("Writing message to MCAP file")
                 self.is_writing = True
                 self.mcap_status_message = f"An MCAP file is being written: {message.writing_file}"
             else:
+                logging.log("Not Writing message to MCAP file")
                 self.is_writing = False
                 self.mcap_status_message = f"No MCAP file is being written."
                 # Important: Mark the current task as done to allow the queue to proceed
             self.status_queue.task_done()
 
     def create_app(self):
+        print("App Created")
         app = Flask(__name__)
         CORS(app)
 
         @app.route('/start', methods=['POST'])
         def start_recording():
-
+            print("Start route called")
             requestData = request.get_json()
             asyncio.create_task(self.start_stop_mcap_generation(input_cmd=True, metadata=requestData))
             return jsonify(message='success')
@@ -76,5 +82,6 @@ class MCAPServer:
         return app
 
     async def start_server(self):
+        print("Starting webserver")
         app = self.create_app()
         app.run(host=self.host, port=self.port)
