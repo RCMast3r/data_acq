@@ -38,8 +38,8 @@ class MCAPServer:
     async def __aexit__(self, exc_type: Any, exc_val: Any, traceback: Any):
         return self.stop_mcap_generation()
 
-    async def start_stop_mcap_generation(self, input_cmd: bool):
-        await self.cmd_queue.put(MCAPFileWriterCommand(input_cmd))
+    async def start_stop_mcap_generation(self, input_cmd: bool, metadata=None):
+        await self.cmd_queue.put(MCAPFileWriterCommand(input_cmd, metadata))
         while True:
             # Wait for the next message from the queue
             message = await self.status_queue.get()
@@ -60,15 +60,7 @@ class MCAPServer:
         def start_recording():
 
             requestData = request.get_json()
-            driver = requestData['driver']
-            trackName = requestData['trackName']
-            eventType = requestData['eventType']
-            drivetrainType = requestData['drivetrainType']
-            mass = requestData['mass']
-            wheelbase = requestData['wheelbase']
-            firmwareRev = requestData['firmwareRev']
-
-            asyncio.create_task(self.start_stop_mcap_generation(True))
+            asyncio.create_task(self.start_stop_mcap_generation(input_cmd=True, metadata=requestData))
             return jsonify(message='success')
 
         @app.route('/stop', methods=['POST'])

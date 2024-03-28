@@ -93,15 +93,17 @@ async def write_data_to_mcap(
 
             if writing:
                 if response_needed:
-                    await mcw.open_new_writer()
+                    await mcw.open_new_writer(cmd_msg.pb_metadata)
                     await writer_status_queue.put(MCAPServerStatusQueueData(True, mcw.actual_path))
-                await mcw.write_data(data_queue)
+                if not data_queue.empty():
+                    await mcw.write_data(data_queue)
             else:
                 if response_needed:
                     await writer_status_queue.put(MCAPServerStatusQueueData(False, mcw.actual_path))
                     await mcw.close_writer()
                 # still keep getting the msgs from queue so it doesnt fill up
-                trash_msg = await data_queue.get()
+                if not data_queue.empty():
+                    trash_msg = await data_queue.get()
 
 
 async def fxglv_websocket_consume_data(queue, foxglove_server):
