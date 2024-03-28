@@ -11,5 +11,6 @@ class MCAPServerStatusQueueData():
         self.writing_file = writing_file 
 
 class MCAPFileWriterCommand():
-    def __init__(self, write: bool):
+    def __init__(self, write: bool, metadata=None):
         self.writing = write
+        self.pb_metadata = metadata
