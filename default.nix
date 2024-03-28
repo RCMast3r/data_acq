@@ -29,8 +29,7 @@ python311Packages.buildPythonApplication {
     hytech_np_proto_py
     proto_gen_pkg
     python311Packages.flask
-
-    
+    python311Packages.flask-cors
   ];
 
   src = ./py_data_acq;
