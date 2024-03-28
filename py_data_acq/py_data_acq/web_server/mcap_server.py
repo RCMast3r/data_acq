@@ -71,6 +71,7 @@ class MCAPServer:
 
     def create_app(self):
         app = Flask(__name__)
+        CORS(app)
 
         @app.route('/start', methods=['POST'])
         def start_recording():
@@ -100,5 +101,4 @@ class MCAPServer:
 
     async def start_server(self):
         app = self.create_app()
-        CORS(app)
         app.run(host=self.host, port=self.port)
