@@ -3,7 +3,7 @@ import { exec } from "node:child_process";
 
 export function OffloadButton() {
 
-    const webserverURL: string = 'http://0.0.0.0:6969'
+    const webserverURL: string = 'http://192.168.203.1:6969'
 
     async function offload() {
         const fetchResponse = await fetch(webserverURL + '/offload', {
