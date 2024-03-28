@@ -54,8 +54,8 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
                 trackName: trackNameInput,
                 eventType: eventTypeInput,
                 drivetrainType: drivetrainTypeInput,
-                mass: parseFloat(massInput),
-                wheelbase: parseFloat(wheelbaseInput),
+                mass: massInput,
+                wheelbase: wheelbaseInput,
                 firmwareRev: firmwareRevInput
             }),
             headers: {
