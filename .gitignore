@@ -9,3 +9,4 @@ result/
 *.log
 .DS_Store
 *.mat
+py_data_acq/.DS_Store
