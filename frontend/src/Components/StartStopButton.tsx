@@ -13,6 +13,8 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
         firmwareRevInput: string
     }) {
 
+    var waitingForResponse: Boolean = false
+
     function getButtonStyle(): string {
         return recording ? "btn btn-error" : "btn btn-success"
     }
@@ -22,6 +24,7 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
     }
 
     function isDisabled(): boolean {
+        if (waitingForResponse) return true
         if (driverInput.length === 0) return true
         if (trackNameInput.length === 0) return true
         if (eventTypeInput.length === 0) return true
@@ -35,6 +38,7 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
     const webserverURL: string = 'http://192.168.203.1:6969'
 
     async function stopRecording(): Promise<boolean> {
+        waitingForResponse = true
         const fetchResponse = await fetch(webserverURL + '/stop', {
             method: 'POST',
             headers: {
@@ -42,11 +46,13 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
                 'Content-Type': 'application/json'
             }
         })
+        waitingForResponse = false
         const status = fetchResponse.status
         return status === 200
     }
 
     async function startRecording(): Promise<boolean> {
+        waitingForResponse = true
         const fetchResponse = await fetch(webserverURL + '/start', {
             method: 'POST',
             body: JSON.stringify({
@@ -63,6 +69,7 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
                 'Content-Type': 'application/json'
             }
         })
+        waitingForResponse = false
         const status = fetchResponse.status
         return status === 200
     }
