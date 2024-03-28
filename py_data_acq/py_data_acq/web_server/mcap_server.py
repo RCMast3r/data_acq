@@ -78,13 +78,12 @@ class MCAPServer:
             driver = requestData['driver']
             trackName = requestData['trackName']
             eventType = requestData['eventType']
-            carSetupId = requestData['carSetupId']
             drivetrainType = requestData['drivetrainType']
             mass = requestData['mass']
             wheelbase = requestData['wheelbase']
             firmwareRev = requestData['firmwareRev']
 
-            asyncio.create_task(self.start_mcap_generation(driver, trackName, eventType, carSetupId, drivetrainType, mass, wheelbase, firmwareRev))
+            asyncio.create_task(self.start_mcap_generation(driver, trackName, eventType, drivetrainType, mass, wheelbase, firmwareRev))
             return jsonify(message='success')
 
         @app.route('/stop', methods=['POST'])
