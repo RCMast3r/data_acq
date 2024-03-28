@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-import asyncio
+
+from py_data_acq.can_interface import continuous_can_receiver
+from py_data_acq.vectornav_interface import continuous_vn_receiver
+
 
 from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
@@ -10,7 +13,9 @@ from py_data_acq.common.common_types import (
     MCAPFileWriterCommand,
 )
 from py_data_acq.web_server.mcap_server import MCAPServer
+
 from hytech_np_proto_py import hytech_pb2
+
 import concurrent.futures
 import sys
 import os
@@ -18,6 +23,8 @@ import can
 from can.interfaces.udp_multicast import UdpMulticastBus
 import cantools
 import logging
+import asyncio
+
 
 # TODO we may want to have a config file handling to set params such as:
 #      - foxglove server port
@@ -30,7 +37,6 @@ can_methods = {
     "local_debug": ["vcan0", "socketcan"],
 }
 
-
 def find_can_interface():
     """Find a CAN interface by checking /sys/class/net/."""
     for interface in os.listdir("/sys/class/net/"):
@@ -38,51 +44,7 @@ def find_can_interface():
             return interface
     return None
 
-
-async def continuous_can_receiver(
-    can_msg_decoder: cantools.db.Database, message_classes, queue, q2, can_bus
-):
-    loop = asyncio.get_event_loop()
-    reader = can.AsyncBufferedReader()
-    notifier = can.Notifier(can_bus, [reader], loop=loop)
-
-    while True:
-        # Wait for the next message from the buffer
-        msg = await reader.get_message()
-
-        # print("got msg")
-        id = msg.arbitration_id
-        try:
-            decoded_msg = can_msg_decoder.decode_message(
-                msg.arbitration_id, msg.data, decode_containers=True
-            )
-            # print("decoded msg")
-            msg = can_msg_decoder.get_message_by_frame_id(msg.arbitration_id)
-            # print("got msg by id")
-            msg = pb_helpers.pack_protobuf_msg(
-                decoded_msg, msg.name.lower(), message_classes
-            )
-            # print("created pb msg successfully")
-            data = QueueData(msg.DESCRIPTOR.name, msg)
-            await queue.put(data)
-            await q2.put(data)
-        except Exception as e:
-            # print(id)
-            # print(e)
-            pass
-
-    # Don't forget to stop the notifier to clean up resources.
-    notifier.stop()
-
-
-async def write_data_to_mcap(
-    writer_cmd_queue: asyncio.Queue,
-    writer_status_queue: asyncio.Queue,
-    data_queue: asyncio.Queue,
-    mcap_writer: HTPBMcapWriter,
-    write_on_init: bool,
-):
-    writing = write_on_init
+async def write_data_to_mcap(queue, mcap_writer):
     async with mcap_writer as mcw:
         while True:
             response_needed = False
@@ -147,9 +109,7 @@ async def run(logger):
     db = cantools.db.load_file(full_path_to_dbc)
 
     list_of_msg_names, msg_pb_classes = pb_helpers.get_msg_names_and_classes()
-    fx_s = HTProtobufFoxgloveServer(
-        "0.0.0.0", 8765, "hytech-foxglove", full_path, list_of_msg_names
-    )
+    fx_s = HTProtobufFoxgloveServer("0.0.0.0", 8765, "hytech_live_data", full_path, list_of_msg_names)
     path_to_mcap = "."
     if os.path.exists("/etc/nixos"):
         logger.info("detected running on nixos")

@@ -6,6 +6,7 @@
 , asyncudp_pkg
 , hytech_np_proto_py
 , proto_gen_pkg
+, py_foxglove_protobuf_schemas
 }:
 
 python311Packages.buildPythonApplication {
@@ -28,6 +29,7 @@ python311Packages.buildPythonApplication {
     py_mcap_pkg
     hytech_np_proto_py
     proto_gen_pkg
+    py_foxglove_protobuf_schemas
   ];
 
   src = ./py_data_acq;

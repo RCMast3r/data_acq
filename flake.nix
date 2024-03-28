@@ -47,6 +47,9 @@
       proto_gen_overlay = final: prev: {
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
+      py_foxglove_protobuf_schemas_overlay = final: prev: {
+        py_foxglove_protobuf_schemas = final.callPackage ./py_foxglove_protobuf_schemas.nix { };
+      };
 
       nix_protos_overlays = nix-proto.generateOverlays' {
         hytech_np = { proto_gen_pkg }:
@@ -71,8 +74,11 @@
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
+        py_foxglove_protobuf_schemas_overlay
+        
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
+        py_vn_driver.overlays.default
         mcap.overlays.default
         asyncudp.overlays.default
         foxglove-websocket.overlays.default
