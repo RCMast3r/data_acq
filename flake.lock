@@ -19,6 +19,25 @@
         "type": "github"
       }
     },
+    "easy_cmake": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_8",
+        "utils": "utils_7"
+      },
+      "locked": {
+        "lastModified": 1696028845,
+        "narHash": "sha256-i3rPkVz8xmQwAkC5LAejXB2Hd8Is4sHXaniQEvxsfjQ=",
+        "owner": "RCMast3r",
+        "repo": "easy_cmake",
+        "rev": "c3308d4f359bb29dd7aa323a186b9d0af334ee21",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RCMast3r",
+        "repo": "easy_cmake",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -180,22 +199,6 @@
         "type": "github"
       }
     },
-    "nixpkgs_10": {
-      "locked": {
-        "lastModified": 1695825837,
-        "narHash": "sha256-4Ne11kNRnQsmSJCRSSNkFRSnHC4Y5gPDBIQGjjPfJiU=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "5cfafa12d57374f48bcc36fda3274ada276cf69e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-23.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1702921762,
@@ -214,16 +217,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1711124224,
-        "narHash": "sha256-l0zlN/3CiodvWDtfBOVxeTwYSRz93muVbXWSpaMjXxM=",
+        "lastModified": 1707650010,
+        "narHash": "sha256-dOhphIA4MGrH4ElNCy/OlwmN24MsnEqFjRR6+RY7jZw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "56528ee42526794d413d6f244648aaee4a7b56c0",
+        "rev": "809cca784b9f72a5ad4b991e0e7bcf8890f9c3a6",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable",
+        "ref": "nixos-23.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -278,11 +281,11 @@
     },
     "nixpkgs_7": {
       "locked": {
-        "lastModified": 1711124224,
-        "narHash": "sha256-l0zlN/3CiodvWDtfBOVxeTwYSRz93muVbXWSpaMjXxM=",
+        "lastModified": 1711460390,
+        "narHash": "sha256-akSgjDZL6pVHEfSE6sz1DNSXuYX6hq+P/1Z5IoYWs7E=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "56528ee42526794d413d6f244648aaee4a7b56c0",
+        "rev": "44733514b72e732bd49f5511bd0203dea9b9a434",
         "type": "github"
       },
       "original": {
@@ -294,11 +297,11 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1704290814,
-        "narHash": "sha256-LWvKHp7kGxk/GEtlrGYV68qIvPHkU9iToomNFGagixU=",
+        "lastModified": 1695825837,
+        "narHash": "sha256-4Ne11kNRnQsmSJCRSSNkFRSnHC4Y5gPDBIQGjjPfJiU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "70bdadeb94ffc8806c0570eb5c2695ad29f0e421",
+        "rev": "5cfafa12d57374f48bcc36fda3274ada276cf69e",
         "type": "github"
       },
       "original": {
@@ -324,26 +327,6 @@
         "type": "github"
       }
     },
-    "py_vn_driver": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_8",
-        "utils": "utils_6",
-        "vn_driver_lib": "vn_driver_lib"
-      },
-      "locked": {
-        "lastModified": 1710616520,
-        "narHash": "sha256-vWP8iuwsv2dE3lVj/jXD1T4ZDTNQrtWIXo7ix0RjpVk=",
-        "owner": "hytech-racing",
-        "repo": "py_vn_driver",
-        "rev": "8b94dc96e53f978a9f966c0d890451520910ca4f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hytech-racing",
-        "repo": "py_vn_driver",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "asyncudp": "asyncudp",
@@ -354,8 +337,8 @@
         "mcap-protobuf": "mcap-protobuf",
         "nix-proto": "nix-proto",
         "nixpkgs": "nixpkgs_7",
-        "py_vn_driver": "py_vn_driver",
-        "utils": "utils_9"
+        "utils": "utils_6",
+        "vn_driver_lib": "vn_driver_lib"
       }
     },
     "systems": {
@@ -449,6 +432,36 @@
       }
     },
     "systems_7": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_8": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_9": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -573,7 +586,7 @@
     },
     "utils_7": {
       "inputs": {
-        "systems": "systems_7"
+        "systems": "systems_8"
       },
       "locked": {
         "lastModified": 1694529238,
@@ -591,7 +604,7 @@
     },
     "utils_8": {
       "inputs": {
-        "systems": "systems_8"
+        "systems": "systems_9"
       },
       "locked": {
         "lastModified": 1694529238,
@@ -607,28 +620,10 @@
         "type": "github"
       }
     },
-    "utils_9": {
-      "inputs": {
-        "systems": "systems_9"
-      },
-      "locked": {
-        "lastModified": 1710146030,
-        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "vn_driver_lib": {
       "inputs": {
         "easy_cmake": "easy_cmake",
-        "nixpkgs": "nixpkgs_10",
+        "nixpkgs": "nixpkgs_9",
         "utils": "utils_8"
       },
       "locked": {

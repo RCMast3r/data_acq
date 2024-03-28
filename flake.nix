@@ -10,8 +10,9 @@
     mcap.url = "github:RCMast3r/py_mcap_nix";
     foxglove-websocket.url = "github:RCMast3r/py_foxglove_webserver_nix";
     asyncudp.url = "github:RCMast3r/asyncudp_nix";
-    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/37";
+    ht_can_pkg_flake.url = "github:hytech-racing/ht_can/40";
     nix-proto = { url = "github:notalltim/nix-proto"; };
+    vn_driver_lib.url = "github:RCMast3r/vn_driver_lib";
   };
 
   outputs =
@@ -25,6 +26,7 @@
     , nix-proto
     , ht_can_pkg_flake
     , flake-utils
+    , vn_driver_lib
     , ...
     }@inputs:
     flake-utils.lib.eachSystem [ "x86_64-linux" "aarch64-darwin" "x86_64-darwin" "aarch64-linux" ] (system:
@@ -78,7 +80,7 @@
         
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
-        py_vn_driver.overlays.default
+        vn_driver_lib.overlays.default
         mcap.overlays.default
         asyncudp.overlays.default
         foxglove-websocket.overlays.default

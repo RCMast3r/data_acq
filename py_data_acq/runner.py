@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 from py_data_acq.can_interface import continuous_can_receiver
-from py_data_acq.vectornav_interface import continuous_vn_receiver
+from py_data_acq.vectornav_interface import continuous_standalone_vn_receiver
 
 
 from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
@@ -127,6 +127,9 @@ async def run(logger):
     )
     receiver_task = asyncio.create_task(
         continuous_can_receiver(db, msg_pb_classes, queue, queue2, bus)
+    )
+    vn_receiver_task = asyncio.create_task(
+        continuous_standalone_vn_receiver(queue, queue2)
     )
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(write_data_to_mcap(mcap_writer_cmd_queue, mcap_writer_status_queue, queue2, mcap_writer, init_writing_on_start))
