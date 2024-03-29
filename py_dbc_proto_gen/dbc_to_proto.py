@@ -61,7 +61,7 @@ def append_proto_message_from_CAN_message(file, can_msg: can.message.Message):
                 + str(line_index)
                 + ";"
             )
-        elif sig.length > 1:
+        elif (sig.length > 1 and sig.length <=32):
             line = (
                 "    int32 "
                 + create_field_name(sig.name)
@@ -69,8 +69,23 @@ def append_proto_message_from_CAN_message(file, can_msg: can.message.Message):
                 + str(line_index)
                 + ";"
             )
+        elif (sig.length >= 32 and not sig.is_signed):
+            line = (
+                "    uint64 "
+                + create_field_name(sig.name)
+                + " = "
+                + str(line_index)
+                + ";"
+            )
         else:
-            print("ERROR")
+            line = (
+                "    int64 "
+                + create_field_name(sig.name)
+                + " = "
+                + str(line_index)
+                + ";"
+            )
+            
         file.write(line + "\n")
     file.write("}\n\n")
     return file
