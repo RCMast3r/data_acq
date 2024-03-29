@@ -62,16 +62,16 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1711500166,
-        "narHash": "sha256-4wuBkKbl4wPq50+ODp/8+18u0C82YKkerv1r4ZPrSfg=",
+        "lastModified": 1711697220,
+        "narHash": "sha256-66IMzTyZAJu37l9Z5d5INHEvV1FT6uBQvxH03/1DOkc=",
         "owner": "hytech-racing",
         "repo": "ht_can",
-        "rev": "2d0aedc0b25e2a90ec24d26ba1e35a3fffbe05b2",
+        "rev": "e6fed99b80ace82cb0f775f77435f402fd27ff47",
         "type": "github"
       },
       "original": {
         "owner": "hytech-racing",
-        "ref": "40",
+        "ref": "41",
         "repo": "ht_can",
         "type": "github"
       }

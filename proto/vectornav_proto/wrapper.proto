@@ -8,9 +8,10 @@ message VNWrapper
 {       
     hytech.vn_vel vn_vel_data = 1;
     hytech.vn_linear_accel  vn_linear_accel_data = 2;  
-    hytech.vn_linear_accel_uncomp  vn_linear_accel_uncomp_data = 3;  
-    hytech.vn_ypr  vn_ypr_data = 4;  
-    hytech.vn_lat_lon  vn_lat_lon_data = 5;  
-    hytech.vn_gps_time  vn_gps_time_data = 6;  
-    hytech.vn_status  vn_status_data = 7;
+    hytech.vn_linear_accel_uncomp  vn_linear_accel_uncomp_data = 3; 
+    hytech.vn_angular_rate vn_angular_rate_data =  4;
+    hytech.vn_ypr  vn_ypr_data = 5;  
+    hytech.vn_lat_lon  vn_lat_lon_data = 6;  
+    hytech.vn_gps_time  vn_gps_time_data = 7;  
+    hytech.vn_status  vn_status_data = 8;
 }

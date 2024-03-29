@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from py_data_acq.can_interface.can_interface import continuous_can_receiver
+from py_data_acq.can_interface.can_interface import (continuous_can_receiver, continuous_can_transmitter)
 from py_data_acq.vectornav_interface.vectornav_interface import receive_message_over_udp
 from py_data_acq.foxglove_live.foxglove_ws import HTProtobufFoxgloveServer
 from py_data_acq.mcap_writer.writer import HTPBMcapWriter
@@ -121,6 +121,7 @@ async def run(logger):
 
     queue = asyncio.Queue()
     queue2 = asyncio.Queue()
+    can_out_queue = asyncio.Queue()
     path_to_bin = ""
     path_to_dbc = ""
 
@@ -158,7 +159,10 @@ async def run(logger):
     receiver_task = asyncio.create_task(
         continuous_can_receiver(db, msg_pb_classes, queue, queue2, bus)
     )
-    vn_receiver_task = asyncio.create_task(receive_message_over_udp("127.0.0.1", 6000, queue2, queue))
+    transmitter_task = asyncio.create_task(
+        continuous_can_transmitter(db, bus, can_out_queue)
+    )
+    vn_receiver_task = asyncio.create_task(receive_message_over_udp("127.0.0.1", 6000, queue2, queue, can_out_queue))
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
     mcap_task = asyncio.create_task(
         write_data_to_mcap(
