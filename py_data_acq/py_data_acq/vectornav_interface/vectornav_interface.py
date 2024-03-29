@@ -11,29 +11,17 @@ async def receive_message_over_udp(addr, port, mcap_data_out_queue, fxglv_data_o
         wrapper = wrapper_pb2.VNWrapper()
         wrapper.ParseFromString(data)
         recv = False
-        if wrapper.HasField("vn_ypr_data"):
-            data = QueueData(wrapper.vn_ypr_data.DESCRIPTOR.name, wrapper.vn_ypr_data)
-            recv = True
-        elif wrapper.HasField("vn_linear_accel_data"):
-            data = QueueData(wrapper.vn_linear_accel_data.DESCRIPTOR.name, wrapper.vn_linear_accel_data)
-            recv = True
-        elif wrapper.HasField("vn_linear_accel_uncomp_data"):
-            data = QueueData(wrapper.vn_linear_accel_uncomp_data.DESCRIPTOR.name, wrapper.vn_linear_accel_uncomp_data)
-            recv = True
-        elif wrapper.HasField("vn_ypr_data"):
-            data = QueueData(wrapper.vn_ypr_data.DESCRIPTOR.name, wrapper.vn_ypr_data)
-            recv = True
-        elif wrapper.HasField("vn_lat_lon_data"):
-            data = QueueData(wrapper.vn_lat_lon_data.DESCRIPTOR.name, wrapper.vn_lat_lon_data)
-            recv = True
-        elif wrapper.HasField("vn_gps_time_data"):
-            data = QueueData(wrapper.vn_gps_time_data.DESCRIPTOR.name, wrapper.vn_gps_time_data)
-            recv = True
-        elif wrapper.HasField("vn_status_data"):
-            data = QueueData(wrapper.vn_status_data.DESCRIPTOR.name, wrapper.vn_status_data)
-            recv = True
+        data_arr = []
+        
+        data_arr.append(QueueData(wrapper.vn_vel_data.DESCRIPTOR.name, wrapper.vn_vel_data))
+        data_arr.append(QueueData(wrapper.vn_linear_accel_data.DESCRIPTOR.name, wrapper.vn_linear_accel_data))
+        data_arr.append(QueueData(wrapper.vn_linear_accel_uncomp_data.DESCRIPTOR.name, wrapper.vn_linear_accel_uncomp_data))
+        data_arr.append(QueueData(wrapper.vn_ypr_data.DESCRIPTOR.name, wrapper.vn_ypr_data))
+        data_arr.append(QueueData(wrapper.vn_lat_lon_data.DESCRIPTOR.name, wrapper.vn_lat_lon_data))
+        data_arr.append(QueueData(wrapper.vn_gps_time_data.DESCRIPTOR.name, wrapper.vn_gps_time_data))
+        data_arr.append(QueueData(wrapper.vn_status_data.DESCRIPTOR.name, wrapper.vn_status_data))
 
-        if recv:
+        for data in data_arr:
             await mcap_data_out_queue.put(data)
             await fxglv_data_out_queue.put(data)
 

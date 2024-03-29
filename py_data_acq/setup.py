@@ -5,5 +5,5 @@ setup(
     name="py_data_acq",
     version="1.0",
     packages=find_packages(),
-    scripts=['runner.py', 'broadcast-test.py', 'data_acq_service.py', 'server_runner.py', 'broadcast-test-vn.py']
+    scripts=['runner.py', 'broadcast-test.py', 'data_acq_service.py', 'server_runner.py']
 )
