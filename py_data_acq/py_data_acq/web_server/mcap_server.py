@@ -71,7 +71,7 @@ class MCAPServer:
 
         @app.route('/stop', methods=['POST'])
         def stop_recording():
-            asyncio.create_task(self.start_stop_mcap_generation(False))
+            asyncio.create_task(self.start_stop_mcap_generation(input_cmd=False))
             return jsonify()
 
         @app.route('/offload', methods=['POST'])
