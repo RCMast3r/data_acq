@@ -172,13 +172,14 @@ async def run(logger):
     )
     srv_task = asyncio.create_task(mcap_web_server.start_server())
     fx_task = asyncio.create_task(fxglv_websocket_consume_data(queue, fx_s))
-    mcap_task = asyncio.create_task(write_data_to_mcap(mcap_writer_cmd_queue, mcap_writer_status_queue, queue2, mcap_writer, init_writing_on_start))
+    # mcap_task = asyncio.create_task(write_data_to_mcap(mcap_writer_cmd_queue, mcap_writer_status_queue, queue2, mcap_writer, init_writing_on_start))
     logger.info("created tasks")
     # in the mcap task I actually have to deserialize the any protobuf msg into the message ID and
     # the encoded message for the message id. I will need to handle the same association of message id
     # and schema in the foxglove websocket server.
 
-    await asyncio.gather(srv_task, receiver_task, fx_task, mcap_task)
+    # await asyncio.gather(srv_task, receiver_task, fx_task, mcap_task)
+    await asyncio.gather(srv_task, receiver_task, fx_task)
 
 
 if __name__ == "__main__":
