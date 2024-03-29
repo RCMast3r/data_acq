@@ -62,16 +62,16 @@
         "utils": "utils_3"
       },
       "locked": {
-        "lastModified": 1711056288,
-        "narHash": "sha256-jWWYVIlR6UXE3NNgSa1w/wcZOZWiwUWdWbg56OGTthc=",
+        "lastModified": 1711500166,
+        "narHash": "sha256-4wuBkKbl4wPq50+ODp/8+18u0C82YKkerv1r4ZPrSfg=",
         "owner": "hytech-racing",
         "repo": "ht_can",
-        "rev": "3c7682d8fed7f8999e1dc99e3b6d90846c21a787",
+        "rev": "2d0aedc0b25e2a90ec24d26ba1e35a3fffbe05b2",
         "type": "github"
       },
       "original": {
         "owner": "hytech-racing",
-        "ref": "37",
+        "ref": "40",
         "repo": "ht_can",
         "type": "github"
       }
@@ -198,16 +198,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1711124224,
-        "narHash": "sha256-l0zlN/3CiodvWDtfBOVxeTwYSRz93muVbXWSpaMjXxM=",
+        "lastModified": 1711523803,
+        "narHash": "sha256-UKcYiHWHQynzj6CN/vTcix4yd1eCu1uFdsuarupdCQQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "56528ee42526794d413d6f244648aaee4a7b56c0",
+        "rev": "2726f127c15a4cc9810843b96cad73c7eb39e443",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-23.11",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
