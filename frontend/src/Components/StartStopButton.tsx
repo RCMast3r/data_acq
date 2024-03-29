@@ -35,7 +35,7 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
         return false
     }
 
-    const webserverURL: string = 'http://192.168.203.1:6969'
+    const webserverURL: string = 'http://127.0.0.1:6969'
 
     async function stopRecording(): Promise<boolean> {
         waitingForResponse = true
@@ -52,8 +52,11 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
     }
 
     async function startRecording(): Promise<boolean> {
+        console.log("Start Recording function started")
+        console.log(webserverURL + '/start')
         waitingForResponse = true
-        const fetchResponse = await fetch(webserverURL + '/start', {
+        try {
+            const fetchResponse = await fetch(webserverURL + '/start', {
             method: 'POST',
             body: JSON.stringify({
                 driver: driverInput,
@@ -68,10 +71,17 @@ export function StartStopButton({ recording, setRecording, driverInput, trackNam
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             }
-        })
-        waitingForResponse = false
-        const status = fetchResponse.status
-        return status === 200
+            })
+
+            waitingForResponse = false
+            const status = fetchResponse.status
+            return status === 200
+        } catch (error) {
+            console.log(error)
+        }
+
+        return false
+
     }
 
     async function toggleRecording() {
