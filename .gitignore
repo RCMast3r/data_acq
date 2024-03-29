@@ -7,3 +7,5 @@ result/
 .DS_Store
 .idea/
 *.mat
+py_data_acq/.DS_Store
+.DS_Store
