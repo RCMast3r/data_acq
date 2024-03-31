@@ -52,7 +52,7 @@ class HTPBMcapWriter:
 
         return True
 
-    async def open_new_writer(self):
+    async def open_new_writer(self, metadata=None):
         if self.is_writing:
             self.is_writing = False
             self.mcap_writer_class.finish()
@@ -63,6 +63,10 @@ class HTPBMcapWriter:
         self.actual_path = os.path.join(self.base_path, date_time_filename)
         self.writing_file = open(self.actual_path, "wb")
         self.mcap_writer_class = Writer(self.writing_file)
+
+        if metadata is not None:
+            await self.write_metadata("setup", metadata)
+
         self.is_writing = True
 
         return True
@@ -78,6 +82,16 @@ class HTPBMcapWriter:
             self.writing_file.flush()
         return True
 
+
     async def write_data(self, data):
         if data is not None:
             return await self.write_msg(data.pb_msg)
+
+    async def write_metadata(self, name, metadata):
+        self.mcap_writer_class._writer.add_metadata(name, metadata)
+
+    #async def write_data(self, queue):
+    #    msg = await queue.get()
+    #    if msg is not None:
+    #        return await self.write_msg(msg.pb_msg)
+

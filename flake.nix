@@ -49,8 +49,24 @@
       proto_gen_overlay = final: prev: {
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
+
       py_foxglove_protobuf_schemas_overlay = final: prev: {
         py_foxglove_protobuf_schemas = final.callPackage ./py_foxglove_protobuf_schemas.nix { };
+
+
+      frontend_overlay = final: prev: {
+        frontend_pkg = final.callPackage ./frontend.nix { };
+      };
+
+      nix_protos_overlays = nix-proto.generateOverlays' {
+        hytech_np = { proto_gen_pkg }:
+          nix-proto.mkProtoDerivation {
+            name = "hytech_np";
+            buildInputs = [ proto_gen_pkg ];
+            src = proto_gen_pkg.out + "/proto";
+            version = "1.0.0";
+          };
+
       };
 
       nix_protos_overlays = nix-proto.generateOverlays'
@@ -74,6 +90,7 @@
             };
         };
       my_overlays = [
+        frontend_overlay 
         (self: super: {
           cantools = super.cantools.overridePythonAttrs (old: rec {
             version = "39.4.5";
@@ -98,6 +115,9 @@
       pkgs = import nixpkgs {
         overlays = my_overlays;
         inherit system;
+        config = {
+          allowUnsupportedSystem = true;
+        };
       };
 
       shared_shell = pkgs.mkShell rec {
@@ -109,8 +129,9 @@
           proto_gen_pkg
           ht_can_pkg
           cmake
-          can-utils
+          nodejs
           python311Packages.scipy
+          frontend_pkg.frontend
         ];
         # Setting up the environment variables you need during
         # development.
@@ -120,9 +141,10 @@
             path=${pkgs.proto_gen_pkg}
             bin_path=$path"/bin"
             dbc_path=${pkgs.ht_can_pkg}
+            frontend_path=${pkgs.frontend_pkg.frontend}
             export BIN_PATH=$bin_path
             export DBC_PATH=$dbc_path
-
+            export FRONT=$frontend_path
             echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
             export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
           '';
@@ -137,6 +159,7 @@
           proto_gen_pkg
           ht_can_pkg
           protobuf
+          frontend_pkg
         ];
         shellHook =
           ''
@@ -157,6 +180,7 @@
       };
 
       packages = rec {
+        frontend_pkg = pkgs.frontend_pkg.frontend;
         default = pkgs.py_data_acq_pkg;
         py_dbc_proto_gen_pkg = pkgs.py_data_acq_pkg;
         proto_gen_pkg = pkgs.proto_gen_pkg;

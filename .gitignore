@@ -4,6 +4,12 @@ __pycache__/
 result
 result/
 .env
+.DS_Store
 .idea/
 *.mat
+
 *.log
+
+py_data_acq/.DS_Store
+.DS_Store
+
