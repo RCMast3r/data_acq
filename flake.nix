@@ -66,9 +66,7 @@
             version = "1.0.0";
           };
       };
-      frontend_overlay = final: prev: {
-        frontend_pkg = final.callPackage ./frontend.nix { };
-      };
+
 
 
       nix_protos_overlays = nix-proto.generateOverlays'
