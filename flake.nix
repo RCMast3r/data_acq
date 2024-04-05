@@ -57,16 +57,6 @@
         frontend_pkg = final.callPackage ./frontend.nix { };
       };
 
-      nix_protos_overlays = nix-proto.generateOverlays' {
-        hytech_np = { proto_gen_pkg }:
-          nix-proto.mkProtoDerivation {
-            name = "hytech_np";
-            buildInputs = [ proto_gen_pkg ];
-            src = proto_gen_pkg.out + "/proto";
-            version = "1.0.0";
-          };
-      };
-
 
 
       nix_protos_overlays = nix-proto.generateOverlays'
