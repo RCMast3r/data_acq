@@ -80,6 +80,28 @@ class MCAPServer:
         def offload_data():
             # os.system("rsync -a ~/recordings urname@192.168.1.101:~/destination/of/data")
             return jsonify()
+        
+        @app.route('/read/<type>', methods=['POST'])
+        def read(type):
+            valid_types = ["drivers", "trackNames", "eventTypes"]
+            if (type not in valid_types):
+                return jsonify(f"Type must be one of: {', '.join(valid_types)}")
+            fileName = type + ".txt"
+            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/"+fileName, "r") as myfile:
+                data = myfile.read().splitlines()
+            
+                
+            return jsonify(data)
+        
+        @app.route('/write/<type>', methods=['POST'])
+        def write(type):
+            valid_types = ["drivers", "trackNames", "eventTypes"]
+            if (type not in valid_types):
+                return jsonify(f"Type must be one of: {', '.join(valid_types)}")
+            fileName = type + ".txt"
+            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/"+fileName, "a") as myfile:
+                myfile.write(request.get_json()["value"]+ '\n')
+            return jsonify()
 
         return app
 
