@@ -173,7 +173,7 @@ async def run(logger):
             init_writing_on_start,
         )
     )
-    # srv_task = asyncio.create_task(mcap_web_server.start_server())
+    srv_task = asyncio.create_task(mcap_web_server.start_server())
     logger.info("created tasks")
     # in the mcap task I actually have to deserialize the any protobuf msg into the message ID and
     # the encoded message for the message id. I will need to handle the same association of message id

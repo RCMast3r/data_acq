@@ -61,17 +61,19 @@ class MCAPServer:
         print("App Created")
         app = Flask(__name__)
         CORS(app)
+        loop = asyncio.get_event_loop()
+
 
         @app.route('/start', methods=['POST'])
         def start_recording():
             print("Start route called")
             requestData = request.get_json()
-            asyncio.create_task(self.start_stop_mcap_generation(input_cmd=True, metadata=requestData))
+            loop.create_task(self.start_stop_mcap_generation(input_cmd=True, metadata=requestData))
             return jsonify(message='success')
 
         @app.route('/stop', methods=['POST'])
         def stop_recording():
-            asyncio.create_task(self.start_stop_mcap_generation(input_cmd=False))
+            loop.create_task(self.start_stop_mcap_generation(input_cmd=False))
             return jsonify()
 
         @app.route('/offload', methods=['POST'])
