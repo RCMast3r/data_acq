@@ -13,7 +13,8 @@ export function DropdownForm({title, type, data, setData, recording}:
     const [showAdd, setShowAdd] = useState(false)
     const [newOption, setNewOption] = useState("")
 
-    const webserverURL: string = 'http://192.168.203.1:6969'
+    // const webserverURL: string = 'http://192.168.203.1:6969'
+    const webserverURL: string = 'http://192.168.172.129:6969'
 
     async function updateOptions() {
         const fetchResponse = await fetch(webserverURL + '/read/' + type, {
