@@ -11,6 +11,7 @@ export function DropdownForm({title, type, data, setData, recording}:
 
     const [options, setOptions] = useState([] as string[])
     const [showAdd, setShowAdd] = useState(false)
+    const [newOption, setNewOption] = useState("")
 
     const webserverURL: string = 'http://192.168.203.1:6969'
 
@@ -25,6 +26,23 @@ export function DropdownForm({title, type, data, setData, recording}:
         setOptions(await fetchResponse.json())
     }
 
+    async function addOption() {
+        const fetchResponse = await fetch(webserverURL + '/write/' + type, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                value: newOption
+            })
+        })
+        await fetchResponse.json()
+        await updateOptions()
+        setShowAdd(false)
+        setNewOption("")
+    }
+
     useEffect(() => {
         updateOptions().then()
     }, [])
@@ -33,8 +51,8 @@ export function DropdownForm({title, type, data, setData, recording}:
         if (!showAdd) return (<></>)
         return (
             <div className={"flex flex-row items-center w-96"}>
-                <input className={"input input-bordered w-64"}/>
-                <button className={"btn"}>
+                <input value={newOption} className={"input input-bordered w-64"}/>
+                <button className={"btn"} onClick={() => addOption()}>
                     Add
                 </button>
             </div>
