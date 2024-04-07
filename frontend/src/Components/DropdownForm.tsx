@@ -23,8 +23,9 @@ export function DropdownForm({title, type, data, setData, recording}:
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             }
-        }).then(fetchResponse => fetchResponse.json())
+        })
         console.log(fetchResponse)
+        console.log(await fetchResponse.json())
         setOptions(await fetchResponse.json())
     }
 
