@@ -34,6 +34,9 @@ export function DropdownForm({title, type, data, setData, recording}:
         return (
             <div className={"flex flex-row items-center w-96"}>
                 <input className={"input input-bordered w-64"}/>
+                <button className={"btn"}>
+                    Add
+                </button>
             </div>
         )
     }
