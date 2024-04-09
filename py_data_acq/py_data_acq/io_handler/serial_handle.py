@@ -11,15 +11,11 @@ async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2)
     )
 
     while True:
-        # Wait for the next message from the buffer, then break it into parts using the byte value for ","
-        nl_byte = await reader.readline()
-        vals = nl_byte.split(b",")
-        print(f"Raw Line: {nl_byte}")
-        print(f"Comma delimited: {vals}")
-        # try:
-        # Get message data for foxglove
-        frameid = int.from_bytes(vals[0],byteorder='little')
         try:
+            # Wait for the next message from the buffer, then break it into parts using the byte value for ","
+            nl_byte = await reader.readline()
+            vals = nl_byte.split(b",")
+            frameid = int.from_bytes(vals[0], byteorder="little")
             msg = can_db.get_message_by_frame_id(frameid)
             # Break down message
             decoded_msg = can_db.decode_message(
@@ -31,14 +27,12 @@ async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2)
                 decoded_msg, msg.name.lower(), message_classes
             )
             data = QueueData(msg.DESCRIPTOR.name, msg)
-        # Throw data into queues and start again
+            # Throw data into queues and start again
             await q1.put(data)
             await q2.put(data)
             # except:
             #     print("Fail")
             #     pass
-        except (KeyError,TypeError,ValueError) as e:
-            print(f"Error with id {frameid}, error : {e}")
+        except (KeyError, TypeError, ValueError) as e:
+            print(f"Error decoding frame, error : {e}")
             continue
-
-
