@@ -33,6 +33,6 @@ async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2)
             # except:
             #     print("Fail")
             #     pass
-        except (KeyError, TypeError, ValueError) as e:
+        except (KeyError, TypeError, ValueError, IndexError) as e:
             print(f"Error decoding frame, error : {e}")
             continue
