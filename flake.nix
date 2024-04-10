@@ -13,18 +13,8 @@
     nix-proto.url = "github:notalltim/nix-proto";
   };
 
-  outputs =
-    { self
-    , nixpkgs
-    , utils
-    , mcap-protobuf
-    , mcap
-    , foxglove-websocket
-    , asyncudp
-    , nix-proto
-    , can_pkg_flake
-    , ...
-    }@inputs:
+  outputs = { self, nixpkgs, utils, mcap-protobuf, mcap, foxglove-websocket
+    , asyncudp, nix-proto, can_pkg_flake, ... }@inputs:
     let
       makePackageSet = pkgs: {
         py_data_acq_pkg = pkgs.py_data_acq_pkg;
@@ -55,16 +45,6 @@
           };
       };
       my_overlays = [
-        (self: super: {
-          cantools = super.cantools.overridePythonAttrs (old: rec {
-            version = "39.4.5";
-            src = old.fetchPypi {
-              pname = "cantools";
-              inherit version;
-              # hash = "sha256-JQn+rtpy/OA2deLszSKEuxyttqBzcAil50H+JDHUdCE=";
-            };
-          });
-        })
         py_dbc_proto_gen_overlay
         py_data_acq_overlay
         proto_gen_overlay
@@ -96,8 +76,7 @@
         "aarch64-linux" = makePackageSet arm_pkgs;
         # Add more systems as needed
       };
-    in
-    {
+    in {
 
       overlays.default = nixpkgs.lib.composeManyExtensions my_overlays;
 
@@ -117,19 +96,17 @@
         ];
         # Setting up the environment variables you need during
         # development.
-        shellHook =
-          let icon = "f121";
-          in
-          ''
-            path=${x86_pkgs.proto_gen_pkg}
-            bin_path=$path"/bin"
-            dbc_path=${x86_pkgs.can_pkg}
-            export BIN_PATH=$bin_path
-            export DBC_PATH=$dbc_path
+        shellHook = let icon = "f121";
+        in ''
+          path=${x86_pkgs.proto_gen_pkg}
+          bin_path=$path"/bin"
+          dbc_path=${x86_pkgs.can_pkg}
+          export BIN_PATH=$bin_path
+          export DBC_PATH=$dbc_path
 
-            echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
-            export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
-          '';
+          echo -e "PYTHONPATH=$PYTHONPATH\nBIN_PATH=$bin_path\nDBC_PATH=$dbc_path\n" > .env
+          export PS1="$(echo -e '\u${icon}') {\[$(tput sgr0)\]\[\033[38;5;228m\]\w\[$(tput sgr0)\]\[\033[38;5;15m\]} (${name}) \\$ \[$(tput sgr0)\]"
+        '';
       };
       devShells.x86_64-linux.ci = x86_pkgs.mkShell rec {
         # Update the name to something that suites your project.
@@ -142,13 +119,13 @@
           protobuf
         ];
         shellHook =
-          ''
-            path=${x86_pkgs.proto_gen_pkg}
-            bin_path=$path"/bin"
-            dbc_path=${x86_pkgs.can_pkg}
-            export BIN_PATH=$bin_path
-            export DBC_PATH=$dbc_path
-          '';
+        ''
+          path=${x86_pkgs.proto_gen_pkg}
+          bin_path=$path"/bin"
+          dbc_path=${x86_pkgs.can_pkg}
+          export BIN_PATH=$bin_path
+          export DBC_PATH=$dbc_path
+        '';
 
       };
 

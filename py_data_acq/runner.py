@@ -69,6 +69,7 @@ async def run(logger):
     mcap_server = MCAPServer(mcap_writer=mcap_writer, path=path_to_mcap)
 
     # Get data source
+    os.environ["D_SOURCE"] = "SERIAL"
     match os.environ.get("D_SOURCE"):
         case "SERIAL":
             receiver_task = asyncio.create_task(
