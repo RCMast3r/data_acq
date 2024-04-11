@@ -4,14 +4,6 @@ from ..common import protobuf_helpers
 from ..common.common_types import QueueData
 
 
-async def check_sync_byte(reader):
-    byte_guy = await reader.read(1)
-    if byte_guy == 0xFA:
-        return True
-    else:
-        return False
-
-
 async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2):
     # Start asyncio on the port
     reader, writer = await serial_asyncio.open_serial_connection(
