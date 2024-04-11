@@ -22,7 +22,7 @@ async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2)
         try:
             # if check_sync_byte(reader):
             # Wait for the next message from the buffer, then break it into parts using the byte value for ","
-            sync_msg = await reader.readuntil(b'\n\xff\n')
+            sync_msg = await reader.readuntil(b"\n\xff\n")
             frameid = int.from_bytes(sync_msg[0:2], byteorder="little")
             msg = can_db.get_message_by_frame_id(frameid)
 
@@ -39,9 +39,7 @@ async def serial_reciever(can_db: cantools.db.Database, message_classes, q1, q2)
             # Throw data into queues and start again
             await q1.put(data)
             await q2.put(data)
-            # except:
-            #     print("Fail")
-            #     pass
+
         except (KeyError, TypeError, ValueError, IndexError) as e:
             print(f"Error decoding frame, error : {e}")
             continue
