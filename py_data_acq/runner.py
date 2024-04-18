@@ -147,8 +147,8 @@ async def run(logger):
 
     init_writing_on_start = True
 
-    mcap_writer_status_queue = asyncio.Queue(maxsize=1)
-    mcap_writer_cmd_queue = asyncio.Queue(maxsize=1)
+    mcap_writer_status_queue = asyncio.Queue(maxsize=0)
+    mcap_writer_cmd_queue = asyncio.Queue(maxsize=0)
     mcap_writer = HTPBMcapWriter(path_to_mcap, init_writing_on_start)
     mcap_web_server = MCAPServer(
         writer_command_queue=mcap_writer_cmd_queue,
