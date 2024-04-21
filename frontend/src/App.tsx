@@ -26,7 +26,7 @@ function App() {
     const [recording, setRecording] = useState(false)
 
     return (
-        <div className={"flex flex-col gap-4 items-center justify-center"}>
+        <div className={"flex flex-col gap-4 items-center justify-center pt-6"}>
             <div className={"flex"}>
                 <PageTitle/>
             </div>
