@@ -18,7 +18,7 @@ export function DeleteButton() {
     }
 
     return (
-        <button className={"btn"} onClick={deleteMCAPs} disabled={false}>
+        <button className={"btn btn-error"} onClick={deleteMCAPs} disabled={false}>
             Delete
         </button>
     )
