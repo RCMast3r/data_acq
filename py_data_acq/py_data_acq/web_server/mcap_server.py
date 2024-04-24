@@ -96,7 +96,7 @@ class MCAPServer:
                     response = requests.post(awsServerURL + '/save_run', files = MCAPfile)
                     #print(response)
                     print(filename + " uploaded")
-                return jsonify(message='success')
+            return jsonify(message='success')
 
         @app.route('/delete', methods=['POST'])
         def delete_data():
