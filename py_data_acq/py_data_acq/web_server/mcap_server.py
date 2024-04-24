@@ -12,6 +12,8 @@ import os
 from hypercorn.config import Config
 from hypercorn.asyncio import serve
 
+import requests
+
 class MCAPServer:
     def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969, metadata_filepath=''):
         self.host = host
@@ -81,8 +83,29 @@ class MCAPServer:
 
         @app.route('/offload', methods=['POST'])
         def offload_data():
-            # os.system("rsync -a ~/recordings urname@192.168.1.101:~/destination/of/data")
-            return jsonify()
+            offload_data = checkOffloadedMCAPS()
+            
+
+        
+        def checkOffloadedMCAPS():
+            path_to_mcap = "."
+            awsServerURL = 'http://localhost:6969'
+            if os.path.exists("/etc/nixos"):
+                path_to_mcap = "/home/nixos/recordings"
+            queryParams = []
+            for filename in os.listdir(path_to_mcap):
+                if filename.endswith(".mcap"):
+                    queryParams.append(filename)
+            queryParams = ["file1.mcap", "file2.mcap", "file3.mcap"] #for testing only
+            queryString = ""
+            for fileName in queryParams:
+                queryString += "file=" + fileName + "&"
+            queryString = queryString[:-1]
+
+            response = requests.get(awsServerURL + '/get_offloaded_mcaps?' + queryString)
+            
+            return jsonify(response.json())
+
         
         @app.route('/fields', methods=['GET'])
         def getJSON():
