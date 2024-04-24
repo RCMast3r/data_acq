@@ -11,8 +11,9 @@ from typing import Any
 import os
 from hypercorn.config import Config
 from hypercorn.asyncio import serve
-
 import requests
+
+awsServerURL = 'http://54.243.4.174:8080'
 
 class MCAPServer:
     def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969, metadata_filepath=''):
@@ -83,28 +84,48 @@ class MCAPServer:
 
         @app.route('/offload', methods=['POST'])
         def offload_data():
+            path_to_mcap = "."
+            if os.path.exists("/etc/nixos"):
+                path_to_mcap = "/home/nixos/recordings"
             offload_data = checkOffloadedMCAPS()
-            
+            not_offloaded = (offload_data["not_offloaded"])
 
-        
+            for filename in not_offloaded:
+                if (os.path.exists(path_to_mcap + "/" + filename)):
+                    MCAPfile = {'file': open(path_to_mcap + "/" + filename, 'rb')}
+                    response = requests.post(awsServerURL + '/save_run', files = MCAPfile)
+                    #print(response)
+                    print(filename + " uploaded")
+
+        @app.route('/delete', methods=['POST'])
+        def delete_data():
+            path_to_mcap = "."
+            if os.path.exists("/etc/nixos"):
+                path_to_mcap = "/home/nixos/recordings"
+            offload_data = checkOffloadedMCAPS()
+            offloaded = (offload_data["offloaded"])
+            for filename in offloaded:
+                filePath = path_to_mcap + "/" + filename
+                if os.path.exists(filePath):
+                    os.remove(filePath) # one file at a time
+                    print("Deleted " + filename)
+
+
         def checkOffloadedMCAPS():
             path_to_mcap = "."
-            awsServerURL = 'http://localhost:6969'
             if os.path.exists("/etc/nixos"):
                 path_to_mcap = "/home/nixos/recordings"
             queryParams = []
             for filename in os.listdir(path_to_mcap):
                 if filename.endswith(".mcap"):
                     queryParams.append(filename)
-            queryParams = ["file1.mcap", "file2.mcap", "file3.mcap"] #for testing only
+            #queryParams = ["03_26_2024_23_10_23 1.mcap", "file2.mcap", "file3.mcap"] #for testing only
             queryString = ""
             for fileName in queryParams:
                 queryString += "file=" + fileName + "&"
             queryString = queryString[:-1]
-
             response = requests.get(awsServerURL + '/get_offloaded_mcaps?' + queryString)
-            
-            return jsonify(response.json())
+            return response.json()
 
         
         @app.route('/fields', methods=['GET'])
