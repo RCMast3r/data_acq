@@ -4,6 +4,7 @@ import {StartStopButton} from "./Components/StartStopButton";
 import {PageTitle} from "./Components/PageTitle";
 import {TextForm} from "./Components/FieldComponents/TextForm";
 import {OffloadButton} from "./OffloadButton";
+import {DeleteButton} from "./DeleteButton";
 import {Field} from "./Components/Field";
 import {AddrToggle} from "./Components/AddrToggle";
 import {EditModeToggle} from "./Components/EditModeToggle";

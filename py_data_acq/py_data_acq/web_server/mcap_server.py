@@ -96,6 +96,7 @@ class MCAPServer:
                     response = requests.post(awsServerURL + '/save_run', files = MCAPfile)
                     #print(response)
                     print(filename + " uploaded")
+                return jsonify(message='success')
 
         @app.route('/delete', methods=['POST'])
         def delete_data():
@@ -109,6 +110,7 @@ class MCAPServer:
                 if os.path.exists(filePath):
                     os.remove(filePath) # one file at a time
                     print("Deleted " + filename)
+            return jsonify(message='success')
 
 
         def checkOffloadedMCAPS():
