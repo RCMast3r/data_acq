@@ -52,17 +52,25 @@ class HTPBMcapWriter:
 
         return True
 
-    async def open_new_writer(self):
+    async def open_new_writer(self, metadata=None):
         if self.is_writing:
             self.is_writing = False
             self.mcap_writer_class.finish()
             self.writing_file.close()
 
-        now = datetime.now()
-        date_time_filename = now.strftime("%m_%d_%Y_%H_%M_%S" + ".mcap")
+        dt = datetime.strptime(str(metadata["time"])[:24], "%a %b %d %Y %H:%M:%S")
+        dt = dt.strftime("%Y-%m-%d-T%H-%M-%S")
+        date_time_filename = dt+ ".mcap" 
+        print(os.path.join(self.base_path, date_time_filename))
+        print(metadata)
+
         self.actual_path = os.path.join(self.base_path, date_time_filename)
         self.writing_file = open(self.actual_path, "wb")
         self.mcap_writer_class = Writer(self.writing_file)
+
+        if metadata is not None:
+            await self.write_metadata("setup", metadata)
+
         self.is_writing = True
 
         return True
@@ -78,7 +86,9 @@ class HTPBMcapWriter:
             self.writing_file.flush()
         return True
 
-    async def write_data(self, queue):
-        msg = await queue.get()
+    async def write_metadata(self, name, metadata):
+        self.mcap_writer_class._writer.add_metadata(name, metadata)
+
+    async def write_data(self, msg):
         if msg is not None:
             return await self.write_msg(msg.pb_msg)

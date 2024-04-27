@@ -25,6 +25,14 @@ usage notes:
 
 by default, it uses a fixed version of the hytech CAN library and it must be manually updated. downstream usage of this can update this too via specifying it in the flake input as well if need be.
 
+### for kevin's new frontend
+
+1. in one devshell (call `nix develop`):
+
+```npm run start --prefix $FRONT```
+
+2. in a second devshell:
+```runner.py```
 
 ### TODO:
 - [x] write test script for creating a cantools constructed hytech CAN msg and sends it over a virtual CAN line

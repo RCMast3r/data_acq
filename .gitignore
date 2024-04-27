@@ -7,3 +7,11 @@ result/
 .idea/
 *.mat
 *.log
+.DS_Store
+*.mat
+py_data_acq/.DS_Store
+*.DS_Store
+.idea/
+**/.idea/
+py_data_acq/py_data_acq.egg-info/*
+py_data_acq/py_data_acq.egg-info/

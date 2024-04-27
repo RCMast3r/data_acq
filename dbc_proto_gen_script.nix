@@ -5,7 +5,8 @@ python311Packages.buildPythonApplication {
   version = "1.0.0";
 
   
-  propagatedBuildInputs = [ python311Packages.cantools python311Packages.protobuf python311Packages.requests ];
+  propagatedBuildInputs = [ (python311Packages.cantools.overridePythonAttrs (_: { doCheck = false; }))
+                            python311Packages.protobuf python311Packages.requests ];
 
   src = ./py_dbc_proto_gen;
 }
