@@ -13,7 +13,7 @@ from hypercorn.config import Config
 from hypercorn.asyncio import serve
 
 class MCAPServer:
-    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='192.168.203.1', port=6969):
+    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969):
         self.host = host
         self.port = port
         
@@ -86,11 +86,11 @@ class MCAPServer:
         
         @app.route('/read/<type>', methods=['POST'])
         def read(type):
-            valid_types = ["drivers", "trackNames", "eventTypes"]
+            valid_types = ["driver", "location", "eventType"]
             if (type not in valid_types):
                 return jsonify(f"Type must be one of: {', '.join(valid_types)}")
             fileName = type + ".txt"
-            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/"+fileName, "r") as myfile:
+            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/"+fileName, "r") as myfile:
                 data = myfile.read().splitlines()
             
                 
@@ -98,13 +98,22 @@ class MCAPServer:
         
         @app.route('/write/<type>', methods=['POST'])
         def write(type):
-            valid_types = ["drivers", "trackNames", "eventTypes"]
+            valid_types = ["driver", "location", "eventType"]
             if (type not in valid_types):
                 return jsonify(f"Type must be one of: {', '.join(valid_types)}")
             fileName = type + ".txt"
-            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/"+fileName, "a") as myfile:
+            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/"+fileName, "a") as myfile:
                 myfile.write(request.get_json()["value"]+ '\n')
             return jsonify()
+        
+        @app.route('/fields', methods=['GET'])
+        def getJSON():
+            try:
+                with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/metadata.json", "r") as f:
+                    data = json.load(f)
+                return jsonify(data)
+            except FileNotFoundError:
+                return jsonify({'error': 'File not found'}), 404
 
         return app
 

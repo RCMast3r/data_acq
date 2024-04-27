@@ -7,16 +7,18 @@ export function DropdownForm({fields, data, setData, index, recording, serverAdd
     const [addInput, setAddInput] = useState('')
 
     async function updateOptions() {
-        // const fetchResponse = await fetch(serverAddr + '/read/' + fields[index].name, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Accept': 'application/json',
-        //         'Content-Type': 'application/json'
-        //     }
-        // })
-        // const json = await fetchResponse.json()
-        const json = '["","True","False"]'
-        setOptions(JSON.parse(json))
+        console.log(fields[index].name)
+         const fetchResponse = await fetch(serverAddr + '/read/' + fields[index].name, {
+             method: 'POST',
+             headers: {
+                 'Accept': 'application/json',
+                 'Content-Type': 'application/json'
+             }
+        })
+         const resultArray = await fetchResponse.json()
+         //console.log(resultArray)
+        //const json = '["","True","False"]'
+        setOptions(resultArray)
     }
 
     useEffect(() => {

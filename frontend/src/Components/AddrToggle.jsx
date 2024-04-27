@@ -16,7 +16,7 @@ export function AddrToggle({serverAddr, setServerAddr}) {
             <article className={"prose pr-2"}>
                 <p> DO NOT TOUCH -&gt;</p>
             </article>
-            <input type={"checkbox"} className={"toggle toggle-primary"} onChange={handleChange}/>
+            <input type={"checkbox"} className={"toggle toggle-error"} onChange={handleChange}/>
         </div>
     )
 

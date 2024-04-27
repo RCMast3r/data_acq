@@ -5,7 +5,7 @@
         "displayName": "Driver",
         "type": "string",
         "required": true,
-        "dropdown": false,
+        "dropdown": true,
         "automatic": false
     },
     {
@@ -23,7 +23,7 @@
         "displayName": "Event Type",
         "type": "string",
         "required": false,
-        "dropdown": false,
+        "dropdown": true,
         "automatic": false
     },
     {
@@ -59,7 +59,7 @@
         "displayName": "Location",
         "type": "string",
         "required": false,
-        "dropdown": false,
+        "dropdown": true,
         "automatic": false
     },
     {
