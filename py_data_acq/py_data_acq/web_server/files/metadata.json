@@ -6,7 +6,12 @@
         "type": "string",
         "required": true,
         "dropdown": true,
-        "automatic": false
+        "automatic": false,
+        "options": [
+            "Driver 1",
+            "Driver 2",
+            "Driver 3"
+        ]
     },
     {
         "id": 1,
@@ -15,7 +20,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 2,
@@ -24,7 +30,12 @@
         "type": "string",
         "required": false,
         "dropdown": true,
-        "automatic": false
+        "automatic": false,
+        "options": [
+            "Event 1",
+            "Event 2",
+            "Event 3"
+        ]
     },
     {
         "id": 3,
@@ -33,7 +44,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 4,
@@ -42,7 +54,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 5,
@@ -51,7 +64,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 6,
@@ -60,7 +74,8 @@
         "type": "string",
         "required": false,
         "dropdown": true,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 7,
@@ -69,7 +84,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 8,
@@ -78,7 +94,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 9,
@@ -87,7 +104,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 10,
@@ -96,7 +114,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 11,
@@ -105,7 +124,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 12,
@@ -114,7 +134,8 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 13,
@@ -123,60 +144,67 @@
         "type": "string",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 14,
         "name": "TCSEnable",
         "displayName": "TCS Enabled",
-        "type": "string",
+        "type": "boolean",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 15,
         "name": "yawPIDENable",
         "displayName": "Yaw PID Enabled",
-        "type": "string",
+        "type": "boolean",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 16,
         "name": "launchEnable",
         "displayName": "Launch Enabled",
-        "type": "string",
+        "type": "boolean",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 17,
         "name": "normForceEnable",
         "displayName": "Norm Force Enabled",
-        "type": "string",
+        "type": "boolean",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 18,
         "name": "mechPowerLimEnable",
         "displayName": "Mech Power Lim. Enabled",
-        "type": "string",
+        "type": "boolean",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
         "id": 19,
         "name": "pidPowerLimEnable",
         "displayName": "Pid Power Lim. Enabled",
-        "type": "string",
+        "type": "boolean",
         "required": false,
         "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     }
 ]
