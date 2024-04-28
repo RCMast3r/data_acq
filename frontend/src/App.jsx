@@ -53,7 +53,7 @@ function App() {
                 {/*<StartStopButton recording={recording} setRecording={setRecording} driverInput={driverInput} trackNameInput={trackNameInput} eventTypeInput={eventTypeInput} drivetrainTypeInput={drivetrainTypeInput} massInput={massInput} wheelbaseInput={wheelbaseInput} firmwareRevInput={firmwareRevInput}/>*/}
             </div>
 
-            <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording}/>
+            <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording} serverAddr={serverAddr}/>
             <OffloadButton/>
         </div>
     );

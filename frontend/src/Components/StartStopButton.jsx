@@ -1,6 +1,6 @@
 import React from "react";
 
-export function StartStopButton({fields, data, recording, setRecording}) {
+export function StartStopButton({fields, data, recording, setRecording, serverAddr}) {
 
     var waitingForResponse = false
 
@@ -34,7 +34,7 @@ export function StartStopButton({fields, data, recording, setRecording}) {
             return false
         }
         waitingForResponse = true
-        const fetchResponse = await fetch(webserverURL + '/stop', {
+        const fetchResponse = await fetch(serverAddr + '/stop', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -61,7 +61,7 @@ export function StartStopButton({fields, data, recording, setRecording}) {
         body += '"time":"' + (new Date()).toString()+'"'
         body += " }"
         console.log(body)
-        const fetchResponse = await fetch(webserverURL + '/start', {
+        const fetchResponse = await fetch(serverAddr + '/start', {
             method: 'POST',
             body: body,
             headers: {
@@ -90,7 +90,7 @@ export function StartStopButton({fields, data, recording, setRecording}) {
     }
 
     return (
-        <button className={getButtonStyle()} onClick={toggleRecording} disabled={isDisabled()}>
+        <button className={getButtonStyle()} onClick={toggleRecording} disabled={false}>
             {getButtonText()}
         </button>
     )
