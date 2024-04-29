@@ -13,14 +13,14 @@ from hypercorn.config import Config
 from hypercorn.asyncio import serve
 
 class MCAPServer:
-    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969):
+    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969, metadata_filepath=''):
         self.host = host
         self.port = port
         
         self.is_writing = init_writing
         self.cmd_queue = writer_command_queue
         self.status_queue = writer_status_queue
-        
+        self.metadata_filepath = metadata_filepath
         if(init_writing):
             self.is_writing = True
             self.mcap_status_message = f"An MCAP file is being written: {init_filename}"
@@ -84,32 +84,10 @@ class MCAPServer:
             # os.system("rsync -a ~/recordings urname@192.168.1.101:~/destination/of/data")
             return jsonify()
         
-        @app.route('/read/<type>', methods=['POST'])
-        def read(type):
-            valid_types = ["driver", "location", "eventType"]
-            if (type not in valid_types):
-                return jsonify(f"Type must be one of: {', '.join(valid_types)}")
-            fileName = type + ".txt"
-            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/"+fileName, "r") as myfile:
-                data = myfile.read().splitlines()
-            
-                
-            return jsonify(data)
-        
-        @app.route('/write/<type>', methods=['POST'])
-        def write(type):
-            valid_types = ["driver", "location", "eventType"]
-            if (type not in valid_types):
-                return jsonify(f"Type must be one of: {', '.join(valid_types)}")
-            fileName = type + ".txt"
-            with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/"+fileName, "a") as myfile:
-                myfile.write(request.get_json()["value"]+ '\n')
-            return jsonify()
-        
         @app.route('/fields', methods=['GET'])
         def getJSON():
             try:
-                with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/metadata.json", "r") as f:
+                with open (os.path.join(self.metadata_filepath, "metadata.json"), "r") as f:
                     data = json.load(f)
                 return jsonify(data)
             except FileNotFoundError:
