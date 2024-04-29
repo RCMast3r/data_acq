@@ -1,6 +1,6 @@
 import React from 'react'
 
-export function DeleteButton(serverAddr) {
+export function DeleteButton({serverAddr}) {
 
 
     async function deleteMCAPs() {

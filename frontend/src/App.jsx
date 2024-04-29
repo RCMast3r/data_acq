@@ -64,13 +64,12 @@ function App() {
                 <div class="btm-nav h-44">
                     <div className={"flex flex-col gap-4 items-center justify-center pt-6"}>
                     <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording} serverAddr={serverAddr}/>
-                    <OffloadButton/>
+                    <OffloadButton serverAddr={serverAddr}/>
+                    <DeleteButton serverAddr={serverAddr}/>
                     </div>
                 </div>
 
-                <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording} serverAddr={serverAddr}/>
-                <OffloadButton serverAddr={serverAddr}/>
-                <DeleteButton serverAddr={serverAddr}/>
+                
             </div>
         );
     }
