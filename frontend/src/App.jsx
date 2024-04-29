@@ -3,8 +3,8 @@ import './App.css';
 import {StartStopButton} from "./Components/StartStopButton";
 import {PageTitle} from "./Components/PageTitle";
 import {TextForm} from "./Components/FieldComponents/TextForm";
-import {OffloadButton} from "./OffloadButton";
-import {DeleteButton} from "./DeleteButton";
+import {OffloadButton} from "./Components/OffloadButton";
+import {DeleteButton} from "./Components/DeleteButton";
 import {Field} from "./Components/Field";
 import {AddrToggle} from "./Components/AddrToggle";
 import {EditModeToggle} from "./Components/EditModeToggle";
@@ -68,6 +68,9 @@ function App() {
                     </div>
                 </div>
 
+                <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording} serverAddr={serverAddr}/>
+                <OffloadButton serverAddr={serverAddr}/>
+                <DeleteButton serverAddr={serverAddr}/>
             </div>
         );
     }

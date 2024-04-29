@@ -89,7 +89,7 @@ class MCAPServer:
                 path_to_mcap = "/home/nixos/recordings"
             offload_data = checkOffloadedMCAPS()
             not_offloaded = (offload_data["not_offloaded"])
-
+            print(not_offloaded)
             for filename in not_offloaded:
                 if (os.path.exists(path_to_mcap + "/" + filename)):
                     MCAPfile = {'file': open(path_to_mcap + "/" + filename, 'rb')}
