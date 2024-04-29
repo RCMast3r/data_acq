@@ -59,6 +59,7 @@ async def write_data_to_mcap(
                         await writer_status_queue.put(MCAPServerStatusQueueData(True, mcw.actual_path))
                     else:
                         await writer_status_queue.put(MCAPServerStatusQueueData(False, mcw.actual_path))
+                        await mcw.write_data("setup", cmd_msg.pb_metadata)
                         await mcw.close_writer()
                     # Now we can cancel the other task as it's no longer needed
                     data_task.cancel()
