@@ -96,6 +96,8 @@ class MCAPServer:
                     response = requests.post(awsServerURL + '/save_run', files = MCAPfile)
                     #print(response)
                     print(filename + " uploaded")
+                else:
+                    print("MCAP File directory , " + path_to_mcap + "/" + filename + " not found.")
             return jsonify(message='success')
 
         @app.route('/delete', methods=['POST'])
@@ -110,6 +112,8 @@ class MCAPServer:
                 if os.path.exists(filePath):
                     os.remove(filePath) # one file at a time
                     print("Deleted " + filename)
+                else:
+                    print("MCAP File directory , " + filePath + " not found.")
             return jsonify(message='success')
 
 
