@@ -1,7 +1,9 @@
 import React from "react";
+import { useState } from "react";
 
 export function StartStopButton({fields, data, recording, setRecording, serverAddr}) {
-
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
     var waitingForResponse = false
 
     function getButtonStyle() {
@@ -26,8 +28,6 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
         return ret
     }
 
-    const webserverURL = 'http://192.168.203.1:6969'
-    //const webserverURL = 'http://0.0.0.0:6969'
 
     async function stopRecording() {
         if(waitingForResponse) {
@@ -84,6 +84,13 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
 
         waitingForResponse = false
         const status = fetchResponse.status
+        if (status == 200) {
+            setAlertMessage("Writing to " + formattedDate + ".mcap"); // Set the alert message
+            setShowAlert(true); // Show alert if request was successful
+            setTimeout(() => {
+                setShowAlert(false);
+              }, 5000);
+        }
         return status === 200
     }
 
@@ -102,9 +109,18 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
     }
 
     return (
-        <button className={getButtonStyle()} onClick={toggleRecording} disabled={false}>
-            {getButtonText()}
-        </button>
+        <div>
+            {showAlert && (
+                <div class="toast">
+                <div class="alert alert-info">
+                  <span>{alertMessage}</span>
+                </div>
+              </div>
+            )}
+            <button className={getButtonStyle()} onClick={toggleRecording} disabled={false}>
+                {getButtonText()}
+            </button>
+        </div>
     )
 
 }
