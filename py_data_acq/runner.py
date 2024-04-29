@@ -117,13 +117,16 @@ async def run(logger):
     can_out_queue = asyncio.Queue()
     path_to_bin = ""
     path_to_dbc = ""
+    path_to_metadata_config = ""
 
     if len(sys.argv) > 2:
         path_to_bin = sys.argv[1]
         path_to_dbc = sys.argv[2]
+        path_to_metadata_config = sys.argv[3]
     else:
         path_to_bin = os.environ.get("BIN_PATH")
         path_to_dbc = os.environ.get("DBC_PATH")
+        path_to_metadata_config = os.environ.get("METADATA_PATH")
 
     full_path = os.path.join(path_to_bin, "hytech.bin")
     full_path_to_dbc = os.path.join(path_to_dbc, "hytech.dbc")
@@ -148,6 +151,7 @@ async def run(logger):
         writer_status_queue=mcap_writer_status_queue,
         init_writing=init_writing_on_start,
         init_filename=mcap_writer.actual_path,
+        metadata_filepath=path_to_metadata_config
     )
     receiver_task = asyncio.create_task(
         continuous_can_receiver(db, msg_pb_classes, queue, queue2, bus)

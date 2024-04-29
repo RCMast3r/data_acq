@@ -13,14 +13,14 @@ from hypercorn.config import Config
 from hypercorn.asyncio import serve
 
 class MCAPServer:
-    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='192.168.203.1', port=6969):
+    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='192.168.203.1', port=6969, metadata_filepath=''):
         self.host = host
         self.port = port
         
         self.is_writing = init_writing
         self.cmd_queue = writer_command_queue
         self.status_queue = writer_status_queue
-        
+        self.metadata_filepath = metadata_filepath
         if(init_writing):
             self.is_writing = True
             self.mcap_status_message = f"An MCAP file is being written: {init_filename}"

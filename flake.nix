@@ -49,6 +49,9 @@
       proto_gen_overlay = final: prev: {
         proto_gen_pkg = final.callPackage ./dbc_proto_bin_gen.nix { };
       };
+      frontend_config_overlay = final: prev: {
+        frontend_config_pkg = final.callPackage ./frontend_metadata.nix { };
+      };
       py_foxglove_protobuf_schemas_overlay = final: prev: {
         py_foxglove_protobuf_schemas = final.callPackage ./py_foxglove_protobuf_schemas.nix { };
       };
@@ -95,7 +98,7 @@
         py_data_acq_overlay
         proto_gen_overlay
         py_foxglove_protobuf_schemas_overlay
-
+        frontend_config_overlay
         frontend_overlay
         ht_can_pkg_flake.overlays.default
         mcap-protobuf.overlays.default
@@ -158,8 +161,10 @@
             path=${pkgs.proto_gen_pkg}
             bin_path=$path"/bin"
             dbc_path=${pkgs.ht_can_pkg}
+            metadata_path=${pkgs.frontend_config_pkg}
             export BIN_PATH=$bin_path
             export DBC_PATH=$dbc_path
+            export METADATA_PATH=$metadata_path
           '';
 
       };
@@ -172,6 +177,7 @@
       };
 
       packages = rec {
+        frontend_config_pkg = pkgs.frontend_config_pkg;
         frontend_pkg = pkgs.frontend_pkg.frontend;
         default = pkgs.py_data_acq_pkg;
         py_dbc_proto_gen_pkg = pkgs.py_data_acq_pkg;
