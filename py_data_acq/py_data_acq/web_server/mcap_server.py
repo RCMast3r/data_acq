@@ -16,7 +16,7 @@ import requests
 awsServerURL = 'http://54.243.4.174:8080'
 
 class MCAPServer:
-    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='0.0.0.0', port=6969, metadata_filepath=''):
+    def __init__(self, writer_command_queue: asyncio.Queue, writer_status_queue: asyncio.Queue, init_writing= True, init_filename = '.',host='192.168.203.1', port=6969, metadata_filepath=''):
         self.host = host
         self.port = port
         
