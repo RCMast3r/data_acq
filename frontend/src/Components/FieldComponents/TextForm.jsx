@@ -9,6 +9,6 @@ export function TextForm({data, setData, index}) {
     }
 
     return (
-        <input value={data[index]} onChange={handleChange} className={"input input-bordered w-80"}/>
+        <input value={data[index]} onChange={handleChange} className={"input input-bordered w-80"} disabled={false}/>
     )
 }
