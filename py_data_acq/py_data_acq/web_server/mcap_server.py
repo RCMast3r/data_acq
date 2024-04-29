@@ -76,7 +76,9 @@ class MCAPServer:
 
         @app.route('/stop', methods=['POST'])
         def stop_recording():
-            loop.create_task(self.start_stop_mcap_generation(input_cmd=False))
+            print("Stop route called")
+            requestData = request.get_json()
+            loop.create_task(self.start_stop_mcap_generation(input_cmd=False, metadata=requestData))
             return jsonify(message='success')
 
         @app.route('/offload', methods=['POST'])
@@ -87,9 +89,14 @@ class MCAPServer:
         @app.route('/fields', methods=['GET'])
         def getJSON():
             try:
-                with open (os.path.join(self.metadata_filepath, "metadata.json"), "r") as f:
-                    data = json.load(f)
-                return jsonify(data)
+                if os.path.exists("/etc/nixos"):
+                    with open (os.path.join(self.metadata_filepath, "metadata.json"), "r") as f:
+                        data = json.load(f)
+                    return jsonify(data)
+                else:
+                    with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/metadata.json", "r") as f:
+                        data = json.load(f)
+                    return jsonify(data)
             except FileNotFoundError:
                 return jsonify({'error': 'File not found'}), 404
 
