@@ -2,8 +2,10 @@ import React from "react";
 import { useState } from "react";
 
 export function StartStopButton({fields, data, recording, setRecording, serverAddr}) {
-    const [showAlert, setShowAlert] = useState(false);
+    const [showStartAlert, setShowStartAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
+    const [showEndAlert, setShowEndALert] = useState("");
+    const [time, setTime] = useState("");
     var waitingForResponse = false
 
     function getButtonStyle() {
@@ -43,6 +45,14 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
         })
         waitingForResponse = false
         const status = fetchResponse.status
+        if (status == 200) {
+            setAlertMessage("Stopped writing to " + time + ".mcap"); // Set the alert message
+            setShowEndALert(true); // Show alert if request was successful
+            setShowStartAlert(false);
+            setTimeout(() => {
+                setShowEndALert(false);
+              }, 5000);
+        }
         return status === 200
     }
 
@@ -70,6 +80,7 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
 
         // Creating the formatted date string
         const formattedDate = `${year}-${month}-${day}-T${hours}-${minutes}-${seconds}`;
+        setTime(formattedDate)
         body += '"time":"' + formattedDate+'"'
         body += " }"
         console.log(body)
@@ -86,10 +97,8 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
         const status = fetchResponse.status
         if (status == 200) {
             setAlertMessage("Writing to " + formattedDate + ".mcap"); // Set the alert message
-            setShowAlert(true); // Show alert if request was successful
-            setTimeout(() => {
-                setShowAlert(false);
-              }, 5000);
+            setShowStartAlert(true); // Show alert if request was successful
+            setShowEndALert(false);
         }
         return status === 200
     }
@@ -110,9 +119,16 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
 
     return (
         <div>
-            {showAlert && (
+            {showStartAlert && (
                 <div class="toast">
                 <div class="alert alert-info">
+                  <span>{alertMessage}</span>
+                </div>
+              </div>
+            )}
+            {showEndAlert && (
+                <div class="toast">
+                <div class="alert alert-warning">
                   <span>{alertMessage}</span>
                 </div>
               </div>
