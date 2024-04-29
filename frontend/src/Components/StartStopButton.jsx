@@ -30,19 +30,8 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
             body += '"' + fields[i].name + '":' + JSON.stringify(data[i])
             body += ', '
         }
-        const date = new Date();
-  
-        // Extracting date components
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-based
-        const day = date.getDate().toString().padStart(2, '0');
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-        const seconds = date.getSeconds().toString().padStart(2, '0');
 
-        // Creating the formatted date string
-        const formattedDate = `${year}-${month}-${day}-T${hours}-${minutes}-${seconds}`;
-        body += '"time":"' + formattedDate+'"'
+        body += '"time":"' + time+'"'
         body += " }"
         waitingForResponse = true
         const fetchResponse = await fetch(getURL('stop', useLocalhost), {
