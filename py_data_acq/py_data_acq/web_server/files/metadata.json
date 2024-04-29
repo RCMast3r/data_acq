@@ -8,9 +8,8 @@
         "dropdown": true,
         "automatic": false,
         "options": [
-            "Driver 1",
-            "Driver 2",
-            "Driver 3"
+            "Shayan",
+            "Ryan"
         ]
     },
     {
@@ -32,9 +31,11 @@
         "dropdown": true,
         "automatic": false,
         "options": [
-            "Event 1",
-            "Event 2",
-            "Event 3"
+            "Skidpad",
+            "Acceleration",
+            "Hairpin",
+            "SCC Autocross",
+            "NA"
         ]
     },
     {
@@ -75,7 +76,12 @@
         "required": false,
         "dropdown": true,
         "automatic": false,
-        "options": []
+        "options": [
+            "MRDC",
+            "SCC", 
+            "ROME", 
+            "MICHIGAN"
+        ]
     },
     {
         "id": 7,
