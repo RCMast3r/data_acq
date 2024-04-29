@@ -45,19 +45,28 @@ function App() {
     function getNoEdit() {
         return (
             <div className={"flex flex-col gap-4 items-center justify-center pt-6"}>
-                <EditModeToggle editMode={editMode} setEditMode={setEditMode}/>
-                <AddrToggle serverAddr={serverAddr} setServerAddr={setServerAddr}/>
-                <div className={"flex"}>
-                    <PageTitle/>
+                <div className={"pb-52"}>
+                    <EditModeToggle editMode={editMode} setEditMode={setEditMode}/>
+                    <AddrToggle serverAddr={serverAddr} setServerAddr={setServerAddr}/>
+                    <div className={"flex"}>
+                        <PageTitle/>
+                    </div>
+
+                    <div className={"flex flex-col gap-4 items-center justify-center"}>
+                        {fields.map((field, index) => <Field key={field.id} fields={fields} data={data}
+                                                             setData={setData} index={index} recording={recording}
+                                                             serverAddr={serverAddr}/>)}
+                        {/*<StartStopButton recording={recording} setRecording={setRecording} driverInput={driverInput} trackNameInput={trackNameInput} eventTypeInput={eventTypeInput} drivetrainTypeInput={drivetrainTypeInput} massInput={massInput} wheelbaseInput={wheelbaseInput} firmwareRevInput={firmwareRevInput}/>*/}
+                    </div>
                 </div>
 
-                <div className={"flex flex-col gap-4 items-center justify-center"}>
-                    {fields.map((field, index) => <Field key={field.id} fields={fields} data={data} setData={setData} index={index} recording={recording} serverAddr={serverAddr}/>)}
-                    {/*<StartStopButton recording={recording} setRecording={setRecording} driverInput={driverInput} trackNameInput={trackNameInput} eventTypeInput={eventTypeInput} drivetrainTypeInput={drivetrainTypeInput} massInput={massInput} wheelbaseInput={wheelbaseInput} firmwareRevInput={firmwareRevInput}/>*/}
+                <div class="btm-nav h-44">
+                    <div className={"flex flex-col gap-4 items-center justify-center pt-6"}>
+                    <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording} serverAddr={serverAddr}/>
+                    <OffloadButton/>
+                    </div>
                 </div>
 
-                <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording} serverAddr={serverAddr}/>
-                <OffloadButton/>
             </div>
         );
     }
@@ -65,10 +74,12 @@ function App() {
     function getEdit() {
         return (
             <div className={"flex flex-col gap-4 items-center justify-center pt-6"}>
-                <EditModeToggle editMode={editMode} setEditMode={setEditMode}/>
-                <AddrToggle serverAddr={serverAddr} setServerAddr={setServerAddr}/>
-                <div className={"flex"}>
-                    <PageTitle/>
+                <div className={"pb-52"}>
+                    <EditModeToggle editMode={editMode} setEditMode={setEditMode}/>
+                    <AddrToggle serverAddr={serverAddr} setServerAddr={setServerAddr}/>
+                    <div className={"flex"}>
+                        <PageTitle/>
+                    </div>
                 </div>
 
             </div>
