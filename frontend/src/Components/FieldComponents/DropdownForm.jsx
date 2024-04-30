@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from "react";
 
-export function DropdownForm({fields, data, setData, index, recording, serverAddr}) {
-
-    const [showAdd, setShowAdd] = useState(false)
-    const [addInput, setAddInput] = useState('')
+export function DropdownForm({fields, data, setData, index}) {
 
     function handleChange(e) {
         const newData = [...data];
@@ -12,10 +9,10 @@ export function DropdownForm({fields, data, setData, index, recording, serverAdd
     }
 
     return (
-        <select value={data[index]} className={"select select-bordered w-80"} onChange={handleChange}
-                disabled={recording}>
+        <select value={data[index]} className={"select select-bordered w-80"} onChange={handleChange}>
             {fields[index].options.map((option) => <option value={option}>{option}</option>)}
         </select>
     )
 
 }
+
