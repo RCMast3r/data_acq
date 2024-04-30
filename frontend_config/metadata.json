@@ -1,182 +1,150 @@
 [
     {
-        "id": 0,
         "name": "driver",
         "displayName": "Driver",
         "type": "string",
-        "required": true,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": [
+            "Shayan",
+            "Ryan"
+        ]
     },
     {
-        "id": 1,
         "name": "testingGoal",
         "displayName": "Testing Goal",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 2,
         "name": "eventType",
         "displayName": "Event Type",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": [
+            "Skidpad",
+            "Acceleration",
+            "Hairpin",
+            "SCC Autocross"
+        ]
     },
     {
-        "id": 3,
-        "name": "notes",
-        "displayName": "Notes",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 4,
         "name": "startTime",
-        "displayName": "Start Time/Date",
+        "displayName": "Start Time & Date",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 5,
         "name": "endTime",
-        "displayName": "End Time/Date",
+        "displayName": "End Time & Date",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 6,
         "name": "location",
         "displayName": "Location",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 7,
         "name": "conditions",
         "displayName": "Conditions (ie dry, night time)",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 8,
         "name": "temperature",
         "displayName": "Temperature (C)",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 9,
         "name": "aeroType",
         "displayName": "Aero Type",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 10,
         "name": "MCUversion",
         "displayName": "MCU Version",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     },
     {
-        "id": 11,
+        "name": "yawPIDValues",
+        "displayName": "Yaw PID Values",
+        "type": "pid",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "TCSPIDValues",
+        "displayName": "TCS PID Values",
+        "type": "pid",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "TCSEnable",
+        "displayName": "TCS Enabled",
+        "type": "boolean",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "yawPIDEnable",
+        "displayName": "Yaw PID Enabled",
+        "type": "boolean",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "launchEnable",
+        "displayName": "Launch Enabled",
+        "type": "boolean",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "normForceEnable",
+        "displayName": "Norm Force Enabled",
+        "type": "boolean",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "mechPowerLimEnable",
+        "displayName": "Mech Power Lim. Enabled",
+        "type": "boolean",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "pidPowerLimEnable",
+        "displayName": "PID Power Lim. Enabled",
+        "type": "boolean",
+        "automatic": false,
+        "options": []
+    },
+    {
+        "name": "notes",
+        "displayName": "Notes",
+        "type": "string",
+        "automatic": false,
+        "options": []
+    },
+    {
         "name": "errors",
         "displayName": "Errors",
         "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 12,
-        "name": "yawPIDValues",
-        "displayName": "Yaw Pid Values",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 13,
-        "name": "TCSPIDValues",
-        "displayName": "TCS PID Values",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 14,
-        "name": "TCSEnable",
-        "displayName": "TCS Enabled",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 15,
-        "name": "yawPIDENable",
-        "displayName": "Yaw PID Enabled",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 16,
-        "name": "launchEnable",
-        "displayName": "Launch Enabled",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 17,
-        "name": "normForceEnable",
-        "displayName": "Norm Force Enabled",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 18,
-        "name": "mechPowerLimEnable",
-        "displayName": "Mech Power Lim. Enabled",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
-    },
-    {
-        "id": 19,
-        "name": "pidPowerLimEnable",
-        "displayName": "Pid Power Lim. Enabled",
-        "type": "string",
-        "required": false,
-        "dropdown": false,
-        "automatic": false
+        "automatic": false,
+        "options": []
     }
 ]
