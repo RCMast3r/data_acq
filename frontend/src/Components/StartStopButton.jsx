@@ -59,7 +59,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         body += '"time":"' + formattedDate+'"'
         body += " }"
         console.log(body)
-        const fetchResponse = await fetch(await fetch(getURL('start', useLocalhost)), {
+        const fetchResponse = await fetch(getURL('start', useLocalhost), {
             method: 'POST',
             body: body,
             headers: {
@@ -91,7 +91,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
     }
 
     return (
-        <div>
+        <div className="centered-container">
             {recording && (
                 <article className={"prose"}>
                     <p>
