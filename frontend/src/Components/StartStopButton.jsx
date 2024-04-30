@@ -5,12 +5,8 @@ import {getFormattedDate} from "../Util/DateUtil";
 
 export function StartStopButton({fields, data, recording, setRecording, useLocalhost}) {
 
-    const [currentFile, setCurrentFile] = useState('');
-    const [showStartAlert, setShowStartAlert] = useState(false);
-    const [alertMessage, setAlertMessage] = useState("");
-    const [showEndAlert, setShowEndALert] = useState("");
     const [time, setTime] = useState("");
-    var waitingForResponse = false
+    let waitingForResponse = false;
 
     function getButtonStyle() {
         return recording ? "btn btn-error" : "btn btn-success"
@@ -40,16 +36,10 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         waitingForResponse = false
         const status = fetchResponse.status
         if (status === 200) {
-            setAlertMessage("Stopped writing to " + time + ".mcap"); // Set the alert message
-            setShowEndALert(true); // Show alert if request was successful
-            setShowStartAlert(false);
-            setTimeout(() => {
-                setShowEndALert(false);
-              }, 5000);
+            alert("Stopped writing to " + time + ".mcap");
         }
         return status === 200
     }
-
 
     async function startRecording() {
         if(waitingForResponse) {
@@ -69,7 +59,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         body += '"time":"' + formattedDate+'"'
         body += " }"
         console.log(body)
-        const fetchResponse = await fetch(serverAddr + '/start', {
+        const fetchResponse = await fetch(await fetch(getURL('start', useLocalhost)), {
             method: 'POST',
             body: body,
             headers: {
@@ -80,10 +70,8 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
 
         waitingForResponse = false
         const status = fetchResponse.status
-        if (status == 200) {
-            setAlertMessage("Writing to " + formattedDate + ".mcap"); // Set the alert message
-            setShowStartAlert(true); // Show alert if request was successful
-            setShowEndALert(false);
+        if (status === 200) {
+            setTime(formattedDate)
         }
         return status === 200
     }
@@ -104,19 +92,12 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
 
     return (
         <div>
-            {showStartAlert && (
-                <div class="toast">
-                <div class="alert alert-info">
-                  <span>{alertMessage}</span>
-                </div>
-              </div>
-            )}
-            {showEndAlert && (
-                <div class="toast">
-                <div class="alert alert-warning">
-                  <span>{alertMessage}</span>
-                </div>
-              </div>
+            {recording && (
+                <article className={"prose"}>
+                    <p>
+                        Recording: {time}.mcap
+                    </p>
+                </article>
             )}
             <button className={getButtonStyle()} onClick={toggleRecording} disabled={false}>
                 {getButtonText()}
