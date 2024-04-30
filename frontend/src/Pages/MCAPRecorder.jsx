@@ -56,7 +56,7 @@ export function MCAPRecorder({}) {
             <footer className={"sticky bottom-0 bg-base-100"}>
                 <div className={"flex flex-col gap-4 items-center justify-center pt-6"}>
                     <StartStopButton fields={fields} data={data} recording={recording} setRecording={setRecording}
-                                     serverAddr={'http://192.168.203.1'}/>
+                                     serverAddr={'http://192.168.203.1'} useLocalhost={useLocalhost}/>
                     <OffloadButton/>
                 </div>
             </footer>
