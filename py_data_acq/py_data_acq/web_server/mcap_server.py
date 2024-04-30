@@ -94,7 +94,7 @@ class MCAPServer:
                         data = json.load(f)
                     return jsonify(data)
                 else:
-                    with open (os.getcwd() +"/py_data_acq/py_data_acq/web_server/files/metadata.json", "r") as f:
+                    with open (os.getcwd() +"/frontend_config/metadata.json", "r") as f:
                         data = json.load(f)
                     return jsonify(data)
             except FileNotFoundError:
