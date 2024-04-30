@@ -1,7 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import {getURL} from "../Util/ServerAddrUtil";
+import {getFormattedDate} from "../Util/DateUtil";
 
-export function StartStopButton({fields, data, recording, setRecording, serverAddr}) {
+export function StartStopButton({fields, data, recording, setRecording, useLocalhost}) {
+
+    const [currentFile, setCurrentFile] = useState('');
     const [showStartAlert, setShowStartAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
     const [showEndAlert, setShowEndALert] = useState("");
@@ -17,17 +21,7 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
     }
 
     function isDisabled() {
-        if (waitingForResponse) {
-            return true
-        }
-        let ret = false
-        for (let i = 0; i < data.length; i++) {
-            if(data[i] === undefined || data[i] === null) {
-                ret = true
-                break
-            }
-        }
-        return ret
+        return waitingForResponse
     }
 
 
@@ -36,7 +30,7 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
             return false
         }
         waitingForResponse = true
-        const fetchResponse = await fetch(serverAddr + '/stop', {
+        const fetchResponse = await fetch(getURL('stop', useLocalhost), {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -45,7 +39,7 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
         })
         waitingForResponse = false
         const status = fetchResponse.status
-        if (status == 200) {
+        if (status === 200) {
             setAlertMessage("Stopped writing to " + time + ".mcap"); // Set the alert message
             setShowEndALert(true); // Show alert if request was successful
             setShowStartAlert(false);
@@ -68,18 +62,9 @@ export function StartStopButton({fields, data, recording, setRecording, serverAd
             body += '"' + fields[i].name + '":' + JSON.stringify(data[i])
             body += ', '
         }
-        const date = new Date();
-  
-        // Extracting date components
-        const year = date.getFullYear();
-        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are zero-based
-        const day = date.getDate().toString().padStart(2, '0');
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-        const seconds = date.getSeconds().toString().padStart(2, '0');
 
         // Creating the formatted date string
-        const formattedDate = `${year}-${month}-${day}-T${hours}-${minutes}-${seconds}`;
+        const formattedDate = getFormattedDate()
         setTime(formattedDate)
         body += '"time":"' + formattedDate+'"'
         body += " }"

@@ -1,9 +1,8 @@
 import React from 'react'
-import { exec } from "node:child_process";
 
 export function OffloadButton() {
 
-    const webserverURL: string = 'http://192.168.203.1:6969'
+    const webserverURL = 'http://192.168.203.1:6969'
 
     async function offload() {
         const fetchResponse = await fetch(webserverURL + '/offload', {
@@ -18,7 +17,7 @@ export function OffloadButton() {
     }
 
     return (
-        <button className={"btn"} onClick={offload} disabled={false}>
+        <button className={"btn"} onClick={() => alert("New Alert")} disabled={false}>
             Offload
         </button>
     )
