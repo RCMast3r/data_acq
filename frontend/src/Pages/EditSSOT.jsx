@@ -16,6 +16,7 @@ export function EditSSOT({}) {
         let json;
         try {
             const fetchResponse = await fetch(getURL('fields', useLocalhost), {
+                signal: AbortSignal.timeout(3000),
                 method: 'GET',
                 headers: {
                     Accept: 'application/json',
