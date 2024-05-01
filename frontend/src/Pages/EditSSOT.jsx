@@ -50,7 +50,7 @@ export function EditSSOT({}) {
         <>
             <main>
                 <div className={"flex flex-col gap-4 items-center justify-center pt-6"}>
-                    <AddrToggle/>
+                    <AddrToggle useLocalhost={useLocalhost} setUseLocalhost={setUseLocalhost}/>
                     <div className={"flex"}>
                         <PageTitle text={"Metadata Editor"}/>
                     </div>
