@@ -1,10 +1,10 @@
 import React from 'react'
 
-export function PageTitle() {
+export function PageTitle({text}) {
     return (
         <article className={"prose"}>
             <h1>
-                MCAP Control Panel
+                {text}
             </h1>
         </article>
     )
