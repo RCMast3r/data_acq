@@ -1,3 +1,5 @@
+import {getFormattedDate} from "./DateUtil";
+
 export function getDefaultData(fields) {
     let data = []
     for (let i = 0; i < fields.length; i++) {
@@ -15,4 +17,15 @@ function getDefaultValue(type) {
         return {p: '', i: '', d: ''}
     }
     return null
+}
+
+export function getMetadata(fields, data) {
+    let body = "{ "
+    for (let i = 0; i < fields.length; i++) {
+        body += '"' + fields[i].name + '":' + JSON.stringify(data[i])
+        body += ', '
+    }
+    body += '"time": ' + JSON.stringify(getFormattedDate())
+    body += " }"
+    return body;
 }
