@@ -1,9 +1,12 @@
-import React from "react";
 
-export function OffloadButton({serverAddr}) {
+import React from 'react'
+
+export function OffloadButton() {
+
+    const webserverURL = 'http://192.168.203.1:6969'
 
     async function offload() {
-        const fetchResponse = await fetch(serverAddr + '/offload', {
+        const fetchResponse = await fetch(webserverURL + '/offload', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -15,7 +18,8 @@ export function OffloadButton({serverAddr}) {
     }
 
     return (
-        <button className={"btn"} onClick={offload} disabled={false}>
+
+        <button className={"btn"} onClick={() => alert("New Alert")} disabled={false}>
             Offload
         </button>
     )

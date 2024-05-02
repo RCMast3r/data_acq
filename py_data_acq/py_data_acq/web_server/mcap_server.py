@@ -137,9 +137,14 @@ class MCAPServer:
         @app.route('/fields', methods=['GET'])
         def getJSON():
             try:
-                with open (os.path.join(self.metadata_filepath, "metadata.json"), "r") as f:
-                    data = json.load(f)
-                return jsonify(data)
+                if os.path.exists("/etc/nixos"):
+                    with open (os.path.join(self.metadata_filepath, "metadata.json"), "r") as f:
+                        data = json.load(f)
+                    return jsonify(data)
+                else:
+                    with open (os.getcwd() +"/frontend_config/metadata.json", "r") as f:
+                        data = json.load(f)
+                    return jsonify(data)
             except FileNotFoundError:
                 return jsonify({'error': 'File not found'}), 404
 
