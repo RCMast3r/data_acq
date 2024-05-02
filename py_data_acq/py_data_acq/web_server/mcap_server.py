@@ -79,7 +79,9 @@ class MCAPServer:
 
         @app.route('/stop', methods=['POST'])
         def stop_recording():
-            loop.create_task(self.start_stop_mcap_generation(input_cmd=False))
+            print("Stop route called")
+            requestData = request.get_json()
+            loop.create_task(self.start_stop_mcap_generation(input_cmd=False, metadata=requestData))
             return jsonify(message='success')
 
         @app.route('/offload', methods=['POST'])

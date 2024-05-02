@@ -23,9 +23,12 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         if(waitingForResponse) {
             return false
         }
+
         setWaitingForResponse(true);
+
         const fetchResponse = await fetch(getURL('stop', useLocalhost), {
             method: 'POST',
+            body: body,
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
@@ -44,6 +47,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
             return false
         }
         setWaitingForResponse(true);
+
 
         // Creating the formatted date string
         const formattedDate = getFormattedDate()

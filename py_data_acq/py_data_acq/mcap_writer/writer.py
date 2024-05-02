@@ -68,11 +68,10 @@ class HTPBMcapWriter:
         self.writing_file = open(self.actual_path, "wb")
         self.mcap_writer_class = Writer(self.writing_file)
 
-        if metadata is not None:
-            await self.write_metadata("setup", metadata)
+        #if metadata is not None:
+        #    await self.write_metadata("setup", metadata)
 
         self.is_writing = True
-
         return True
 
     async def write_msg(self, msg):
