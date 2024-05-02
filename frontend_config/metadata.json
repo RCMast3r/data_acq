@@ -29,20 +29,6 @@
         ]
     },
     {
-        "name": "startTime",
-        "displayName": "Start Time & Date",
-        "type": "string",
-        "automatic": false,
-        "options": []
-    },
-    {
-        "name": "endTime",
-        "displayName": "End Time & Date",
-        "type": "string",
-        "automatic": false,
-        "options": []
-    },
-    {
         "name": "location",
         "displayName": "Location",
         "type": "string",

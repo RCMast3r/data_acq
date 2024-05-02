@@ -26,7 +26,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
 
         setWaitingForResponse(true);
 
-        let body = getMetadata(fields, data)
+        let body = getMetadata(fields, data, time)
 
         const fetchResponse = await fetch(getURL('stop', useLocalhost), {
             method: 'POST',
@@ -50,14 +50,13 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         }
         setWaitingForResponse(true);
 
-
+        let body = '{ "time": ' + JSON.stringify(getFormattedDate()) + '}'
         // Creating the formatted date string
         const formattedDate = getFormattedDate()
         setTime(formattedDate)
-
         const fetchResponse = await fetch(getURL('start', useLocalhost), {
             method: 'POST',
-            body: '[ "time: " ' + JSON.stringify(getFormattedDate()) + ']',
+            body: body,
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'

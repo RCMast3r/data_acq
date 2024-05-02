@@ -19,7 +19,7 @@ function getDefaultValue(type) {
     return null
 }
 
-export function getMetadata(fields, data) {
+export function getMetadata(fields, data, startTime) {
     let body = "{ "
     for (let i = 0; i < fields.length; i++) {
         if (fields[i].type === "string") {
@@ -29,7 +29,8 @@ export function getMetadata(fields, data) {
         }
         body += ', '
     }
-    body += '"time": ' + JSON.stringify(getFormattedDate())
+    body += '"startTime": ' + JSON.stringify(startTime) + ","
+    body += '"endTime": ' + JSON.stringify(getFormattedDate())
     body += " }"
     return body;
 }
