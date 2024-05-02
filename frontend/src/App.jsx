@@ -6,7 +6,6 @@ import {EditSSOT} from "./Pages/EditSSOT";
 import {Files} from "./Pages/Files"
 
 function App() {
-
     return (
         <BrowserRouter>
             <Routes>

@@ -1,12 +1,10 @@
-
 import React from 'react'
 
-export function OffloadButton() {
+export function DeleteButton({serverAddr}) {
 
-    const webserverURL = 'http://192.168.203.1:6969'
 
-    async function offload() {
-        const fetchResponse = await fetch(webserverURL + '/offload', {
+    async function deleteMCAPs() {
+        const fetchResponse = await fetch(serverAddr + '/delete', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -18,9 +16,8 @@ export function OffloadButton() {
     }
 
     return (
-
-        <button className={"btn"} onClick={() => alert("New Alert")} disabled={false}>
-            Offload
+        <button className={"btn btn-error"} onClick={deleteMCAPs} disabled={false}>
+            Delete
         </button>
     )
 }

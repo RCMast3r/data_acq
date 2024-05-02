@@ -18,6 +18,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         return recording ? "Stop Recording" : "Start Recording"
     }
 
+
     async function stopRecording() {
         if(waitingForResponse) {
             return false
