@@ -22,7 +22,11 @@ function getDefaultValue(type) {
 export function getMetadata(fields, data) {
     let body = "{ "
     for (let i = 0; i < fields.length; i++) {
-        body += '"' + fields[i].name + '":' + JSON.stringify(data[i])
+        if (fields[i].type === "pid") {
+            body += '"' + fields[i].name + '": "' + JSON.stringify(data[i]) + '"'
+        } else {
+            body += '"' + fields[i].name + '": ' + JSON.stringify(data[i])
+        }
         body += ', '
     }
     body += '"time": ' + JSON.stringify(getFormattedDate())
