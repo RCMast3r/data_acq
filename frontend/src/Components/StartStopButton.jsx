@@ -2,11 +2,13 @@ import React from "react";
 import { useState } from "react";
 import {getURL} from "../Util/ServerAddrUtil";
 import {getFormattedDate} from "../Util/DateUtil";
+import {getMetadata} from "../Util/DataUtil";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 export function StartStopButton({fields, data, recording, setRecording, useLocalhost}) {
 
     const [time, setTime] = useState("");
-    let waitingForResponse = false;
+    const [waitingForResponse, setWaitingForResponse] = useState(false);
 
     function getButtonStyle() {
         return recording ? "btn btn-error" : "btn btn-success"
@@ -16,24 +18,14 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         return recording ? "Stop Recording" : "Start Recording"
     }
 
-    function isDisabled() {
-        return waitingForResponse
-    }
-
 
     async function stopRecording() {
         if(waitingForResponse) {
             return false
         }
-        let body = "{ "
-        for(let i = 0; i < data.length; i++) {
-            body += '"' + fields[i].name + '":' + JSON.stringify(data[i])
-            body += ', '
-        }
 
-        body += '"time":"' + time+'"'
-        body += " }"
-        waitingForResponse = true
+        setWaitingForResponse(true);
+
         const fetchResponse = await fetch(getURL('stop', useLocalhost), {
             method: 'POST',
             body: body,
@@ -42,7 +34,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
                 'Content-Type': 'application/json'
             }
         })
-        waitingForResponse = false
+        setWaitingForResponse(false);
         const status = fetchResponse.status
         if (status === 200) {
             alert("Stopped writing to " + time + ".mcap");
@@ -54,19 +46,15 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
         if(waitingForResponse) {
             return false
         }
+        setWaitingForResponse(true);
 
-        let body = "{ "
-        for(let i = 0; i < data.length; i++) {
-            body += '"' + fields[i].name + '":' + JSON.stringify(data[i])
-            body += ', '
-        }
 
         // Creating the formatted date string
         const formattedDate = getFormattedDate()
         setTime(formattedDate)
-        body += '"time":"' + formattedDate+'"'
-        body += " }"
-        console.log(body)
+
+        let body = getMetadata(fields, data)
+
         const fetchResponse = await fetch(getURL('start', useLocalhost), {
             method: 'POST',
             body: body,
@@ -76,7 +64,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
             }
         })
 
-        waitingForResponse = false
+        setWaitingForResponse(false);
         const status = fetchResponse.status
         if (status === 200) {
             setTime(formattedDate)
@@ -107,7 +95,7 @@ export function StartStopButton({fields, data, recording, setRecording, useLocal
                     </p>
                 </article>
             )}
-            <button className={getButtonStyle()} onClick={toggleRecording} disabled={false}>
+            <button className={getButtonStyle()} onClick={toggleRecording} disabled={waitingForResponse}>
                 {getButtonText()}
             </button>
         </div>

@@ -10,13 +10,13 @@ export function PidForm({data, setData, index}) {
     
     function handleChangeI(e) {
         const newData = [...data]
-        newData[index].p = e.target.value
+        newData[index].i = e.target.value
         setData(newData)
     }
     
     function handleChangeD(e) {
         const newData = [...data]
-        newData[index].p = e.target.value
+        newData[index].d = e.target.value
         setData(newData)
     }
     
@@ -32,14 +32,14 @@ export function PidForm({data, setData, index}) {
             <article className={"prose pr-2"}>
                 <p>I:</p>
             </article>
-            <input value={data[index].p} onChange={handleChangeI} className={"input input-bordered w-20"}/>
+            <input value={data[index].i} onChange={handleChangeI} className={"input input-bordered w-20"}/>
             
             <div className={"grow w-max"}/>
             
             <article className={"prose pr-2"}>
                 <p>D:</p>
             </article>
-            <input value={data[index].p} onChange={handleChangeD} className={"input input-bordered w-20"}/>
+            <input value={data[index].d} onChange={handleChangeD} className={"input input-bordered w-20"}/>
         </div>
     )
 

@@ -35,6 +35,7 @@ python311Packages.buildPythonApplication {
     python311Packages.flask
     python311Packages.flask-cors
     python311Packages.hypercorn
+    python311Packages.requests
   ];
 
   src = ./py_data_acq;
